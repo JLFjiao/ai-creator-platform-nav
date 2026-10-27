@@ -854,6 +854,30 @@ function sortRows(list){
   return arr;
 }
 
+function lev(a,b){
+  const m=a.length, n=b.length;
+  if(Math.abs(m-n)>2) return 99;
+  let prev=Array.from({length:n+1},(_,j)=>j), cur=new Array(n+1);
+  for(let i=1;i<=m;i++){
+    cur[0]=i;
+    const ca=a.charCodeAt(i-1);
+    for(let j=1;j<=n;j++){
+      const cost = ca===b.charCodeAt(j-1) ? 0 : 1;
+      cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+cost);
+    }
+    const t=prev; prev=cur; cur=t;
+  }
+  return prev[n];
+}
+
+// 英文名拼错时的容错（如 deepeek -> DeepSeek）
+function fuzzyHit(q, d){
+  if(q.length < 5 || !/^[a-z0-9.\-]+$/.test(q)) return false;
+  const host = d.u.replace(/^https?:\/\//,'').replace(/\/.*$/,'').replace(/^www\./,'').toLowerCase();
+  return [d.n.toLowerCase(), host, d.v.toLowerCase()]
+    .some(t => Math.abs(t.length-q.length) <= 2 && lev(q,t) <= 2);
+}
+
 function match(d){
   if(state.favOnly && !favSet.has(d.n)) return false;
   if(state.cat!=='all' && d.c!==state.cat) return false;
@@ -864,7 +888,7 @@ function match(d){
   const q = state.q.trim().toLowerCase();
   if(q){
     const hay = (d.n+' '+d.v+' '+d.co+' '+d.d+' '+d.t.join(' ')+' '+d.u).toLowerCase();
-    if(!hay.includes(q)) return false;
+    if(!hay.includes(q) && !fuzzyHit(q, d)) return false;
   }
   return true;
 }
