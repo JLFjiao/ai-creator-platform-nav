@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 创作者平台导航 · 国内优先 · 规模与评分排序</title>
+<style>
+  :root{
+    --bg:#f6f8fb;
+    --card:#ffffff;
+    --ink:#141821;
+    --muted:#6b7280;
+    --line:#e4e8ef;
+    --accent:#2563eb;
+    --accent-soft:#e8f0fe;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:36px 24px 80px}
+
+  header{margin-bottom:22px}
+  h1{
+    font-size:27px;line-height:1.3;margin:0 0 10px;font-weight:650;letter-spacing:-0.02em;
+  }
+  .sub{color:#4b5563;font-size:13.5px;margin:0;max-width:900px}
+  .sub b{color:var(--ink);font-weight:600}
+
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .stat{
+    background:#fff;border:1px solid var(--line);border-radius:9px;
+    padding:9px 14px;font-size:12.5px;color:var(--muted);
+  }
+  .stat b{display:block;font-size:19px;color:var(--ink);font-weight:650;line-height:1.25;font-variant-numeric:tabular-nums}
+
+  .toolbar{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px;margin:20px 0 22px;position:sticky;top:0;z-index:20;
+    box-shadow:0 2px 10px rgba(20,24,33,.04);
+  }
+  .searchrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  #q{
+    flex:1;min-width:240px;
+    border:1px solid var(--line);border-radius:8px;
+    padding:10px 13px;font-size:14px;font-family:inherit;
+    background:#fbfcfe;color:var(--ink);outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  #q:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:#fff}
+  .count{color:var(--muted);font-size:12.5px;white-space:nowrap;font-variant-numeric:tabular-nums;width:142px;text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis}
+  .reset{
+    border:1px solid var(--line);background:#fff;color:#4b5563;border-radius:8px;
+    padding:9px 12px;font-size:12.5px;cursor:pointer;font-family:inherit;
+  }
+  .reset:hover{border-color:#c7cdd6;color:var(--ink)}
+  select#sort{
+    border:1px solid var(--line);border-radius:8px;background:#fff;color:#374151;
+    padding:9px 10px;font-size:12.5px;font-family:inherit;cursor:pointer;outline:none;
+  }
+  select#sort:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .btn-group{display:flex;gap:8px;flex-shrink:0;margin-left:auto}
+
+  .fgroup{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:11px}
+  .flabel{font-size:11.5px;color:#9aa1ac;letter-spacing:.04em;width:52px;flex-shrink:0}
+  .chip{
+    border:1px solid var(--line);background:#fff;color:#374151;
+    border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer;
+    font-family:inherit;transition:all .13s;line-height:1.4;
+  }
+  .chip:hover{border-color:#c7cdd6;background:#fbfcfe}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:500}
+  .chip small{opacity:.55;margin-left:4px;font-size:11px;font-variant-numeric:tabular-nums}
+  .chip.p0.on{background:#0f7a3d;border-color:#0f7a3d}
+  .chip.p1.on{background:#3f8f4f;border-color:#3f8f4f}
+  .chip.p2.on{background:#1a56db;border-color:#1a56db}
+  .chip.p3.on{background:#b45309;border-color:#b45309}
+  .chip.p4.on{background:#b42318;border-color:#b42318}
+
+  .group{margin-bottom:34px}
+  .ghead{
+    display:flex;align-items:baseline;gap:10px;margin:0 0 12px;
+    padding-bottom:8px;border-bottom:1px solid var(--line);
+  }
+  .ghead h2{font-size:16px;margin:0;font-weight:650;letter-spacing:-0.01em}
+  .ghead .gmeta{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+  .ghead{flex-wrap:wrap;row-gap:2px}
+  .gdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transform:translateY(-2px)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(345px,1fr));gap:13px}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:15px 16px 13px;display:flex;flex-direction:column;
+    transition:border-color .15s, box-shadow .15s, transform .15s;
+  }
+  .card:hover{border-color:#c3d3f5;box-shadow:0 4px 16px rgba(20,24,33,.07);transform:translateY(-1px)}
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+  .right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+  .score{font-size:16px;font-weight:700;color:#0f766e;font-variant-numeric:tabular-nums;letter-spacing:-.03em;line-height:1.2;white-space:nowrap;background:#f0f5f4;border-radius:5px;padding:2px 6px}
+  .score em{font-size:11px;font-weight:500;font-style:normal;color:#4b5563;margin-right:3px;letter-spacing:0}
+  .score i{font-size:10px;font-weight:400;font-style:normal;color:#8b93a1;margin-left:1px;letter-spacing:0}
+  .price em{font-style:normal;font-size:10.5px;font-weight:500;opacity:.82;margin-right:2px}
+  .scale{display:flex;gap:5px;align-items:baseline;margin-top:9px;font-size:11.5px;min-width:0}
+  .scale b{font-weight:650;color:#0f766e;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .scale span{color:#9aa1ac;font-size:10.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .scale.none b{color:#9aa1ac;font-weight:400}
+  .name{font-size:15px;font-weight:640;letter-spacing:-0.01em;color:var(--ink);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .card-link{display:block;color:inherit;text-decoration:none;border-radius:var(--radius)}
+  .card-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .nameline{display:flex;align-items:center;gap:7px;min-width:0}
+  .nameline .name{flex:0 1 auto;min-width:0}
+  .fav{flex-shrink:0;width:19px;height:19px;display:inline-flex;align-items:center;justify-content:center;color:#aeb5c0;cursor:pointer;user-select:none;transition:color .15s,transform .15s;margin-left:2px}
+  .fav svg{width:19px;height:19px;display:block}
+  .fav polygon{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;transition:fill .15s}
+  .fav:hover{color:#e0a800;transform:scale(1.12)}
+  .fav.on{color:#f0a500}
+  .fav.on polygon{fill:currentColor}
+  .reset.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .reset b{font-weight:600;font-variant-numeric:tabular-nums}
+  .name:hover{color:var(--accent)}
+  .name .flag{font-size:12px;font-weight:400;opacity:.85}
+  .host .co{color:#4b5563}
+  .host .dot{color:#c3c9d2;margin:0 3px}
+  .host{font-size:11.5px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-top:2px}
+  .desc{font-size:12.9px;color:#3f4652;margin:9px 0 0;flex:1}
+
+  .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+  .tag{
+    font-size:11px;padding:2px 7px;border-radius:5px;background:#f1f4f9;color:#43506a;
+    letter-spacing:.01em;white-space:nowrap;
+  }
+  .tag.hot{background:#fdf2ec;color:#a15c00}
+  .tag.cn{background:#fdeeee;color:#b42318}
+
+  .meta{
+    display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;
+    font-size:11.5px;color:var(--muted);margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);
+  }
+  .meta .vm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:66%}
+  .net{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+  .net.free{color:#0f7a3d}
+  .net.vpn{color:#b45309}
+
+  .price{
+    flex-shrink:0;font-size:11px;font-weight:650;padding:2.5px 8px;border-radius:5px;
+    letter-spacing:.02em;white-space:nowrap;margin-top:1px;
+  }
+  .pr0{background:#e7f6ec;color:#0f7a3d}
+  .pr1{background:#eef7ec;color:#3f8f4f}
+  .pr2{background:#e8f0fe;color:#1a56db}
+  .pr3{background:#fff5e6;color:#a15c00}
+  .pr4{background:#fdecec;color:#b42318}
+
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:48px 0;font-size:13.5px}
+
+  .panel{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;margin-top:34px;
+  }
+  .panel h2{font-size:15px;margin:0 0 14px;font-weight:640;letter-spacing:-0.01em}
+  .panel h2 span{color:var(--muted);font-weight:400;font-size:13px;margin-left:6px}
+
+  table{width:100%;border-collapse:collapse;font-size:12.8px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:500;font-size:12px;letter-spacing:.02em;background:#fafbfc}
+  tr:last-child td{border-bottom:none}
+  td code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:#f3f4f6;padding:1px 5px;border-radius:4px}
+
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:14px;margin-top:30px}
+  .pnote{margin:14px 0 0;font-size:12.5px;color:#4b5563;line-height:1.75}
+  .rule{background:var(--card);border:1px solid var(--line);border-left:3px solid #d1d5db;border-radius:8px;padding:14px 16px}
+  .rule.hi{border-left-color:#b45309}
+  .rule h3{font-size:13px;margin:0 0 6px;font-weight:640}
+  .rule p{margin:0;font-size:12.5px;color:#4b5563}
+
+  footer{margin-top:36px;color:var(--muted);font-size:12px;line-height:1.8;border-top:1px solid var(--line);padding-top:16px}
+  ::selection{background:#cfe0fd}
+  @media (max-width:600px){
+    .wrap{padding:22px 14px 60px}
+    h1{font-size:21px}
+    .grid{grid-template-columns:1fr}
+    .flabel{width:100%}
+    .toolbar{position:static}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>AI 创作者平台导航</h1>
+    <p class="sub">按<b>生成能力分模块</b>收录，<b>优先国内可用</b>。只收录各品类中使用人数较多、较为常用的平台，热门度不足的不再收录，因此各模块数量不等（24–30 条）。排序默认<b>国内优先 → 使用人数 → 评分</b>。使用人数仅少数平台有公开数据（QuestMobile / Sensor Tower / 公司财报），无公开数据的条目不做数字臆测；<b>消费档只与同类型平台比较</b>，为同类内相对位置，不跨模块换算。</p>
+    <div class="stats">
+      <div class="stat"><b id="s-total">0</b>收录条目</div>
+      <div class="stat"><b id="s-cat">0</b>能力模块</div>
+      <div class="stat"><b id="s-cn">0</b>国内条目</div>
+      <div class="stat"><b id="s-free">0</b>可直连条目</div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="searchrow">
+      <input id="q" type="search" placeholder="搜索平台名、厂商、国家或能力：影视级 / 二次元 / 音频 / 低代码 / 智能体 / 中国">
+      <select id="sort" title="排序方式">
+        <option value="rec">推荐：国内优先 · 人数</option>
+        <option value="score">评分从高到低</option>
+        <option value="scale">使用人数从多到少</option>
+      </select>
+      <div class="count" id="count"></div>
+      <div class="btn-group">
+        <button class="reset" id="reset">重置筛选</button>
+        <button class="reset" id="favBtn">已收藏 <b id="favCount">0</b></button>
+      </div>
+    </div>
+    <div class="fgroup" id="f-cat"><span class="flabel">能力</span></div>
+    <div class="fgroup" id="f-region"><span class="flabel">地区</span></div>
+    <div class="fgroup" id="f-price"><span class="flabel">消费档</span></div>
+    <div class="fgroup" id="f-net"><span class="flabel">网络</span></div>
+  </div>
+
+  <div id="groups"></div>
+
+  <div class="panel">
+    <h2>消费档口径 <span>只在同一模块内比较，跨模块的「中」不是同一金额</span></h2>
+    <table>
+      <thead>
+        <tr><th style="width:78px">消费档</th><th style="width:150px">在本类中的位置</th><th>判断依据</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>很高</code></td><td>该类最高</td><td>企业年约、按席位售卖或最高档订阅，个人难以长期自付；常见于数字人、企业级视频与自主编码代理。</td></tr>
+        <tr><td><code>高</code></td><td>高于该类中位</td><td>专业创作主力工具，订阅后可稳定商用；重度使用常需再加购积分或算力包。</td></tr>
+        <tr><td><code>中</code></td><td>该类主流付费档</td><td>有免费额度，付费门槛不高；高频使用时会明显上升，是同类的默认选择区。</td></tr>
+        <tr><td><code>低</code></td><td>低于该类中位</td><td>免费额度够日常试用，付费档在几十元级别，适合先跑通再升级。</td></tr>
+        <tr><td><code>很低</code></td><td>该类最低 / 免费</td><td>无强制付费，或可本地部署只承担算力成本；商用需另看许可证。</td></tr>
+      </tbody>
+    </table>
+    <p class="pnote">每个模块内至少保留一个「高」或「很高」的条目、一个「低」或「很低」的条目，便于在同一类型里做贵/便宜对照；不强制每个模块都出现「很高」，避免造成该类普遍昂贵的误读。各类「中档」人民币参考（编辑归纳，非报价）：视频生成 ¥100–200/月；图片生成、代码生成、对话与推理、音频与音乐、办公与文档、设计与原型均为 ¥70–150/月；智能体与低代码 ¥150–300/月。品类整体价格带不同，因此不提供跨类换算，也不做「哪个类更贵」的结论。</p>
+  </div>
+
+  <div class="panel">
+    <h2>评分口径 <span>10 分制，编辑估计，不是第三方评测排名</span></h2>
+    <table>
+      <thead>
+        <tr><th style="width:150px">维度</th><th style="width:70px">权重</th><th>判断依据</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>能力上限</td><td>30%</td><td>该品类内的生成质量、可控性与成品可用度。</td></tr>
+        <tr><td>国内可用性</td><td>25%</td><td>是否可直连、中文语义与本地化程度、访问稳定性。</td></tr>
+        <tr><td>稳定与生态</td><td>20%</td><td>产品迭代节奏、接口与工具链集成、文档与社区支持。</td></tr>
+        <tr><td>性价比</td><td>15%</td><td>免费额度、订阅门槛与按量成本。</td></tr>
+        <tr><td>公开口碑</td><td>10%</td><td>公开评测、创作者社区讨论与长期使用反馈的总体倾向。</td></tr>
+      </tbody>
+    </table>
+    <p class="pnote">分数按平台整体给出，同一平台跨模块保持一致。它反映「当前阶段综合可用度」，用于快速排序与取舍，不替代你自己的实测；争议较大的新平台会被压在中位区间。</p>
+  </div>
+
+  <div class="rules">
+    <div class="rule hi">
+      <h3>使用人数不是全量可查项</h3>
+      <p>AI 平台极少公布真实用户数。本页数据只有三类来源：公司财报或官方公告（OpenAI、Alphabet、微软等）、第三方监测（中国大陆用 QuestMobile，全球用 Sensor Tower）、以及无公开数据。周活跃用户与月活口径不同，不能直接比大小，因此只作量级参考。没有数字不等于平台小，只代表没有可核查来源。</p>
+    </div>
+    <div class="rule hi">
+      <h3>「需境外网络」只描述访问条件</h3>
+      <p>标记为需境外网络，是指平台主站在中国大陆常规网络下通常无法直接打开，需要合规的国际网络接入。是否可用、是否需要实名，最终以平台与当地法规为准。</p>
+    </div>
+    <div class="rule">
+      <h3>消费档只在同类内比</h3>
+      <p>「高」「中」「低」是同一模块内的相对位置，不是绝对价格。视频生成的「中」与对话助手的「中」不构成同一金额；要跨类比较，请回到具体平台的实际套餐。海外平台按约 1 美元 ≈ 7.2 元折算，未计区域定价与税费，实际支付以结算页为准。</p>
+    </div>
+    <div class="rule">
+      <h3>「擅长方向」来自产品定位</h3>
+      <p>标签取自平台公开的产品定位与主推能力，不代表在所有题材上都优于同类。影视级、二次元、工程级代码等描述是方向性判断，不是评测排名。</p>
+    </div>
+    <div class="rule">
+      <h3>厂商与国家用于判断语言生态</h3>
+      <p>国家按厂商总部或主要运营主体标注。语言优势看标签：中文理解、方言、多语言配音等，反映该平台训练与产品优化的语种侧重，不代表只支持本国语言。</p>
+    </div>
+    <div class="rule">
+      <h3>商用前核对三件事</h3>
+      <p>生成内容的商用授权、训练数据与肖像/商标风险、平台对输出物的署名要求。免费档常与付费档授权不同，逐条看服务条款。</p>
+    </div>
+  </div>
+
+  <footer>
+    收录口径：面向内容创作者的生成式 AI 平台，按能力分 8 个模块共 221 条（跨模块重复计入）。只保留各品类中使用人数较多、较为常用的平台，不为了凑整而收录冷门站点，因此各模块数量不等。<br>
+    使用人数数据：QuestMobile《2026 年 AI 应用市场半年报》及 2026-09 AI 原生 App 榜、Sensor Tower 2026-05 估算、OpenAI / Alphabet / 微软等公司财报与官方公告。公司披露口径（周活跃用户、月活、累计用户）与第三方估算不可混排，本页只作量级参考。<br>
+    评分为编辑估计（10 分制，维度见上表），非第三方评测排名；消费档为同一模块内的相对位置，不跨类换算。产品迭代快，域名、套餐与可用地区可能变更，以官方页面为准。
+  </footer>
+</div>
+
+<script>
+const CATS = [
+  {id:'video', label:'视频生成',  color:'#b42318', desc:'文生视频、图生视频、数字人播报、AI 剪辑成片'},
+  {id:'image', label:'图片生成',  color:'#7c3aed', desc:'文生图、图生图、风格模型、修图与放大'},
+  {id:'code',  label:'代码生成',  color:'#0f766e', desc:'IDE 补全、仓库级改码、自然语言建站'},
+  {id:'chat',  label:'对话与推理', color:'#1a56db', desc:'通用大模型、深度研究、模型聚合入口'},
+  {id:'audio', label:'音频与音乐', color:'#b45309', desc:'音乐生成、配音克隆、降噪与母带'},
+  {id:'office',label:'办公与文档', color:'#0369a1', desc:'写作、会议纪要、PPT、文档问答'},
+  {id:'design',label:'设计与原型', color:'#be185d', desc:'UI 生成、品牌物料、抠图与矢量转换'},
+  {id:'agent', label:'智能体与低代码', color:'#4d7c0f', desc:'工作流编排、0 代码智能体、应用搭建'}
+];
+
+const PRICES = [
+  {id:4, label:'很高', cls:'pr4', cny:'该类最高档'},
+  {id:3, label:'高',   cls:'pr3', cny:'高于该类中位'},
+  {id:2, label:'中',   cls:'pr2', cny:'该类主流付费档'},
+  {id:1, label:'低',   cls:'pr1', cny:'低于该类中位'},
+  {id:0, label:'很低', cls:'pr0', cny:'该类最低 / 免费'}
+];
+
+// 各模块「中档」人民币参考（编辑归纳，仅用于同类内定位）
+const CATMID = {
+  video:'¥100–200/月', image:'¥70–150/月', code:'¥70–150/月', chat:'¥70–150/月',
+  audio:'¥70–150/月', office:'¥70–150/月', design:'¥70–150/月', agent:'¥150–300/月'
+};
+
+const FLAG = {'中国':'🇨🇳','美国':'🇺🇸','英国':'🇬🇧','德国':'🇩🇪','法国':'🇫🇷','加拿大':'🇨🇦','澳大利亚':'🇦🇺','日本':'🇯🇵','韩国':'🇰🇷','以色列':'🇮🇱','印度':'🇮🇳','新加坡':'🇸🇬','瑞典':'🇸🇪','荷兰':'🇳🇱','西班牙':'🇪🇸','意大利':'🇮🇹','捷克':'🇨🇿','奥地利':'🇦🇹','瑞士':'🇨🇭','芬兰':'🇫🇮','丹麦':'🇩🇰','挪威':'🇳🇴','波兰':'🇵🇱','乌克兰':'🇺🇦','巴西':'🇧🇷','卢森堡':'🇱🇺','塞浦路斯':'🇨🇾','斯洛伐克':'🇸🇰','匈牙利':'🇭🇺','阿联酋':'🇦🇪','俄罗斯':'🇷🇺','中国台湾':'🇨🇳','中国香港':'🇨🇳'};
+
+const DATA = [
+  /* ========== 视频生成 ========== */
+  {n:'Runway', u:'https://runwayml.com', c:'video', v:'Runway AI', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['影视级','可控运镜'], d:'面向专业创作的全流程视频工作台，Gen 系列模型配合运镜控制、抠像与后期工具，广告与短片团队使用率高。'},
+  {n:'Sora', u:'https://sora.com', c:'video', v:'OpenAI', co:'美国', p:4, net:1, m:0, mb:'', r:7.3, tier:'B', main:1,
+   t:['影视级','物理一致性'], d:'以长镜头与物理连贯性见长，擅长一次性生成带叙事的完整段落，适合概念片与分镜预演。'},
+  {n:'Google Veo / Flow', u:'https://labs.google/flow', c:'video', v:'Google DeepMind', co:'美国', p:4, net:1, m:0, mb:'', r:7.3, tier:'B', main:1,
+   t:['影视级','原生音画'], d:'Veo 模型搭配 Flow 剪辑界面，可生成带同步音效的片段并做镜头延展，适合成片级素材生产。'},
+  {n:'Luma Dream Machine', u:'https://lumalabs.ai/dream-machine', c:'video', v:'Luma AI', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['图生视频','运镜'], d:'以图像为起点的视频生成，镜头运动自然、画面质感偏电影，适合把静态概念图转成动态镜头。'},
+  {n:'Pika', u:'https://pika.art', c:'video', v:'Pika Labs', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['风格化','短视频'], d:'轻量级创意视频工具，特效模板与局部修改玩法多，适合社媒短视频与趣味视觉。'},
+  {n:'可灵 AI', u:'https://app.klingai.com', c:'video', v:'快手', co:'中国', p:3, net:0, m:0, mb:'', r:8.7, tier:'B', main:1,
+   t:['影视级','图生视频','中文理解'], d:'国内视频生成的代表性产品，人物表演与大幅度动作稳定性较好，支持首尾帧控制，适合短剧与广告分镜。'},
+  {n:'海螺 AI', u:'https://hailuoai.com', c:'video', v:'MiniMax', co:'中国', p:2, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['动画质感','图生视频'], d:'画面风格偏细腻、镜头语言丰富，人物表情与动漫质感突出，适合动画短片与情绪化镜头。'},
+  {n:'Vidu', u:'https://www.vidu.cn', c:'video', v:'生数科技', co:'中国', p:2, net:0, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['参考一致性','多主体'], d:'主打多主体参考一致性，能把同一角色稳定放进不同镜头，适合系列化内容与角色 IP 短片。'},
+  {n:'即梦 AI', u:'https://jimeng.jianying.com', c:'video', v:'字节跳动', co:'中国', p:1, net:0, m:2400, mb:'QuestMobile 2026-09 TOP8，月活<2500万', r:8.6, tier:'B', main:1,
+   t:['快速出片','中文理解'], d:'图生视频与文生视频入口，中文提示理解好、出片快，与剪映生态衔接顺畅，适合内容号日更。'},
+  {n:'通义万相', u:'https://tongyi.aliyun.com/wanxiang', c:'video', v:'阿里巴巴', co:'中国', p:1, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['中文场景','免费额度'], d:'阿里体系的多模态生成入口，视频与图像同站，中文语义与国风场景理解较稳，适合电商与营销素材。'},
+  {n:'腾讯混元视频', u:'https://hunyuan.tencent.com', c:'video', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['开源','中文理解'], d:'混元视频模型提供开源权重与在线体验，适合需要私有化部署或二次开发的团队。'},
+  {n:'智谱清影', u:'https://chatglm.cn', c:'video', v:'智谱 AI', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['免费额度','图生视频'], d:'清言内的视频生成能力，门槛低、免费额度友好，适合先验证创意再决定是否换重工具。'},
+  {n:'PixVerse', u:'https://pixverse.ai', c:'video', v:'爱诗科技', co:'中国', p:2, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['模板玩法','短视频'], d:'特效模板与风格转换玩法丰富，上手快，适合做传播型短视频而非精细成片。'},
+  {n:'讯飞智作', u:'https://peiyin.xunfei.cn', c:'video', v:'科大讯飞', co:'中国', p:2, net:0, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['数字人','中文播报'], d:'配音与数字人播报一体，中文发音与多音字处理成熟，适合口播科普、课程与政务宣传。'},
+  {n:'一帧秒创', u:'https://aigc.yizhentv.com', c:'video', v:'一帧', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['图文转视频','口播成片'], d:'把图文稿件自动转成带配音字幕的成片，适合公众号与资讯内容做视频化分发。'},
+  {n:'腾讯智影', u:'https://zenvideo.qq.com', c:'video', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['数字人','剪辑'], d:'数字人播报加在线剪辑，模板与素材库偏国内平台风格，适合企业号与知识类账号批量化生产。'},
+  {n:'剪映专业版', u:'https://www.capcut.cn', c:'video', v:'字节跳动', co:'中国', p:0, net:0, m:0, mb:'', r:8.6, tier:'B', main:1,
+   t:['AI 剪辑','字幕'], d:'免费桌面剪辑器，智能字幕、文本成片、音频降噪等能力齐备，是 AI 素材落地成片的默认收口工具。'},
+  {n:'HeyGen', u:'https://www.heygen.com', c:'video', v:'HeyGen', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['数字人','多语言'], d:'数字人形象与声音克隆质量稳定，口型同步多语言表现好，适合出海营销与培训视频。'},
+  {n:'Synthesia', u:'https://www.synthesia.io', c:'video', v:'Synthesia', co:'英国', p:3, net:1, m:0, mb:'官方 6.5万家企业客户（非用户数）', r:7.1, tier:'C', main:1,
+   t:['企业培训','合规'], d:'企业级数字人视频平台，强调品牌一致性与团队协作，常见于大型组织的培训与内训场景。'},
+  {n:'D-ID', u:'https://www.d-id.com', c:'video', v:'D-ID', co:'以色列', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['照片说话','接口'], d:'让静态人像开口说话，接口化程度高，适合集成进客服、教育或互动装置。'},
+  {n:'Colossyan', u:'https://www.colossyan.com', c:'video', v:'Colossyan', co:'匈牙利', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['企业课程','多语言'], d:'面向企业学习场景的数字人视频工具，模板偏课程结构，支持多语种替换音轨。'},
+
+  {n:'InVideo AI', u:'https://invideo.io', c:'video', v:'InVideo', co:'印度', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['脚本到成片','模板'], d:'输入主题即产出脚本、配音与剪辑，模板量大，适合批量做信息类短视频。'},
+  {n:'Pictory', u:'https://pictory.ai', c:'video', v:'Pictory', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['长文转视频','切片'], d:'把长文章或长视频压缩成短片段，自动匹配素材与字幕，适合内容再利用。'},
+  {n:'Descript', u:'https://www.descript.com', c:'video', v:'Descript', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['文本剪辑','播客'], d:'用改文字的方式剪音视频，删词即删画面，播客与访谈类内容效率提升明显。'},
+  {n:'Adobe Firefly Video', u:'https://firefly.adobe.com', c:'video', v:'Adobe', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['商用安全','素材生态'], d:'定位商用安全的生成式视频，训练素材授权相对清晰，与 Premiere 等工具体系打通。'},
+  {n:'Wonder Studio', u:'https://wonder.studio', c:'video', v:'Wonder Dynamics', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['三维角色替换','影视级'], d:'自动把实拍人物替换为三维角色并匹配光影，适合小团队做科幻或特效镜头。'},
+  {n:'Hedra', u:'https://www.hedra.com', c:'video', v:'Hedra', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['角色表演','口型'], d:'以人物表情与口型驱动为核心，适合虚拟主播、角色对话与叙事短片。'},
+  {n:'Genmo', u:'https://www.genmo.ai', c:'video', v:'Genmo', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['开源','长镜头'], d:'Mochi 系列视频模型开放权重，可自部署与微调，适合研究型团队与需要私有化的场景。'},
+  /* ========== 图片生成 ========== */
+  {n:'Midjourney', u:'https://www.midjourney.com', c:'image', v:'Midjourney', co:'美国', p:3, net:1, m:2000, mb:'2026-01 注册用户约1983万', r:8.9, tier:'B', main:1,
+   t:['影视级图像','美学风格'], d:'审美上限与风格统一性突出的老牌平台，概念图、海报与氛围图表现稳定，需在 Discord 或网页端使用。'},
+  {n:'Stable Diffusion', u:'https://stability.ai', c:'image', v:'Stability AI', co:'英国', p:0, net:0, m:0, mb:'', r:8.4, tier:'B', main:1,
+   t:['开源','风格模型'], d:'开源图像生成的底座，可本地部署并自由加载风格模型与构图控制插件，适合要完全掌控流程与数据的工作室。'},
+  {n:'FLUX', u:'https://bfl.ai', c:'image', v:'Black Forest Labs', co:'德国', p:1, net:1, m:0, mb:'', r:8.2, tier:'B', main:1,
+   t:['开源','写实人像'], d:'出图质感与提示遵循度均衡，开源版本生态活跃，是自建绘图流水线的主流选择之一。'},
+  {n:'ChatGPT 图像', u:'https://chatgpt.com', c:'image', v:'OpenAI', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['语义理解','文字渲染'], d:'强在听懂复杂描述与在图内排版文字，适合做信息图、说明图与需要精确指令的改图任务。'},
+  {n:'Adobe Firefly', u:'https://firefly.adobe.com', c:'image', v:'Adobe', co:'美国', p:2, net:1, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['商用安全','设计生态'], d:'强调训练素材授权清晰，生成结果可直接进入 Photoshop 与 Illustrator 流程，适合商业交付。'},
+  {n:'Ideogram', u:'https://ideogram.ai', c:'image', v:'Ideogram', co:'加拿大', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['文字渲染','海报'], d:'图内文字准确率是其主要卖点，适合 Logo 草案、活动海报与带标语的视觉。'},
+  {n:'Leonardo.Ai', u:'https://leonardo.ai', c:'image', v:'Leonardo（Canva 旗下）', co:'澳大利亚', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['游戏资产','风格模型'], d:'面向游戏与产品美术的生成平台，自带模型训练与素材管理，适合批量产出道具、场景与角色概念。'},
+  {n:'Krea', u:'https://www.krea.ai', c:'image', v:'Krea', co:'西班牙', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['实时生成','画质增强'], d:'实时画板边画边出图，配合放大与增强模块，适合视觉探索阶段快速试方向。'},
+  {n:'Recraft', u:'https://www.recraft.ai', c:'image', v:'Recraft', co:'英国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['矢量','品牌一致'], d:'少数能稳定输出可编辑矢量图的生成工具，风格锁定功能适合做成套品牌插画与图标。'},
+  {n:'Freepik AI', u:'https://www.freepik.com', c:'image', v:'Freepik', co:'西班牙', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['素材库','多模型'], d:'把多家生成模型与自身素材库合并，可在同一界面生成、扩图、改图并直接落到设计稿。'},
+  {n:'Civitai', u:'https://civitai.com', c:'image', v:'Civitai', co:'美国', p:0, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['风格模型','社区'], d:'最大的开源模型与风格模型集散地，找特定画风或人物模型基本都从这里起步，附带在线生成。'},
+  {n:'Tensor.Art', u:'https://tensor.art', c:'image', v:'Tensor.Art', co:'新加坡', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['模型社区','免费额度'], d:'在线跑开源模型的平台，模型库大、免费算力额度友好，适合没有显卡但想玩转风格模型的用户。'},
+  {n:'SeaArt', u:'https://www.seaart.ai', c:'image', v:'SeaArt', co:'新加坡', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['二次元','模型丰富'], d:'二次元与写实模型都齐，工作流与构图控制支持较完整，中文界面友好。'},
+  {n:'NovelAI', u:'https://novelai.net', c:'image', v:'NovelAI', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['二次元','隐私'], d:'以动漫插画见长，风格模型调校成熟，同时提供纯文本创作工具，社区对隐私保护评价较高。'},
+  {n:'Bing 图像创建器', u:'https://www.bing.com/create', c:'image', v:'微软', co:'美国', p:0, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['免费额度','易上手'], d:'免费调用 DALL·E 系模型，微软账号即可用，适合零成本试提示词与日常配图。'},
+  {n:'Google ImageFX', u:'https://labs.google/fx', c:'image', v:'Google', co:'美国', p:0, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['免费额度','写实'], d:'Google Labs 的实验性图像工具，Imagen 系模型出图干净，写实与产品图表现稳。'},
+  {n:'Grok Imagine', u:'https://grok.com', c:'image', v:'xAI', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['快速出图','风格化'], d:'与 Grok 对话集成的图像生成，出图快、限制少，适合社媒配图与快速视觉草案。'},
+  {n:'即梦 AI', u:'https://jimeng.jianying.com', c:'image', v:'字节跳动', co:'中国', p:1, net:0, m:2400, mb:'QuestMobile 2026-09 TOP8，月活<2500万', r:8.6, tier:'B', main:1,
+   t:['中文理解','二次元'], d:'中文提示理解到位，国风、二次元与商业人像都能出，和剪映衔接便于直接做成视频。'},
+  {n:'通义万相', u:'https://tongyi.aliyun.com/wanxiang', c:'image', v:'阿里巴巴', co:'中国', p:1, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['电商设计','中文'], d:'电商场景与商品图能力强，中文语义稳，适合主图、场景图与营销海报的批量试稿。'},
+  {n:'文心一格', u:'https://yige.baidu.com', c:'image', v:'百度', co:'中国', p:1, net:0, m:0, mb:'', r:7.6, tier:'B', main:1,
+   t:['国风','中文理解'], d:'偏国风与东方美学的生成取向，中文古诗词与意境描述理解较好，适合文化类内容。'},
+  {n:'腾讯混元图像', u:'https://hunyuan.tencent.com', c:'image', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'', r:7.8, tier:'B', main:1,
+   t:['开源','中文'], d:'混元图像提供在线体验与开源版本，中文场景与人物生成稳定，可私有化部署。'},
+  {n:'智谱 CogView', u:'https://chatglm.cn', c:'image', v:'智谱 AI', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['中文','免费额度'], d:'清言内置的图像生成，中文长提示理解好，适合配图与概念示意，额度对个人友好。'},
+  {n:'商汤秒画', u:'https://miaohua.sensetime.com', c:'image', v:'商汤科技', co:'中国', p:1, net:0, m:0, mb:'', r:7.6, tier:'B', main:1,
+   t:['写实人像','亚洲面孔'], d:'写实人像与亚洲面孔表现较好，支持模型自训练，适合需要固定人物形象的商业拍摄替代。'},
+  {n:'美图 WHEE', u:'https://www.whee.com', c:'image', v:'美图公司', co:'中国', p:1, net:0, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['人像美化','电商'], d:'延续美图在人像处理上的积累，生成后可直接修图美化，适合电商模特图与社交头像。'},
+  {n:'无界 AI', u:'https://www.wujieai.com', c:'image', v:'无界 AI', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['二次元','国风'], d:'国内较早的 AI 绘画平台，模型与风格库偏国风与二次元，工作流功能较完整。'},
+  {n:'LiblibAI', u:'https://www.liblib.art', c:'image', v:'哩布哩布', co:'中国', p:1, net:0, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['风格模型','社区'], d:'国内最大的模型分享社区之一，风格模型与工作流模板丰富，可在线生成或下载自部署。'},
+  {n:'稿定 AI', u:'https://www.gaoding.com', c:'image', v:'稿定设计', co:'中国', p:1, net:0, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['电商设计','模板'], d:'生成能力嵌在设计模板体系里，出图后可直接排版成商品页、主图与活动物料。'},
+  {n:'Photoroom', u:'https://www.photoroom.com', c:'image', v:'Photoroom', co:'法国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['商品图','抠图'], d:'专攻电商商品图，抠图、换背景、加场景一步完成，移动端体验尤其顺手。'},
+  {n:'Magnific', u:'https://magnific.ai', c:'image', v:'Magnific', co:'西班牙', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['画质增强','细节重建'], d:'把低清图重绘成高细节大图，纹理与皮肤质感重建能力强，常作为出图后的最后一道工序。'},
+  /* ========== 代码生成 ========== */
+  {n:'GitHub Copilot', u:'https://github.com/features/copilot', c:'code', v:'GitHub（微软）', co:'美国', p:2, net:1, m:5000, mb:'微软 2026-07 公布用户数', r:8.8, tier:'A', main:1,
+   t:['IDE 补全','企业合规'], d:'覆盖面最广的编程助手，补全与对话能力嵌进主流 IDE，企业版的策略管控与审计相对成熟。'},
+  {n:'Cursor', u:'https://cursor.com', c:'code', v:'Anysphere', co:'美国', p:3, net:1, m:0, mb:'', r:9.0, tier:'B', main:1,
+   t:['工程级代码','仓库级重构'], d:'以整仓理解为设计前提的编辑器，跨文件改动与多步任务执行稳定，是目前专业团队的主力选项之一。'},
+  {n:'Claude Code', u:'https://claude.com/product/claude-code', c:'code', v:'Anthropic', co:'美国', p:3, net:1, m:0, mb:'', r:8.7, tier:'B', main:1,
+   t:['工程级代码','长上下文'], d:'终端里的编码代理，擅长读懂大型仓库后做渐进式改造，对代码风格与边界的把握较好。'},
+  {n:'OpenAI Codex', u:'https://openai.com/codex', c:'code', v:'OpenAI', co:'美国', p:3, net:1, m:0, mb:'', r:8.4, tier:'B', main:1,
+   t:['工程级代码','并行任务'], d:'可并行派发多个编码任务并在云端执行，适合把明确的工单批量交给代理处理。'},
+  {n:'Windsurf', u:'https://windsurf.com', c:'code', v:'Windsurf（原 Codeium）', co:'美国', p:2, net:1, m:0, mb:'', r:8.2, tier:'B', main:1,
+   t:['智能体 IDE','轻量级代码'], d:'智能体式的编辑器，能顺着上下文连续改多处文件，界面克制、上手成本低。'},
+  {n:'Gemini Code Assist', u:'https://cloud.google.com/gemini/docs/codeassist/overview', c:'code', v:'Google', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['免费额度','IDE 集成'], d:'Google 体系的编程助手，个人版免费额度较大，与 Firebase、Cloud 的联动是主要优势。'},
+  {n:'Amazon Q Developer', u:'https://aws.amazon.com/q/developer', c:'code', v:'Amazon', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['企业合规','云服务集成'], d:'深度绑定 AWS 的编程与运维助手，除写码外还能处理资源查询、升级与安全扫描。'},
+  {n:'Tabnine', u:'https://www.tabnine.com', c:'code', v:'Tabnine', co:'以色列', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['私有部署','合规'], d:'主打不出内网的代码补全，支持本地与私有云部署，适合代码不能外传的金融与政企团队。'},
+  {n:'Replit', u:'https://replit.com', c:'code', v:'Replit', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['云端 IDE','全栈生成'], d:'浏览器里从写码到部署一体，适合快速做原型、内部工具与教学演示，无需本地环境。'},
+  {n:'Lovable', u:'https://lovable.dev', c:'code', v:'Lovable', co:'瑞典', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['自然语言建站','全栈'], d:'用对话生成可上线的前后端应用，数据库与登录可托管，适合非工程背景做产品验证。'},
+  {n:'Bolt.new', u:'https://bolt.new', c:'code', v:'StackBlitz', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['自然语言建站','前端'], d:'在浏览器沙箱里边生成边运行前端项目，改错快，适合落地页与轻量 Web 应用。'},
+  {n:'v0', u:'https://v0.dev', c:'code', v:'Vercel', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['UI 生成','前端'], d:'以 React 与 Tailwind 为目标的界面生成器，产出可直接复用的组件代码，配合 Vercel 一键部署。'},
+  {n:'Sourcegraph Cody', u:'https://sourcegraph.com', c:'code', v:'Sourcegraph', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['代码搜索','大仓库'], d:'建立在代码搜索之上，跨仓库定位实现与引用能力强，适合庞大单体或微服务群的维护。'},
+  {n:'Qodo', u:'https://www.qodo.ai', c:'code', v:'Qodo', co:'以色列', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['测试生成','代码审查'], d:'聚焦测试用例生成与合并请求审查，补的是团队质量流程而不是单点补全。'},
+  {n:'Aider', u:'https://aider.chat', c:'code', v:'Aider（开源）', co:'美国', p:0, net:0, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['开源','终端'], d:'命令行里的结对编程工具，直接改本地仓库并自动提交，模型可自选，适合愿意自己配环境的开发者。'},
+  {n:'Cline', u:'https://cline.bot', c:'code', v:'Cline（开源）', co:'美国', p:0, net:0, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['开源','智能体'], d:'开源编辑器代理，能读写文件、跑终端命令，模型自带密钥，成本可控、过程可审。'},
+  {n:'Devin', u:'https://devin.ai', c:'code', v:'Cognition', co:'美国', p:4, net:1, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['工程级代码','自主代理'], d:'定位为可独立接单的 AI 工程师，能读文档、改仓库、跑测试，适合把整块任务外包给代理。'},
+  {n:'JetBrains AI', u:'https://www.jetbrains.com/ai', c:'code', v:'JetBrains', co:'捷克', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['IDE 集成','企业'], d:'与 IntelliJ、PyCharm 等原生融合，重构与导航仍是强项，AI 作为辅助层接入。'},
+  {n:'通义灵码', u:'https://lingma.aliyun.com', c:'code', v:'阿里云', co:'中国', p:1, net:0, m:0, mb:'', r:8.2, tier:'B', main:1,
+   t:['IDE 补全','中文注释'], d:'国内使用面最广的编程助手之一，中文注释与业务代码理解好，个人版免费。'},
+  {n:'文心快码 Comate', u:'https://comate.baidu.com', c:'code', v:'百度', co:'中国', p:1, net:0, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['中文注释','企业版'], d:'覆盖补全、单测与代码审查，中文语义与国内技术栈适配较好，提供企业私有化方案。'},
+  {n:'腾讯云 CodeBuddy', u:'https://www.codebuddy.ai', c:'code', v:'腾讯云', co:'中国', p:2, net:0, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['工程级代码','微信生态'], d:'面向工程级任务的编码代理，支持仓级理解与多文件改动，对微信小程序与云开发有专门优化。'},
+  {n:'豆包 MarsCode', u:'https://www.marscode.cn', c:'code', v:'字节跳动', co:'中国', p:1, net:0, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['IDE 补全','免费'], d:'免费开放的编程助手，云端 IDE 与插件双形态，适合学生与个人开发者低成本起步。'},
+  {n:'华为云 CodeArts Snap', u:'https://www.huaweicloud.com/product/codearts.html', c:'code', v:'华为云', co:'中国', p:2, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['企业合规','私有化'], d:'嵌在 CodeArts 研发流水线里的智能助手，强调信创环境与内网部署，适合大型组织。'},
+  {n:'讯飞星火代码', u:'https://xinghuo.xfyun.cn', c:'code', v:'科大讯飞', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['中文','免费额度'], d:'星火大模型下的编程能力入口，中文需求描述转代码较顺，适合教学与轻量开发。'},
+  {n:'CodeGeeX', u:'https://codegeex.cn', c:'code', v:'智谱 AI', co:'中国', p:0, net:0, m:0, mb:'', r:7.8, tier:'B', main:1,
+   t:['开源','免费'], d:'清华系开源代码模型，提供 IDE 插件与开源版本，可离线部署，研究与教学场景常用。'},
+  {n:'商汤代码小浣熊', u:'https://www.xiaohuanxiong.com', c:'code', v:'商汤科技', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['轻量级代码','数据分析'], d:'把代码生成与数据分析串起来，适合做报表处理、脚本自动化这类轻量任务。'},
+  {n:'aiXcoder', u:'https://www.aixcoder.com', c:'code', v:'硅心科技', co:'中国', p:2, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['私有部署','企业'], d:'面向企业的代码大模型方案，支持内网部署与团队代码规范微调，金融客户较多。'},
+  {n:'Trae', u:'https://www.trae.com.cn', c:'code', v:'字节跳动', co:'中国', p:1, net:0, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['智能体 IDE','免费'], d:'AI 原生编辑器，国内版免费开放，中文交互与一键生成项目对新手友好。'},
+  {n:'DeepSeek', u:'https://www.deepseek.com', c:'code', v:'深度求索', co:'中国', p:0, net:0, m:12265, mb:'QuestMobile 2026-09 月活', r:9.0, tier:'A', main:1,
+   t:['工程级代码','免费'], d:'代码与数学推理是其强项，网页端免费且支持长上下文，常被当作低成本的编码顾问。'},
+  {n:'Kimi', u:'https://kimi.moonshot.cn', c:'code', v:'月之暗面', co:'中国', p:1, net:0, m:729, mb:'QuestMobile 2026-06 月活', r:8.1, tier:'B', main:1,
+   t:['长上下文','代码阅读'], d:'超长上下文适合整包读代码与文档，做技术方案梳理和遗留系统理解比逐行补全更有价值。'},
+  /* ========== 对话与推理 ========== */
+  {n:'ChatGPT', u:'https://chatgpt.com', c:'chat', v:'OpenAI', co:'美国', p:3, net:1, m:110000, mb:'Sensor Tower 2026-05 月活；官方 12亿周活跃用户', r:9.4, tier:'A', main:1,
+   t:['多模态','通用'], d:'综合能力最均衡的通用助手，语音、图像、文件与联网都在同一入口，生态最丰富。'},
+  {n:'Claude', u:'https://claude.ai', c:'chat', v:'Anthropic', co:'美国', p:3, net:1, m:24500, mb:'Sensor Tower 2026-05 估算，官方未披露', r:9.2, tier:'A', main:1,
+   t:['长文本','写作'], d:'长文理解与文字质感突出，改稿时更愿意保留原意，适合报告、合同与长篇内容。'},
+  {n:'Gemini', u:'https://gemini.google.com', c:'chat', v:'Google', co:'美国', p:2, net:1, m:95000, mb:'Alphabet 2026-Q2 月活（App）', r:9.1, tier:'A', main:1,
+   t:['多模态','生态集成'], d:'与搜索、Workspace、Android 深度打通，超长上下文与视频理解是其差异点。'},
+  {n:'Grok', u:'https://grok.com', c:'chat', v:'xAI', co:'美国', p:2, net:1, m:11700, mb:'SEC 招股书 2026-03', r:7.7, tier:'A', main:1,
+   t:['实时信息','风格化'], d:'接 X 平台实时信息流，时效性强、语气直接，适合追踪热点与舆情。'},
+  {n:'Microsoft Copilot', u:'https://copilot.microsoft.com', c:'chat', v:'微软', co:'美国', p:2, net:1, m:15000, mb:'微软 2026-01 全系月活', r:7.7, tier:'A', main:1,
+   t:['办公集成','免费额度'], d:'Windows 与 Office 体系内的助手入口，免费可用的模型与图像生成额度较大。'},
+  {n:'Perplexity', u:'https://www.perplexity.ai', c:'chat', v:'Perplexity', co:'美国', p:2, net:1, m:4500, mb:'2026 估算区间下限', r:7.7, tier:'B', main:1,
+   t:['深度研究','来源引用'], d:'搜索与生成合一，答案逐句带来源链接，做资料核查与行业扫描效率高。'},
+  {n:'Poe', u:'https://poe.com', c:'chat', v:'Quora', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['模型聚合','Bot 广场'], d:'一个订阅横跨多家模型与用户自建 Bot，适合比对不同模型对同一问题的表现。'},
+  {n:'Le Chat', u:'https://chat.mistral.ai', c:'chat', v:'Mistral AI', co:'法国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['开源模型','欧洲合规'], d:'Mistral 官方入口，响应快、价格低，对数据驻留欧洲有要求的团队更合适。'},
+  {n:'DeepSeek', u:'https://www.deepseek.com', c:'chat', v:'深度求索', co:'中国', p:0, net:0, m:12265, mb:'QuestMobile 2026-09 月活', r:9.0, tier:'A', main:1,
+   t:['推理','开源'], d:'推理链与代码、数学能力突出，接口价格低，是国内开发者做应用底座的高频选择。'},
+  {n:'豆包', u:'https://www.doubao.com', c:'chat', v:'字节跳动', co:'中国', p:0, net:0, m:41908, mb:'QuestMobile 2026-09 月活', r:8.9, tier:'A', main:1,
+   t:['多模态','免费'], d:'语音交互自然，图像与视频生成一体化，免费额度大，适合日常问答与内容初稿。'},
+  {n:'Kimi', u:'https://kimi.moonshot.cn', c:'chat', v:'月之暗面', co:'中国', p:1, net:0, m:729, mb:'QuestMobile 2026-06 月活', r:8.1, tier:'B', main:1,
+   t:['长文本','文档解析'], d:'以超长上下文起家，能整本读报告与合同，适合做资料汇总与跨文档比对。'},
+  {n:'通义千问', u:'https://tongyi.aliyun.com', c:'chat', v:'阿里巴巴', co:'中国', p:0, net:0, m:15817, mb:'QuestMobile 2026-09 月活', r:8.7, tier:'A', main:1,
+   t:['办公','多模态'], d:'与钉钉、阿里云打通，文档、表格与会议场景衔接顺，企业落地案例多。'},
+  {n:'文心一言', u:'https://yiyan.baidu.com', c:'chat', v:'百度', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['中文','搜索增强'], d:'中文语料与百科知识扎实，配合百度搜索做事实类问答较稳。'},
+  {n:'智谱清言', u:'https://chatglm.cn', c:'chat', v:'智谱 AI', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['智能体','中文'], d:'内置大量智能体与工具调用，图文视频生成同站，适合一站式完成轻量创作。'},
+  {n:'腾讯元宝', u:'https://yuanbao.tencent.com', c:'chat', v:'腾讯', co:'中国', p:0, net:0, m:3733, mb:'QuestMobile 2026-09 月活', r:8.4, tier:'A', main:1,
+   t:['微信生态','免费'], d:'可直接读取公众号内容，与微信、腾讯文档衔接，做中文资料检索方便。'},
+  {n:'讯飞星火', u:'https://xinghuo.xfyun.cn', c:'chat', v:'科大讯飞', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['语音','教育'], d:'语音识别与合成是传统强项，教育、医疗行业的知识问答做了专门适配。'},
+  {n:'百小应', u:'https://ying.baichuan-ai.com', c:'chat', v:'百川智能', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['医疗','中文'], d:'医疗健康方向积累较多，回答偏严谨，适合健康科普与专业资料初筛。'},
+  {n:'天工', u:'https://www.tiangong.cn', c:'chat', v:'昆仑万维', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['长文本','搜索'], d:'长文本与搜索结合，支持研究式提问，适合做行业调研的起点。'},
+  {n:'海螺 AI', u:'https://hailuoai.com', c:'chat', v:'MiniMax', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['语音','长文本'], d:'语音合成自然度高，对话与视频生成共用一套账号，适合做有声内容。'},
+  {n:'跃问', u:'https://yuewen.cn', c:'chat', v:'阶跃星辰', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['多模态','图像理解'], d:'多模态理解能力较突出，看图问答、图表解读是其主要使用场景。'},
+  {n:'商量', u:'https://chat.sensetime.com', c:'chat', v:'商汤科技', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['多模态','企业'], d:'商汤的多模态助手，图文理解与行业方案结合，偏企业侧交付。'},
+  {n:'纳米 AI 搜索', u:'https://www.n.cn', c:'chat', v:'360', co:'中国', p:0, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['搜索','免费'], d:'搜索式问答入口，聚合多模型结果，免费且中文内容覆盖广。'},
+  {n:'秘塔 AI 搜索', u:'https://metaso.cn', c:'chat', v:'秘塔科技', co:'中国', p:0, net:0, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['搜索','无广告'], d:'无广告的学术与资料搜索，自动生成大纲与出处，适合写综述与做尽调。'},
+  {n:'Groq', u:'https://groq.com', c:'chat', v:'Groq', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['推理加速','低延迟'], d:'自研推理芯片带来极低延迟，适合做实时对话与语音交互的底层推理。'},
+  {n:'Together AI', u:'https://www.together.ai', c:'chat', v:'Together AI', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['开源模型托管','接口'], d:'把主流开源模型做成可按量调用的接口，价格透明，适合自建产品后端。'},
+  {n:'OpenRouter', u:'https://openrouter.ai', c:'chat', v:'OpenRouter', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['模型聚合','统一接口'], d:'一个密钥调数百个模型并自动比价，做模型选型与容灾切换很方便。'},
+  {n:'Hugging Face', u:'https://huggingface.co', c:'chat', v:'Hugging Face', co:'美国', p:0, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['开源社区','模型托管'], d:'开源模型与数据集的中心，Spaces 可在线试玩，是查模型能力边界的第一站。'},
+  {n:'Cohere', u:'https://coral.cohere.com', c:'chat', v:'Cohere', co:'加拿大', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['企业知识库','私有部署'], d:'面向企业的检索增强与嵌入方案，支持私有云部署，强调数据不出域。'},
+  {n:'Character.AI', u:'https://character.ai', c:'chat', v:'Character.AI', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['角色扮演','社区'], d:'角色对话社区的先行者，人设保持与多轮互动体验成熟，适合做虚拟角色原型。'},
+  /* ========== 音频与音乐 ========== */
+  {n:'Suno', u:'https://suno.com', c:'audio', v:'Suno', co:'美国', p:2, net:1, m:0, mb:'', r:8.6, tier:'B', main:1,
+   t:['音乐生成','人声演唱'], d:'输入一句主题即可产出带人声的完整歌曲，风格覆盖广，是目前传播度最高的 AI 音乐工具。'},
+  {n:'Udio', u:'https://www.udio.com', c:'audio', v:'Udio', co:'美国', p:2, net:1, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['音乐生成','高保真'], d:'音质与编曲细节见长，支持段落延展与重绘，适合对成品听感要求更高的创作。'},
+  {n:'ElevenLabs', u:'https://elevenlabs.io', c:'audio', v:'ElevenLabs', co:'美国', p:3, net:1, m:0, mb:'', r:8.8, tier:'B', main:1,
+   t:['配音克隆','多语言'], d:'声音克隆与情感表达的行业标杆，多语种口音自然，适合有声书、播客与出海视频配音。'},
+  {n:'Murf AI', u:'https://murf.ai', c:'audio', v:'Murf AI', co:'印度', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['企业配音','多语言'], d:'面向企业演示与课程的配音平台，发音词典与语速控制细，团队协作功能完整。'},
+  {n:'PlayHT', u:'https://play.ht', c:'audio', v:'PlayHT', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['语音合成','接口'], d:'低延迟语音合成接口，支持声音克隆与多语种，适合接进产品做实时播报。'},
+  {n:'Resemble AI', u:'https://www.resemble.ai', c:'audio', v:'Resemble AI', co:'加拿大', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['声音克隆','鉴伪'], d:'声音克隆起家，同时提供深度伪造检测，适合既要用声音又需要风控的场景。'},
+  {n:'Adobe Podcast', u:'https://podcast.adobe.com', c:'audio', v:'Adobe', co:'美国', p:0, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['降噪','人声增强'], d:'免费的人声增强工具，一段录音即可去掉房间混响与底噪，播客与口播剪辑的常用前置步骤。'},
+  {n:'LALAL.AI', u:'https://www.lalal.ai', c:'audio', v:'LALAL.AI', co:'塞浦路斯', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['分轨','去人声'], d:'人声、鼓、贝斯、钢琴分轨质量稳定，做伴奏提取与采样二创很方便。'},
+  {n:'Moises', u:'https://moises.ai', c:'audio', v:'Moises', co:'巴西', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['分轨','变速'], d:'面向乐手的分轨与练习工具，可单独静音某轨、变速变调，移动端体验好。'},
+  {n:'LANDR', u:'https://www.landr.com', c:'audio', v:'LANDR', co:'加拿大', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['母带','分发'], d:'自动母带处理加数字发行，适合独立音乐人把 Demo 做到可上架的状态。'},
+  {n:'AIVA', u:'https://www.aiva.ai', c:'audio', v:'AIVA', co:'卢森堡', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['配乐','版权清晰'], d:'偏影视与游戏配乐，可按情绪与时长生成，版权归属规则相对明确。'},
+  {n:'Soundraw', u:'https://soundraw.io', c:'audio', v:'Soundraw', co:'日本', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['免版税配乐','可编辑'], d:'按场景与情绪筛曲，生成后可改段落与乐器，订阅期内产出可商用。'},
+  {n:'Stable Audio', u:'https://stableaudio.com', c:'audio', v:'Stability AI', co:'英国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['音效','配乐'], d:'音效与氛围音乐生成，短片段质感好，适合游戏与视频的音效填补。'},
+  {n:'Riffusion', u:'https://www.riffusion.com', c:'audio', v:'Riffusion', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['音乐生成','风格迁移'], d:'以频谱图生成为技术路线，风格迁移玩法多，适合实验性创作。'},
+  {n:'Voicemod', u:'https://www.voicemod.net', c:'audio', v:'Voicemod', co:'西班牙', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['变声','实时'], d:'实时变声与音效板，直播与游戏语音的常用工具，本地处理延迟低。'},
+  {n:'Speechify', u:'https://speechify.com', c:'audio', v:'Speechify', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['朗读','无障碍'], d:'把网页与文档转成语音，语速与音色选择多，适合通勤听读与无障碍场景。'},
+  {n:'WellSaid Labs', u:'https://wellsaidlabs.com', c:'audio', v:'WellSaid Labs', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['企业配音','品牌音色'], d:'面向企业品牌音的配音平台，音色一致性强，强调商用授权与团队审核流程。'},
+  {n:'网易天音', u:'https://tianyin.163.com', c:'audio', v:'网易云音乐', co:'中国', p:1, net:0, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['AI 作曲','中文歌词'], d:'中文歌词与流行编曲理解到位，可出完整 Demo，适合短视频配乐与原创试唱。'},
+  {n:'讯飞智作', u:'https://peiyin.xunfei.cn', c:'audio', v:'科大讯飞', co:'中国', p:2, net:0, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['配音','方言'], d:'中文配音的老牌工具，方言与多音字处理成熟，支持情绪与停顿标记。'},
+  {n:'魔音工坊', u:'https://www.moyin.com', c:'audio', v:'魔音工坊', co:'中国', p:1, net:0, m:0, mb:'', r:7.6, tier:'B', main:1,
+   t:['配音','短视频'], d:'面向短视频解说的配音工具，音色库偏网感，长文本合成稳定。'},
+  {n:'MiniMax Audio', u:'https://hailuoai.com', c:'audio', v:'MiniMax', co:'中国', p:1, net:0, m:0, mb:'', r:7.8, tier:'B', main:1,
+   t:['语音克隆','多语言'], d:'声音克隆只需少量样本，多语种发音自然，适合做跨境内容的多语配音。'},
+  {n:'腾讯智影', u:'https://zenvideo.qq.com', c:'audio', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['配音','数字人'], d:'配音与数字人口型同步，企业宣传与课程视频可一站式完成。'},
+  {n:'剪映', u:'https://www.capcut.cn', c:'audio', v:'字节跳动', co:'中国', p:0, net:0, m:0, mb:'', r:8.5, tier:'B', main:1,
+   t:['文本朗读','音效库'], d:'内置朗读音色与音效库，剪辑时直接配音配乐，是短视频音频的最低成本方案。'},
+  {n:'标贝悦读', u:'https://www.biaobei.cn', c:'audio', v:'标贝科技', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['语音合成','定制音色'], d:'面向企业的语音合成服务，支持行业音色定制与私有化，常用于客服与播报。'},
+  {n:'TME Studio', u:'https://y.qq.com', c:'audio', v:'腾讯音乐', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['作曲','分轨'], d:'腾讯音乐旗下的创作辅助工具，旋律生成与人声分离结合，中文曲库资源丰富。'},
+  /* ========== 办公与文档 ========== */
+  {n:'Notion AI', u:'https://www.notion.so', c:'office', v:'Notion', co:'美国', p:2, net:1, m:10000, mb:'官网 1亿+ 累计用户', r:8.4, tier:'B', main:1,
+   t:['写作','知识库'], d:'在笔记与数据库里直接调用 AI，摘要、改写、跨页检索都在原地完成，适合团队知识沉淀。'},
+  {n:'Microsoft 365 Copilot', u:'https://www.microsoft.com/microsoft-365/copilot', c:'office', v:'微软', co:'美国', p:3, net:1, m:0, mb:'', r:8.6, tier:'B', main:1,
+   t:['办公套件','企业合规'], d:'嵌进 Word、Excel、PowerPoint、Teams，基于企业内部数据作答，权限体系沿用微软租户。'},
+  {n:'Google Workspace Gemini', u:'https://workspace.google.com', c:'office', v:'Google', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['办公套件','协作'], d:'在 Docs、Sheets、Gmail 内生成与总结，长上下文可跨 Drive 文件检索。'},
+  {n:'Grammarly', u:'https://www.grammarly.com', c:'office', v:'Grammarly', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['英文写作','语气调整'], d:'英文语法与语气润色的标准工具，浏览器与桌面端全局可用，非母语写作提效明显。'},
+  {n:'Jasper', u:'https://www.jasper.ai', c:'office', v:'Jasper', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['营销文案','品牌语气'], d:'面向营销团队的品牌语气管理，可锁定风格与禁用词，批量产出多渠道文案。'},
+  {n:'Copy.ai', u:'https://www.copy.ai', c:'office', v:'Copy.ai', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['销售文案','工作流'], d:'从线索到外呼话术的销售流程自动化，模板与企业集成较完整。'},
+  {n:'Writesonic', u:'https://writesonic.com', c:'office', v:'Writesonic', co:'印度', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['SEO 写作','博客'], d:'围绕搜索流量做长文生成与优化，适合内容站批量铺稿。'},
+  {n:'QuillBot', u:'https://quillbot.com', c:'office', v:'QuillBot', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['改写','语法检查'], d:'段落改写与同义替换工具，适合非母语写作时调整表达而非整段重写。'},
+  {n:'Otter.ai', u:'https://otter.ai', c:'office', v:'Otter', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['会议纪要','实时转录'], d:'英文会议实时转写与摘要，能自动区分发言人并同步到日历与协作工具。'},
+  {n:'Fireflies.ai', u:'https://fireflies.ai', c:'office', v:'Fireflies', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['会议记录','客户系统同步'], d:'会议记录自动归档并写入客户系统，销售与客户成功团队使用较多。'},
+  {n:'Fathom', u:'https://fathom.video', c:'office', v:'Fathom', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['会议纪要','免费额度'], d:'免费额度慷慨的会议助手，会后即刻出摘要与行动项，个人使用成本低。'},
+  {n:'Gamma', u:'https://gamma.app', c:'office', v:'Gamma', co:'美国', p:2, net:1, m:0, mb:'', r:8.2, tier:'B', main:1,
+   t:['PPT','网页'], d:'从一句话或文档生成整份演示，排版自动完成，可导出 PPT 或直接发布为网页。'},
+  {n:'Tome', u:'https://tome.app', c:'office', v:'Tome', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['叙事演示','销售提案'], d:'以叙事结构为核心的演示工具，适合做提案与产品故事而非密集数据页。'},
+  {n:'Beautiful.ai', u:'https://www.beautiful.ai', c:'office', v:'Beautiful.ai', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['演示排版','团队模板'], d:'自动遵守排版规则，加内容时版式不乱，适合不擅长设计的汇报者。'},
+  {n:'NotebookLM', u:'https://notebooklm.google', c:'office', v:'Google', co:'美国', p:0, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['文档问答','音频概览'], d:'把资料集变成可问答的知识库，并能生成双人对谈式音频概览，适合消化长文档。'},
+  {n:'ChatPDF', u:'https://www.chatpdf.com', c:'office', v:'ChatPDF', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['PDF 问答','摘要'], d:'上传 PDF 直接提问并定位原文页码，处理论文与合同最快的一类工具。'},
+  {n:'PDF.ai', u:'https://pdf.ai', c:'office', v:'PDF.ai', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['PDF 对话','批量'], d:'支持多份 PDF 同时对话与信息抽取，适合做合同比对与资料整理。'},
+  {n:'Readwise Reader', u:'https://readwise.io/readers', c:'office', v:'Readwise', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['阅读','标注'], d:'把网页、PDF、简报收进一个阅读器，标注可自动回流到笔记系统。'},
+  {n:'Elicit', u:'https://elicit.com', c:'office', v:'Elicit', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['文献综述','证据表'], d:'自动检索论文并抽取研究结论成表，做综述与证据梳理的效率工具。'},
+  {n:'Consensus', u:'https://consensus.app', c:'office', v:'Consensus', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['论文证据','问答'], d:'用论文结论回答研究性问题，标注样本量与结论方向，适合查证健康与社科议题。'},
+  {n:'SciSpace', u:'https://typeset.io', c:'office', v:'SciSpace', co:'印度', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['论文阅读','公式解释'], d:'读论文时逐段解释公式与术语，支持与文献对话，留学生使用率高。'},
+  {n:'飞书智能伙伴', u:'https://www.feishu.cn', c:'office', v:'字节跳动', co:'中国', p:2, net:0, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['协作','知识库'], d:'嵌在飞书文档、会议与多维表格中的助手，会议纪要与企业知识检索衔接顺。'},
+  {n:'钉钉 AI 助理', u:'https://www.dingtalk.com', c:'office', v:'阿里巴巴', co:'中国', p:2, net:0, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['办公','审批流'], d:'把 AI 接进审批、日程与群聊，可在组织架构内做信息查询与流程发起。'},
+  {n:'WPS AI', u:'https://www.wps.cn', c:'office', v:'金山办公', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['文档','表格','PPT'], d:'国内办公套件里覆盖最全的 AI 能力，写作、表格公式、PPT 生成与 PDF 处理都在同一账号下。'},
+  {n:'讯飞智文', u:'https://zhiwen.xfyun.cn', c:'office', v:'科大讯飞', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['PPT 生成','中文'], d:'一句话或一篇文稿生成整套 PPT，中文排版与政务、教育模板较贴合国内汇报习惯。'},
+  {n:'百度文库 AI', u:'https://wenku.baidu.com', c:'office', v:'百度', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['文档','PPT'], d:'依托文库语料做文档生成与总结，模板与范文资源是其主要优势。'},
+  {n:'夸克', u:'https://quark.cn', c:'office', v:'阿里巴巴', co:'中国', p:0, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['搜索','文档处理'], d:'搜索加 AI 助手的组合，扫描、转写、总结免费可用，适合移动端轻办公。'},
+  {n:'腾讯文档', u:'https://docs.qq.com', c:'office', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['协作文档','表格'], d:'在线协作文档内置 AI 写作与表格分析，与微信、企业微信分享链路短。'},
+  {n:'iSlide', u:'https://www.islide.cc', c:'office', v:'iSlide', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['PPT 插件','模板'], d:'PowerPoint 插件形态的排版与素材工具，AI 一键美化与图示库对做汇报实用。'},
+  /* ========== 设计与原型 ========== */
+  {n:'Figma', u:'https://www.figma.com', c:'design', v:'Figma', co:'美国', p:2, net:1, m:1300, mb:'第三方 2026 设计类月活', r:8.7, tier:'B', main:1,
+   t:['UI 生成','协作'], d:'界面设计的事实标准，AI 功能围绕首稿生成、批量重命名与内容填充展开，团队协作链路最完整。'},
+  {n:'Canva', u:'https://www.canva.com', c:'design', v:'Canva', co:'澳大利亚', p:2, net:1, m:22000, mb:'官方 2026-Q1 月活', r:8.8, tier:'A', main:1,
+   t:['模板','品牌一致性'], d:'模板驱动的全民设计工具，Magic Studio 覆盖文生图、抠图、批量改尺寸，非设计师也能出成品。'},
+  {n:'Adobe Express', u:'https://www.adobe.com/express', c:'design', v:'Adobe', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['社媒物料','素材库'], d:'轻量版 Adobe 设计工具，字体与素材授权清晰，适合做社媒图与短视频封面。'},
+  {n:'Framer', u:'https://www.framer.com', c:'design', v:'Framer', co:'荷兰', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['建站','发布'], d:'设计稿直接变成可上线网站，AI 可生成整页布局，适合作品集与营销页快速上线。'},
+  {n:'Webflow', u:'https://webflow.com', c:'design', v:'Webflow', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['建站','内容管理'], d:'可视化建站加内容管理，AI 辅助生成结构与文案，适合需要长期维护的企业站。'},
+  {n:'Relume', u:'https://www.relume.io', c:'design', v:'Relume', co:'澳大利亚', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['站点结构','线框'], d:'从一句话生成站点地图与线框，可直接同步到 Figma 或 Webflow，做前期结构很快。'},
+  {n:'Uizard', u:'https://uizard.io', c:'design', v:'Uizard', co:'丹麦', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['线框转设计','快速原型'], d:'手绘草图或截图转成可编辑线框，适合产品早期快速对齐界面结构。'},
+  {n:'Visily', u:'https://www.visily.ai', c:'design', v:'Visily', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['截图转线框','团队协作'], d:'把截图或手绘转成线框，模板库偏软件产品与移动端，非设计师也能改。'},
+  {n:'Motiff 妙多', u:'https://motiff.com', c:'design', v:'Motiff', co:'中国', p:2, net:0, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['UI 生成','设计系统'], d:'AI 原生的界面设计工具，支持整页生成与设计系统维护，团队协作与国内访问体验好。'},
+  {n:'即时设计', u:'https://js.design', c:'design', v:'即时设计', co:'中国', p:1, net:0, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['UI 协作','免费'], d:'国产在线 UI 工具，Figma 文件可导入，个人免费额度大，适合国内团队协作。'},
+  {n:'MasterGo', u:'https://mastergo.com', c:'design', v:'MasterGo', co:'中国', p:2, net:0, m:0, mb:'', r:7.8, tier:'B', main:1,
+   t:['UI 协作','企业'], d:'面向中大型团队的设计协作平台，私有化与权限管理完善，金融与政企客户较多。'},
+  {n:'Pixso', u:'https://pixso.cn', c:'design', v:'Pixso', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['UI 协作','交付'], d:'设计、原型与交付一体的国产工具，与国内研发流程衔接顺，价格友好。'},
+  {n:'稿定设计', u:'https://www.gaoding.com', c:'design', v:'稿定设计', co:'中国', p:1, net:0, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['电商物料','模板'], d:'电商与新媒体物料模板库，AI 抠图、扩图、商品图生成都围绕卖货场景设计。'},
+  {n:'创客贴', u:'https://www.chuangkit.com', c:'design', v:'创客贴', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['模板设计','印刷'], d:'模板加在线印刷下单，做线下物料与门店海报时省去对接环节。'},
+  {n:'图怪兽', u:'https://818ps.com', c:'design', v:'图怪兽', co:'中国', p:0, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['模板','免费'], d:'免费模板资源多，改字换图即可出图，适合预算有限的小商家与个人号。'},
+  {n:'美图设计室', u:'https://design.meitu.com', c:'design', v:'美图公司', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['电商图','人像'], d:'商品图与模特图的 AI 处理，抠图、换背景、试穿一体，适合淘宝与跨境卖家。'},
+  {n:'Looka', u:'https://looka.com', c:'design', v:'Looka', co:'加拿大', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['Logo','品牌套件'], d:'输入行业与偏好生成 Logo 方案，附带名片、社媒头像等成套品牌物料。'},
+  {n:'Coolors', u:'https://coolors.co', c:'design', v:'Coolors', co:'意大利', p:0, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['配色','导出'], d:'快速生成与锁定配色方案，可导出到 Figma、CSS 与 Adobe，设计师常用基础工具。'},
+  {n:'Vectorizer', u:'https://vectorizer.ai', c:'design', v:'Vectorizer', co:'美国', p:1, net:1, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['位图转矢量','Logo 矢量化'], d:'把位图转成干净的 SVG，边缘处理比常规描摹好，适合重制旧 Logo 与图标。'},
+  {n:'Spline', u:'https://spline.design', c:'design', v:'Spline', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['3D 设计','网页嵌入'], d:'浏览器里的 3D 设计工具，AI 生成模型与材质，可直接嵌进网页做交互展示。'},
+  {n:'墨刀', u:'https://modao.cc', c:'design', v:'墨刀', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['原型','协作'], d:'国内常用的原型工具，AI 生成页面与交互，产品评审与交付衔接顺。'},
+  {n:'蓝湖', u:'https://lanhuapp.com', c:'design', v:'蓝湖', co:'中国', p:2, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['协作交付','标注'], d:'设计稿交付与标注平台，自动生成切图与代码片段，是国内研发协作的常见一环。'},
+  {n:'Clipdrop', u:'https://clipdrop.co', c:'design', v:'Clipdrop', co:'法国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['图像工具集','抠图'], d:'抠图、扩图、清理、生成一组的轻量工具集，适合运营岗日常修图。'},
+  {n:'Remove.bg', u:'https://www.remove.bg', c:'design', v:'Canva', co:'奥地利', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['抠图','批量'], d:'一键去背景的老牌服务，边缘发丝处理稳定，提供接口可批量接入。'},
+  /* ========== 智能体与低代码 ========== */
+  {n:'扣子 Coze', u:'https://www.coze.cn', c:'agent', v:'字节跳动', co:'中国', p:0, net:0, m:0, mb:'', r:8.2, tier:'B', main:1,
+   t:['0 代码智能体','多端发布'], d:'拖拽式搭建智能体并一键发布到飞书、微信公众号等渠道，插件与知识库齐全，个人可零成本起步。'},
+  {n:'Dify', u:'https://dify.ai', c:'agent', v:'LangGenius', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['开源','工作流','知识库问答'], d:'开源的大模型应用平台，工作流编排、知识库与运行监控完整，可自托管，国内团队落地首选之一。'},
+  {n:'n8n', u:'https://n8n.io', c:'agent', v:'n8n', co:'德国', p:2, net:0, m:0, mb:'', r:8.2, tier:'B', main:1,
+   t:['工作流','自托管'], d:'节点式自动化平台，可自托管、可控数据，AI 节点支持接入自有模型，适合技术团队做内部集成。'},
+  {n:'Zapier', u:'https://zapier.com', c:'agent', v:'Zapier', co:'美国', p:3, net:1, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['应用集成','自动化'], d:'连接数千个在线服务的自动化老牌平台，AI 步骤可嵌入现成流程，非技术团队也能维护。'},
+  {n:'Make', u:'https://www.make.com', c:'agent', v:'Make', co:'捷克', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['可视化自动化','性价比'], d:'可视化流程编排，分支与循环表达能力强，同等任务量的成本通常低于同类。'},
+  {n:'Relevance AI', u:'https://relevanceai.com', c:'agent', v:'Relevance AI', co:'澳大利亚', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['AI 员工','多智能体'], d:'搭建可分工协作的「AI 员工」团队，带权限与审核，偏企业运营场景。'},
+  {n:'Flowise', u:'https://flowiseai.com', c:'agent', v:'Flowise', co:'美国', p:0, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['开源','可视化'], d:'开源的可视化大模型编排工具，拖拽节点即可搭建知识库问答与对话流程，可本地部署。'},
+  {n:'Langflow', u:'https://www.langflow.org', c:'agent', v:'Langflow', co:'美国', p:0, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['开源','可视化'], d:'以 LangChain 为基础的可视化编排器，适合快速验证链路并导出为接口。'},
+  {n:'CrewAI', u:'https://www.crewai.com', c:'agent', v:'CrewAI', co:'美国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['多智能体','开源'], d:'用角色分工的方式组织多个智能体协作，代码化程度高，适合工程团队做定制。'},
+  {n:'Manus', u:'https://manus.im', c:'agent', v:'Monica', co:'中国', p:3, net:1, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['通用智能体','自主执行'], d:'给定目标后自主规划并操作浏览器与工具产出交付物，适合调研、制表与多步任务。'},
+  {n:'Genspark', u:'https://www.genspark.ai', c:'agent', v:'Genspark', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['超级智能体','搜索'], d:'搜索起家转向任务执行，可生成页面、表格与简报，适合做一次性深度调研。'},
+  {n:'Voiceflow', u:'https://www.voiceflow.com', c:'agent', v:'Voiceflow', co:'加拿大', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['对话设计','企业'], d:'对话机器人的设计与协作平台，适合较大团队分工维护复杂对话流程。'},
+  {n:'Botpress', u:'https://botpress.com', c:'agent', v:'Botpress', co:'加拿大', p:2, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['对话机器人','开源'], d:'可自托管的对话机器人平台，支持多渠道路由与人工接管。'},
+  {n:'Chatbase', u:'https://www.chatbase.co', c:'agent', v:'Chatbase', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['客服机器人','知识库'], d:'上传文档即可得到可嵌入网站的客服机器人，部署成本低。'},
+  {n:'CustomGPT.ai', u:'https://customgpt.ai', c:'agent', v:'CustomGPT.ai', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['企业知识库','私有数据'], d:'用企业文档构建问答机器人，强调不训练公开模型、数据隔离。'},
+  {n:'Glide', u:'https://www.glideapps.com', c:'agent', v:'Glide', co:'美国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['表格转应用','0 代码'], d:'把表格直接变成可用的内部应用，AI 可生成界面与字段，适合快速做业务工具。'},
+  {n:'Softr', u:'https://www.softr.io', c:'agent', v:'Softr', co:'德国', p:2, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['无代码门户','Airtable'], d:'基于 Airtable 等数据源搭客户门户与内部系统，权限与登录开箱可用。'},
+  {n:'Bubble', u:'https://bubble.io', c:'agent', v:'Bubble', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['无代码应用','全栈'], d:'能力最接近真实开发的无代码平台，可做带支付与数据库的完整产品，学习曲线也最陡。'},
+  {n:'Airtable AI', u:'https://www.airtable.com', c:'agent', v:'Airtable', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['表格','自动化'], d:'在结构化数据上叠加 AI 字段与自动化，适合做内容排期、线索管理与轻量客户管理。'},
+  {n:'Retool', u:'https://retool.com', c:'agent', v:'Retool', co:'美国', p:3, net:1, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['内部工具','企业集成'], d:'面向工程团队的内部工具搭建平台，AI 可生成查询与界面，适合替换手工后台。'},
+  {n:'阿里云百炼', u:'https://bailian.console.aliyun.com', c:'agent', v:'阿里云', co:'中国', p:2, net:0, m:0, mb:'', r:8.0, tier:'B', main:1,
+   t:['企业智能体','模型托管'], d:'模型调用、模型定制与应用搭建一体，企业可在阿里云账号体系内完成权限与配额管理。'},
+  {n:'百度千帆', u:'https://qianfan.cloud.baidu.com', c:'agent', v:'百度', co:'中国', p:2, net:0, m:0, mb:'', r:7.9, tier:'B', main:1,
+   t:['企业智能体','知识库问答'], d:'文心系模型的应用开发平台，知识库与插件体系完整，提供私有化选项。'},
+  {n:'腾讯元器', u:'https://yuanqi.tencent.com', c:'agent', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'', r:7.8, tier:'B', main:1,
+   t:['0 代码智能体','微信生态'], d:'零代码创建智能体并发布到微信生态，适合做公众号客服与社群助手。'},
+  {n:'讯飞星辰', u:'https://xinghuo.xfyun.cn', c:'agent', v:'科大讯飞', co:'中国', p:1, net:0, m:0, mb:'', r:8.3, tier:'B', main:1,
+   t:['智能体','私有化'], d:'星火体系下的智能体与模型定制平台，语音交互与行业知识库是主要落点。'},
+  {n:'简道云', u:'https://www.jiandaoyun.com', c:'agent', v:'帆软', co:'中国', p:2, net:0, m:0, mb:'', r:7.8, tier:'B', main:1,
+   t:['低代码平台','表单流程'], d:'表单、流程与仪表盘一体的低代码平台，AI 可辅助建表与数据分析，适合企业信息化。'},
+  {n:'明道云', u:'https://www.mingdao.com', c:'agent', v:'明道云', co:'中国', p:2, net:0, m:0, mb:'', r:7.7, tier:'B', main:1,
+   t:['低代码','私有部署'], d:'以数据表与工作流为核心的低代码平台，支持私有化部署，适合中大型组织自建系统。'},
+  {n:'Monica', u:'https://monica.im', c:'agent', v:'Monica', co:'中国', p:1, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
+   t:['浏览器助手','模型聚合'], d:'浏览器侧边栏助手，网页总结、写作与多模型切换随手可用，适合日常资料处理。'},
+];
+const state = {cat:'all', region:'all', price:'all', net:'all', favOnly:false, sort:'rec', q:''};
+
+const groupsEl   = document.getElementById('groups');
+const countEl    = document.getElementById('count');
+const qEl        = document.getElementById('q');
+const favBtn     = document.getElementById('favBtn');
+const favCountEl = document.getElementById('favCount');
+
+let favSet = new Set();
+try { favSet = new Set(JSON.parse(localStorage.getItem('aigc-nav-favs') || '[]')); } catch(e) { favSet = new Set(); }
+function saveFavs(){ try { localStorage.setItem('aigc-nav-favs', JSON.stringify([...favSet])); } catch(e) {} }
+
+function esc(s){return String(s).replace(/[&<>"]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+
+function priceOf(id){ return PRICES.find(p=>p.id===id) || PRICES[2]; }
+
+function fmtM(m){
+  if(!m) return '';
+  if(m >= 10000) return (m/10000).toFixed(2).replace(/\.?0+$/,'') + ' 亿';
+  return m + ' 万';
+}
+
+function card(d){
+  const p = priceOf(d.p);
+  const host = d.u.replace(/^https?:\/\//,'').replace(/\/.*$/,'');
+  const tags = d.t.map(t=>{
+    const hot = /影视级|二次元|音频|工程级|0 ?代码|智能体/.test(t) ? ' hot' : '';
+    return `<span class="tag${hot}">${esc(t)}</span>`;
+  }).join('');
+  const scale = d.m
+    ? `<div class="scale" title="${esc(d.mb)}"><b>${fmtM(d.m)}</b><span>${esc(d.mb)}</span></div>`
+    : '';
+  const fav = favSet.has(d.n);
+  return `<a class="card-link" href="${esc(d.u)}" target="_blank" rel="noopener">
+    <article class="card">
+      <div class="card-top">
+        <div style="min-width:0;flex:1">
+          <div class="nameline">
+            <span class="name" title="${esc(d.n)}">${esc(d.n)}</span>
+            <span class="fav${fav?' on':''}" role="button" tabindex="0" data-fav="${esc(d.n)}"
+                  title="${fav?'取消收藏':'收藏'}"><svg viewBox="0 0 20 20" aria-hidden="true"><polygon points="10,1.6 18,7.4 14.9,16.8 5.1,16.8 2,7.4"/></svg></span>
+          </div>
+          <div class="host">${esc(host)}<span class="dot">·</span><span class="co">${esc(d.co)}</span></div>
+        </div>
+        <div class="right">
+          <span class="score" title="编辑估计评分（10 分制）"><em>评分</em>${d.r.toFixed(1)}<i>/10</i></span>
+          <span class="price ${p.cls}" title="同类内相对消费档：${p.label}；本类中档参考 ${CATMID[d.c]||'—'}"><em>消费</em>${p.label}</span>
+        </div>
+      </div>
+      <p class="desc">${esc(d.d)}</p>
+      <div class="tags">${tags}</div>
+      ${scale}
+      <div class="meta">
+        <span class="vm" title="${esc(d.v)}">${esc(d.v)}</span>
+        <span class="net ${d.net===0?'free':'vpn'}">${d.net===0?'✓ 可直连':'↗ 需境外网络'}</span>
+      </div>
+    </article>
+  </a>`;
+}
+
+function sortRows(list){
+  const arr = list.slice();
+  if(state.sort === 'score'){
+    arr.sort((a,b)=> b.r-a.r || (b.m||0)-(a.m||0));
+  } else if(state.sort === 'scale'){
+    arr.sort((a,b)=> (b.m||0)-(a.m||0) || b.r-a.r);
+  } else {
+    arr.sort((a,b)=>
+      ((a.co==='中国')?0:1) - ((b.co==='中国')?0:1) ||
+      (b.m?1:0) - (a.m?1:0) ||
+      (b.m||0) - (a.m||0) ||
+      b.r - a.r
+    );
+  }
+  return arr;
+}
+
+function match(d){
+  if(state.favOnly && !favSet.has(d.n)) return false;
+  if(state.cat!=='all' && d.c!==state.cat) return false;
+  if(state.region==='cn' && d.co!=='中国') return false;
+  if(state.region==='global' && d.co==='中国') return false;
+  if(state.price!=='all' && d.p!==state.price) return false;
+  if(state.net!=='all' && d.net!==state.net) return false;
+  const q = state.q.trim().toLowerCase();
+  if(q){
+    const hay = (d.n+' '+d.v+' '+d.co+' '+d.d+' '+d.t.join(' ')+' '+d.u).toLowerCase();
+    if(!hay.includes(q)) return false;
+  }
+  return true;
+}
+
+function render(){
+  const rows = DATA.filter(match);
+  const list = state.cat==='all' ? CATS : CATS.filter(c=>c.id===state.cat);
+  let html = '';
+
+  list.forEach(cat=>{
+    const sub = sortRows(rows.filter(d=>d.c===cat.id));
+    if(!sub.length) return;
+    const cn = sub.filter(d=>d.co==='中国').length;
+    const sm = sub.filter(d=>d.m).length;
+    const dist = [4,3,2,1,0].map(k=>`${priceOf(k).label}${sub.filter(d=>d.p===k).length}`).join('/');
+    html += `<section class="group">
+      <div class="ghead">
+        <span class="gdot" style="background:${cat.color}"></span>
+        <h2 title="${esc(cat.desc)}">${cat.label}</h2>
+        <span class="gmeta">${sub.length} 条 · 国内 ${cn} · 有公开人数 ${sm} · 消费 ${dist}</span>
+      </div>
+      <div class="grid">${sub.map(card).join('')}</div>
+    </section>`;
+  });
+
+  const empty = state.favOnly
+    ? '还没有收藏。点平台名称右边的 ☆ 就能收藏，收藏后再点「已收藏」只看这些平台。'
+    : '没有匹配的平台。换个关键词，或点「重置筛选」。';
+  groupsEl.innerHTML = html || `<div class="grid"><div class="empty">${empty}</div></div>`;
+  countEl.textContent = state.favOnly
+    ? `已收藏 ${new Set(rows.map(d=>d.n)).size} 个平台 · ${rows.length} 条`
+    : `显示 ${rows.length} / ${DATA.length} 条`;
+}
+
+function chips(host, items, key, extraClass){
+  host.querySelectorAll('.chip').forEach(n=>n.remove());
+  items.forEach(it=>{
+    const b = document.createElement('button');
+    b.className = 'chip' + (extraClass?(' '+extraClass(it)):'') + (state[key]===it.id?' on':'');
+    b.innerHTML = it.label + (it.count!==undefined?`<small>${it.count}</small>`:'');
+    b.onclick = ()=>{ state[key]=it.id; buildFilters(); render(); };
+    host.appendChild(b);
+  });
+}
+
+function buildFilters(){
+  const catItems = [{id:'all', label:'全部', count:DATA.length}].concat(
+    CATS.map(c=>({id:c.id, label:c.label, count:DATA.filter(d=>d.c===c.id).length}))
+  );
+  chips(document.getElementById('f-cat'), catItems, 'cat');
+
+  chips(document.getElementById('f-region'), [
+    {id:'all', label:'全球', count:DATA.length},
+    {id:'cn', label:'国内', count:DATA.filter(d=>d.co==='中国').length},
+    {id:'global', label:'海外', count:DATA.filter(d=>d.co!=='中国').length}
+  ], 'region');
+
+  const priceItems = [{id:'all', label:'全部', count:DATA.length}].concat(
+    PRICES.map(p=>({id:p.id, label:p.label, count:DATA.filter(d=>d.p===p.id).length}))
+  );
+  chips(document.getElementById('f-price'), priceItems, 'price',
+    it=>['p0','p1','p2','p3','p4'].includes('p'+it.id) ? 'p'+it.id : '');
+
+  chips(document.getElementById('f-net'), [
+    {id:'all', label:'全部', count:DATA.length},
+    {id:0, label:'可直连', count:DATA.filter(d=>d.net===0).length},
+    {id:1, label:'需境外网络（VPN）', count:DATA.filter(d=>d.net===1).length}
+  ], 'net');
+}
+
+function updateFavUI(){
+  favCountEl.textContent = favSet.size;
+  favBtn.classList.toggle('on', state.favOnly);
+}
+
+function toggleFav(name){
+  if(favSet.has(name)) favSet.delete(name); else favSet.add(name);
+  saveFavs();
+  updateFavUI();
+  if(state.favOnly){ render(); return; }
+  groupsEl.querySelectorAll('.fav').forEach(el=>{
+    const on = favSet.has(el.dataset.fav);
+    el.classList.toggle('on', on);
+    el.title = on ? '取消收藏' : '收藏';
+  });
+}
+
+groupsEl.addEventListener('click', e=>{
+  const f = e.target.closest('.fav');
+  if(!f) return;
+  e.preventDefault();
+  e.stopPropagation();
+  toggleFav(f.dataset.fav);
+});
+
+groupsEl.addEventListener('keydown', e=>{
+  if((e.key==='Enter' || e.key===' ') && e.target.classList && e.target.classList.contains('fav')){
+    e.preventDefault();
+    toggleFav(e.target.dataset.fav);
+  }
+});
+
+favBtn.onclick = ()=>{ state.favOnly = !state.favOnly; updateFavUI(); render(); };
+
+qEl.addEventListener('input', e=>{ state.q = e.target.value; render(); });
+document.getElementById('sort').onchange = e=>{ state.sort = e.target.value; render(); };
+document.getElementById('reset').onclick = ()=>{
+  state.cat='all'; state.region='all'; state.price='all'; state.net='all';
+  state.favOnly=false; state.sort='rec'; state.q='';
+  qEl.value=''; document.getElementById('sort').value='rec';
+  buildFilters(); updateFavUI(); render();
+};
+
+document.getElementById('s-total').textContent = DATA.length;
+document.getElementById('s-cat').textContent = CATS.length;
+document.getElementById('s-cn').textContent = DATA.filter(d=>d.co==='中国').length;
+document.getElementById('s-free').textContent = DATA.filter(d=>d.net===0).length;
+
+buildFilters();
+updateFavUI();
+render();
+</script>
+</body>
+</html>
