@@ -208,7 +208,7 @@
 
   <div class="toolbar">
     <div class="searchrow">
-      <input id="q" type="search" placeholder="搜索平台名、厂商、国家或能力：影视级 / 二次元 / 音频 / 低代码 / 智能体 / 中国">
+      <input id="q" type="search" placeholder="搜索平台、厂商、能力，不区分大小写，拼错也能搜：deepseek / 影视级 / 二次元 / 低代码">
       <select id="sort" title="排序方式">
         <option value="rec">推荐：国内优先 · 人数</option>
         <option value="score">评分从高到低</option>
@@ -268,8 +268,8 @@
       <p>AI 平台极少公布真实用户数。本页数据只有三类来源：公司财报或官方公告（OpenAI、Alphabet、微软等）、第三方监测（中国大陆用 QuestMobile，全球用 Sensor Tower）、以及无公开数据。周活跃用户与月活口径不同，不能直接比大小，因此只作量级参考。没有数字不等于平台小，只代表没有可核查来源。</p>
     </div>
     <div class="rule hi">
-      <h3>「需境外网络」只描述访问条件</h3>
-      <p>标记为需境外网络，是指平台主站在中国大陆常规网络下通常无法直接打开，需要合规的国际网络接入。是否可用、是否需要实名，最终以平台与当地法规为准。</p>
+      <h3>「需高科技」指什么</h3>
+      <p>标记为需高科技，是指平台主站在中国大陆常规网络下通常无法直接打开，需要借助额外的网络工具才能正常访问。是否可用、是否需要实名，最终以平台与当地法规为准。</p>
     </div>
     <div class="rule">
       <h3>消费档只在同类内比</h3>
@@ -831,7 +831,7 @@ function card(d){
       ${scale}
       <div class="meta">
         <span class="vm" title="${esc(d.v)}">${esc(d.v)}</span>
-        <span class="net ${d.net===0?'free':'vpn'}">${d.net===0?'✓ 可直连':'↗ 需境外网络'}</span>
+        <span class="net ${d.net===0?'free':'vpn'}">${d.net===0?'✓ 可直连':'↗ 需高科技'}</span>
       </div>
     </article>
   </a>`;
@@ -870,12 +870,22 @@ function lev(a,b){
   return prev[n];
 }
 
-// 英文名拼错时的容错（如 deepeek -> DeepSeek）
+// 归一化：统一小写，把连字符、下划线、点等分隔符折成空格，保留词边界
+function norm(s){
+  return String(s).toLowerCase()
+    .replace(/[\-_.,·、()（）\/]+/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+// 英文名拼错时的容错（不计大小写与分隔符）：deepeek -> deepseek、mid journy -> midjourney
 function fuzzyHit(q, d){
-  if(q.length < 5 || !/^[a-z0-9.\-]+$/.test(q)) return false;
-  const host = d.u.replace(/^https?:\/\//,'').replace(/\/.*$/,'').replace(/^www\./,'').toLowerCase();
-  return [d.n.toLowerCase(), host, d.v.toLowerCase()]
-    .some(t => Math.abs(t.length-q.length) <= 2 && lev(q,t) <= 2);
+  if(!/^[a-z0-9]+$/.test(q)) return false;
+  const max = q.length >= 5 ? 2 : (q.length === 4 ? 1 : 0);
+  if(!max) return false;
+  const host = norm(d.u.replace(/^https?:\/\//,'').replace(/\/.*$/,'').replace(/^www\./,''));
+  return [norm(d.n), host, norm(d.v)]
+    .some(t => Math.abs(t.length - q.length) <= max && lev(q, t) <= max);
 }
 
 function match(d){
@@ -887,8 +897,16 @@ function match(d){
   if(state.net!=='all' && d.net!==state.net) return false;
   const q = state.q.trim().toLowerCase();
   if(q){
-    const hay = (d.n+' '+d.v+' '+d.co+' '+d.d+' '+d.t.join(' ')+' '+d.u).toLowerCase();
-    if(!hay.includes(q) && !fuzzyHit(q, d)) return false;
+    // 每个字段单独归一化，避免字段首尾拼接后产生假匹配（cursor + anysphere）
+    const catLabel = (CATS.find(c=>c.id===d.c)||{}).label || '';
+    const fields = [d.n, d.v, d.co, d.d, d.t.join(' '), d.u, catLabel].map(norm);
+    // 先归一化再拆词，这样 deep-seek / MID JOURNEY 都能正确分成两个词
+    const terms = norm(q).split(' ').filter(Boolean);
+    for(const term of terms){
+      if(fields.some(f => f.includes(term))) continue;
+      if(fuzzyHit(term, d)) continue;
+      return false;
+    }
   }
   return true;
 }
@@ -916,7 +934,7 @@ function render(){
 
   const empty = state.favOnly
     ? '还没有收藏。点平台名称右边的 ☆ 就能收藏，收藏后再点「已收藏」只看这些平台。'
-    : '没有匹配的平台。换个关键词，或点「重置筛选」。';
+    : '没有找到匹配的平台。已尝试忽略大小写与拼写差异，可换关键词或点「重置筛选」。';
   groupsEl.innerHTML = html || `<div class="grid"><div class="empty">${empty}</div></div>`;
   countEl.textContent = state.favOnly
     ? `已收藏 ${new Set(rows.map(d=>d.n)).size} 个平台 · ${rows.length} 条`
@@ -955,7 +973,7 @@ function buildFilters(){
   chips(document.getElementById('f-net'), [
     {id:'all', label:'全部', count:DATA.length},
     {id:0, label:'可直连', count:DATA.filter(d=>d.net===0).length},
-    {id:1, label:'需境外网络（VPN）', count:DATA.filter(d=>d.net===1).length}
+    {id:1, label:'需高科技', count:DATA.filter(d=>d.net===1).length}
   ], 'net');
 }
 
