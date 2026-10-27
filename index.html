@@ -197,7 +197,7 @@
 
   <header>
     <h1>AI 创作者平台导航</h1>
-    <p class="sub">按<b>生成能力分模块</b>收录，<b>优先国内可用</b>。只收录各品类中使用人数较多、较为常用的平台，热门度不足的不再收录，因此各模块数量不等（24–30 条）。排序默认<b>国内优先 → 使用人数 → 评分</b>。使用人数仅少数平台有公开数据（QuestMobile / Sensor Tower / 公司财报），无公开数据的条目不做数字臆测；<b>消费档只与同类型平台比较</b>，为同类内相对位置，不跨模块换算。</p>
+    <p class="sub">按<b>生成能力分模块</b>收录，<b>优先国内可用</b>。只收录各品类中使用人数较多、较为常用的平台，热门度不足的不再收录，因此各模块数量不等（24–30 条）。排序默认<b>按评分从高到低</b>，可切换国内优先或使用人数。使用人数仅少数平台有公开数据（QuestMobile / Sensor Tower / 公司财报），无公开数据的条目不做数字臆测；<b>消费档只与同类型平台比较</b>，为同类内相对位置，不跨模块换算。</p>
     <div class="stats">
       <div class="stat"><b id="s-total">0</b>收录条目</div>
       <div class="stat"><b id="s-cat">0</b>能力模块</div>
@@ -210,8 +210,8 @@
     <div class="searchrow">
       <input id="q" type="search" placeholder="搜索平台、厂商、能力，不区分大小写，拼错也能搜：deepseek / 影视级 / 二次元 / 低代码">
       <select id="sort" title="排序方式">
+        <option value="score" selected>评分从高到低</option>
         <option value="rec">推荐：国内优先 · 人数</option>
-        <option value="score">评分从高到低</option>
         <option value="scale">使用人数从多到少</option>
       </select>
       <div class="count" id="count"></div>
@@ -777,7 +777,7 @@ const DATA = [
   {n:'Monica', u:'https://monica.im', c:'agent', v:'Monica', co:'中国', p:1, net:0, m:0, mb:'', r:8.1, tier:'B', main:1,
    t:['浏览器助手','模型聚合'], d:'浏览器侧边栏助手，网页总结、写作与多模型切换随手可用，适合日常资料处理。'},
 ];
-const state = {cat:'all', region:'all', price:'all', net:'all', favOnly:false, sort:'rec', q:''};
+const state = {cat:'all', region:'all', price:'all', net:'all', favOnly:false, sort:'score', q:''};
 
 const groupsEl   = document.getElementById('groups');
 const countEl    = document.getElementById('count');
@@ -1015,8 +1015,8 @@ qEl.addEventListener('input', e=>{ state.q = e.target.value; render(); });
 document.getElementById('sort').onchange = e=>{ state.sort = e.target.value; render(); };
 document.getElementById('reset').onclick = ()=>{
   state.cat='all'; state.region='all'; state.price='all'; state.net='all';
-  state.favOnly=false; state.sort='rec'; state.q='';
-  qEl.value=''; document.getElementById('sort').value='rec';
+  state.favOnly=false; state.sort='score'; state.q='';
+  qEl.value=''; document.getElementById('sort').value='score';
   buildFilters(); updateFavUI(); render();
 };
 
