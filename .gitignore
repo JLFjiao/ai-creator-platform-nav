@@ -2,3 +2,7 @@
 Thumbs.db
 *.bak
 .workbuddy/
+_*.py
+_*.json
+_*.png
+_*.html
