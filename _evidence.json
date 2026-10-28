@@ -1,0 +1,1848 @@
+{
+ "Runway": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Sora": {
+  "c": "video",
+  "status": "short",
+  "vids": [
+   {
+    "t": "AI短剧工具对比：Seedance/可灵/Wan/MiniMax/Sora【一分钟一公司】",
+    "a": "一分钟一公司",
+    "l": 0,
+    "pl": 8,
+    "p": "2026-10-05",
+    "b": "BV1sNH46gEpV",
+    "d": "【一分钟一公司】AI短剧/视频生成工具对比：字节Seedance市占超80%；OpenAI Sora API于9月24日下线，年化算力成本超50亿美元、产品收入约140万美元、三十天留存仅1%；可灵4.0十月上线、单次时长翻倍至30秒并支持4K十比特HDR；Seedance把720P生成价打到约0.",
+    "sc": 0.0
+   }
+  ]
+ },
+ "Google Veo / Flow": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Luma Dream Machine": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Pika": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "可灵 AI": {
+  "c": "video",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "seedance2.5对比kling4.0 可灵完胜",
+    "a": "不来嗯忒",
+    "l": 234,
+    "pl": 18187,
+    "p": "2026-09-30",
+    "b": "BV1TLad6pErT",
+    "d": "-",
+    "sc": 0.78
+   },
+   {
+    "t": "可灵4.0和seedance2.5对比",
+    "a": "摆蛋咕",
+    "l": 52,
+    "pl": 9463,
+    "p": "2026-10-16",
+    "b": "BV1SrJt62EM8",
+    "d": "完全相同的提示词和参考图，看看两者的区别。",
+    "sc": 0.705
+   },
+   {
+    "t": "seedance2.5与可灵4.0 Flash对比",
+    "a": "AI强国有你有我",
+    "l": 49,
+    "pl": 6174,
+    "p": "2026-09-29",
+    "b": "BV16YaW6SEGP",
+    "d": "seedance2.5与可灵4.0 Flash对比",
+    "sc": 0.667
+   }
+  ]
+ },
+ "海螺 AI": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "Vidu": {
+  "c": "video",
+  "status": "short",
+  "vids": [
+   {
+    "t": "Wan3.0与ViduQ4新模型对比实测（专属优化提示词）",
+    "a": "鸟叔AIGC导演",
+    "l": 2,
+    "pl": 162,
+    "p": "2026-10-22",
+    "b": "BV1Xon26GEpa",
+    "d": "Wan 3.0、Vidu Q4新模型实测，先说我的个人结论：\n\n只看这组样片的写实画面，我的排序是：\nSeedance 2.5 ＞ Wan 3.0 Prime ＞ MiniMax H3 Max ＞ Vidu Q4。\n\n在我看来，Seedance 2.5在写实画面上依旧遥遥领先，其他三家也各有各的优势",
+    "sc": 0.182
+   },
+   {
+    "t": "4 个国产 AI 视频工具横评：可灵/即梦/海螺/Vidu 到底谁更值得天天用？",
+    "a": "萌萌说AI",
+    "l": 0,
+    "pl": 53,
+    "p": "2026-10-22",
+    "b": "BV1X9ny6iEiW",
+    "d": "```\n🎬 这期把可灵 / 即梦 / 海螺 / Vidu 四个 AI 视频工具拉出来横评，到底谁适合干嘛、坑在哪，一次讲清，帮你别再乱选。\n\n📎 视频里讲不全的，我整理成了《AI视频工具横评对比表》（4工具对比 + 选型矩阵 + 通用提示词结构）：\n👉 去公众号【佳萌学堂】回复关键词「AI视频」，系",
+    "sc": 0.061
+   }
+  ]
+ },
+ "即梦 AI": {
+  "c": "image",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "即梦SD2.5对比可灵O4，你觉得哪个效果好？",
+    "a": "后期帮",
+    "l": 5,
+    "pl": 482,
+    "p": "2026-10-21",
+    "b": "BV1srnz6gEdr",
+    "d": "同一提示词，同一参考图像，直接生成的效果，你觉得哪个好，说说你的看法！",
+    "sc": 0.271
+   },
+   {
+    "t": "AI做图工具有哪些？Midjourney vs 即梦：画质、功能、价格对比，哪个更好用？",
+    "a": "不管这么多",
+    "l": 2,
+    "pl": 292,
+    "p": "2026-10-17",
+    "b": "BV1mdJa6XE8m",
+    "d": "介绍AI作图工具，Midjourney vs 即梦",
+    "sc": 0.146
+   },
+   {
+    "t": "即梦SD2.5 vs 可灵 Kling4.0，谁更胜一筹？",
+    "a": "云观OmniSight_AI",
+    "l": 1,
+    "pl": 198,
+    "p": "2026-10-27",
+    "b": "BV1Doxu6LEpV",
+    "d": "两款 AI 视频模型放在一起，该怎么选？这期从画面、人物动作、配音配乐出发，对比即梦 Seedance 2.5 与可灵 Kling 4.0 的表现",
+    "sc": 0.083
+   }
+  ]
+ },
+ "通义万相": {
+  "c": "image",
+  "status": "short",
+  "vids": [
+   {
+    "t": "国产AI生图怎么选？千问、万相、Seedream三款实测：换装、电商图、海报",
+    "a": "软核狼哥",
+    "l": 9,
+    "pl": 866,
+    "p": "2026-10-16",
+    "b": "BV1UDJC6dEm6",
+    "d": "换装后还是不是本人？\n商品图好看了，产品却被改了？\n海报第一眼很惊艳，放大后文字对不对？\n\n这期拿三个真实使用场景，对比三款国产AI图像模型：\nQwen Image 3.0 Pro\nWan 2.7 Image Pro（通义万相）\nSeedream 5.0 Pro\n\n【测试内容】\n① 用自己的照片换装",
+    "sc": 0.375
+   }
+  ]
+ },
+ "腾讯混元视频": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "智谱清影": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "PixVerse": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "讯飞智作": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "一帧秒创": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "腾讯智影": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "剪映专业版": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "HeyGen": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Synthesia": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "D-ID": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Colossyan": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "InVideo AI": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Pictory": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Descript": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Adobe Firefly Video": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Wonder Studio": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Hedra": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Genmo": {
+  "c": "video",
+  "status": "none",
+  "vids": []
+ },
+ "Midjourney": {
+  "c": "image",
+  "status": "short",
+  "vids": [
+   {
+    "t": "25种画风×6个图片模型｜150张盲选后，我重新认识了这些生图模型",
+    "a": "娜乌斯嘉AI",
+    "l": 9,
+    "pl": 311,
+    "p": "2026-10-26",
+    "b": "BV1XLnd6wEQG",
+    "d": "25种画风，6个图片模型，150张图匿名盲选。先选喜欢的画风，再看适合自己的模型。这是娜娜酱的个人审美选择，不是通用能力榜单。\n\n参测模型：Midjourney V8.2、GPT Image 2、Nano Banana Pro、Seedream 5.0 Pro、FLUX 2 Max、Luma uni",
+    "sc": 0.292
+   },
+   {
+    "t": "AI做图工具有哪些？Midjourney vs 即梦：画质、功能、价格对比，哪个更好用？",
+    "a": "不管这么多",
+    "l": 2,
+    "pl": 292,
+    "p": "2026-10-17",
+    "b": "BV1mdJa6XE8m",
+    "d": "介绍AI作图工具，Midjourney vs 即梦",
+    "sc": 0.146
+   }
+  ]
+ },
+ "Stable Diffusion": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "FLUX": {
+  "c": "image",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "Flux3 Klein 百科全书：与 Qwen Image 2.1 同赛道的性价比生图和编辑模型，到底应该选谁？",
+    "a": "黎黎原上咩",
+    "l": 192,
+    "pl": 3748,
+    "p": "2026-10-27",
+    "b": "BV1ncnZ6nEvZ",
+    "d": "FLUX.3 Image Klein，是 Flux 家族最新开源的图像小模型。它依旧同时支持文生图、图像编辑和参考生图，定位跟最近才发布的 Qwen Image 2.1 相同。更巧的是，它们的模型参数量都比自己的上一代更少，减量不减质，走的",
+    "sc": 0.708
+   },
+   {
+    "t": "Qwen Image 2.1终极测试：文生图对比Krea 2，图像编辑对比Flux克莱因",
+    "a": "Vito的AI力量",
+    "l": 19,
+    "pl": 1120,
+    "p": "2026-09-27",
+    "b": "BV1u2ab6jEeV",
+    "d": "本视频译自我的某管频道\n💡5元赞助获得本频道所有工作流: https://ifdian.net/a/myaiforce\n⬇️ 免费下载视频内工作流: https://pan.baidu.com/s/1VZhT7d5Io82cjWWBUDrijg?pwd=he36\nRunningHub海外版：http",
+    "sc": 0.479
+   },
+   {
+    "t": "25种画风×6个图片模型｜150张盲选后，我重新认识了这些生图模型",
+    "a": "娜乌斯嘉AI",
+    "l": 9,
+    "pl": 311,
+    "p": "2026-10-26",
+    "b": "BV1XLnd6wEQG",
+    "d": "25种画风，6个图片模型，150张图匿名盲选。先选喜欢的画风，再看适合自己的模型。这是娜娜酱的个人审美选择，不是通用能力榜单。\n\n参测模型：Midjourney V8.2、GPT Image 2、Nano Banana Pro、Seedream 5.0 Pro、FLUX 2 Max、Luma uni",
+    "sc": 0.292
+   }
+  ]
+ },
+ "ChatGPT 图像": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Adobe Firefly": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Ideogram": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Leonardo.Ai": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Krea": {
+  "c": "image",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "开源主流图像模型横评：qwen-image2.1 VS Krea2 VS Z-Image。（附带官流V2工作流）！",
+    "a": "敢抢我神棍名号",
+    "l": 151,
+    "pl": 10091,
+    "p": "2026-09-23",
+    "b": "BV1PChx6ZE7w",
+    "d": "👇 点击下方链接注册，领取1000 RH币免费在RTX4090上运行：\n国内 (.cn)：https://www.runninghub.cn/?inviteCode=rh-v1221\n全球 (.ai)： https://www.runninghub.ai/?inviteCode=rh-v1221\n国",
+    "sc": 0.729
+   },
+   {
+    "t": "Qwen Image 2.1终极测试：文生图对比Krea 2，图像编辑对比Flux克莱因",
+    "a": "Vito的AI力量",
+    "l": 19,
+    "pl": 1120,
+    "p": "2026-09-27",
+    "b": "BV1u2ab6jEeV",
+    "d": "本视频译自我的某管频道\n💡5元赞助获得本频道所有工作流: https://ifdian.net/a/myaiforce\n⬇️ 免费下载视频内工作流: https://pan.baidu.com/s/1VZhT7d5Io82cjWWBUDrijg?pwd=he36\nRunningHub海外版：http",
+    "sc": 0.479
+   },
+   {
+    "t": "本地文生图模型实测对比 Qwen image2.1、Klein、Krea2、Zimage四大生图主力军，stonefx交互PS插件comfyui生图#AI工具",
+    "a": "艾迪深",
+    "l": 4,
+    "pl": 259,
+    "p": "2026-10-14",
+    "b": "BV1Jrp16HE4h",
+    "d": "能和Comfyui实时交互的PS插件，AI文生图，AI图片编辑，多图编辑。持续同步更新好用的模型和工作流接入到PS。\n夸克链接：https://pan.quark.cn/s/d9ab829fa2a5?pwd=sA7D",
+    "sc": 0.188
+   }
+  ]
+ },
+ "Recraft": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Freepik AI": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Civitai": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Tensor.Art": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "SeaArt": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "NovelAI": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Bing 图像创建器": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Google ImageFX": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Grok Imagine": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "文心一格": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "腾讯混元图像": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "智谱 CogView": {
+  "c": "image",
+  "status": "short",
+  "vids": [
+   {
+    "t": "国产AI怎么选？DeepSeek、Kimi、豆包等6家，各自强在哪？",
+    "a": "小华聊AI",
+    "l": 22,
+    "pl": 3847,
+    "p": "2026-10-16",
+    "b": "BV11YJQ6gEP6",
+    "d": "读论文、做网页、写代码、日常聊天，应该先找哪个AI？\n这期参考 Artificial Analysis（AA）和 Arena 的公开评测，结合个人使用感受，聊聊 Kimi、千问、智谱GLM、DeepSeek、小米MiMo和豆包，各自有哪些值",
+    "sc": 0.625
+   }
+  ]
+ },
+ "商汤秒画": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "美图 WHEE": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "无界 AI": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "LiblibAI": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "稿定 AI": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Photoroom": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "Magnific": {
+  "c": "image",
+  "status": "none",
+  "vids": []
+ },
+ "GitHub Copilot": {
+  "c": "code",
+  "status": "short",
+  "vids": [
+   {
+    "t": "【从夯到拉】AI 编程 Agent 排名：Claude Code、Codex、Cursor、Copilot 谁夯谁拉？",
+    "a": "cxtiao",
+    "l": 3,
+    "pl": 421,
+    "p": "2026-10-25",
+    "b": "BV1cgHV68ERf",
+    "d": "把现在最火的 10 个 AI 编程工具从夯到拉排了一遍，纯个人排法，不是测评，不同意评论区见。\n\n00:00 开场\n00:11 夯：Claude Code\n00:36 顶级：Codex、Cursor\n01:03 人上人：GitHub Copilot、OpenCode、Cline\n01:39 NPC：",
+    "sc": 0.206
+   },
+   {
+    "t": "2026最佳AI编程智能体？Claude Code、Codex与GitHub Copilot实测对比",
+    "a": "快乐的天才程序员",
+    "l": 1,
+    "pl": 192,
+    "p": "2026-08-31",
+    "b": "BV1zsts6gEnS",
+    "d": "转自 https://www.youtube.com/watch?v=SoP2H4iKpWA\nHappy Code AI（happycodeai.com）：一站式 AI 模型服务平台，持续接入最新 AI 模型，支持稳定 API 调用与站内生",
+    "sc": 0.118
+   }
+  ]
+ },
+ "Cursor": {
+  "c": "code",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "我为什么强烈推荐Cursor的Pro套餐，Grok Bot真的太好用了！",
+    "a": "AI摸鱼的梁师傅",
+    "l": 104,
+    "pl": 18680,
+    "p": "2026-10-13",
+    "b": "BV15epZ61E7F",
+    "d": "这期讲清楚三件事：为什么选 Cursor（官网软件直连、支付宝付款）；Pro 的两个模型池子怎么分（Grok/Composer 一池，Claude/GPT 共享一池）；附赠的 Grok Bot 怎么用——它有自己的云端电脑，合上 Mac 也在替你干活：定时简报、盯 PR、管邮件日历，还能多 Bot ",
+    "sc": 0.618
+   },
+   {
+    "t": "Cursor vs Claude Code vs Codex哪个好？三大AI编程工具区别与选择指南",
+    "a": "不管这么多",
+    "l": 85,
+    "pl": 6977,
+    "p": "2026-10-09",
+    "b": "BV1t9pt6JETF",
+    "d": "三大编程工具要如何选？",
+    "sc": 0.549
+   },
+   {
+    "t": "AI编程工具大横评：20款从夯到拉，Copilot/Cursor/Claude谁在裸泳？",
+    "a": "马士兵学堂",
+    "l": 112,
+    "pl": 606,
+    "p": "2026-10-14",
+    "b": "BV1VSpC6ME6E",
+    "d": "",
+    "sc": 0.422
+   }
+  ]
+ },
+ "Claude Code": {
+  "c": "code",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "Cursor vs Claude Code vs Codex哪个好？三大AI编程工具区别与选择指南",
+    "a": "不管这么多",
+    "l": 85,
+    "pl": 6977,
+    "p": "2026-10-09",
+    "b": "BV1t9pt6JETF",
+    "d": "三大编程工具要如何选？",
+    "sc": 0.549
+   },
+   {
+    "t": "2026 AI 编程工具从夯到拉怎么选：Claude Code、Codex、Cursor、Trae 等 10 个，按干什么活加预算，一张表选好",
+    "a": "优哥跨境",
+    "l": 18,
+    "pl": 1241,
+    "p": "2026-10-21",
+    "b": "BV1qGnN6wEvm",
+    "d": "10 个 AI 编程工具按“干什么活 + 预算”分 4 档，附一张选择表。Claude Code、Codex 是我天天在用的，其余 8 个按官方页面讲，价格 2026-10-11 现抓。\n没看过上一期也能直接看；上一期：《Claude 还是 Codex 怎么选？》BV1QmpE6YEEP。图文版和更",
+    "sc": 0.353
+   },
+   {
+    "t": "AGI一到，人类就能赛博永生？",
+    "a": "凹凸君Hedi",
+    "l": 16,
+    "pl": 1385,
+    "p": "2026-10-24",
+    "b": "BV1Qzne6KEkx",
+    "d": "我把同一个问题分别问了ChatGPT、Claude Code和Gemini Argon：谁最有可能先发明AGI？结果有两个都选了Google DeepMind，只有ChatGPT选了自己家。这期我想认真讲讲，为什么我也押Google。\n· 实测Argon：15x15迷宫、模仿童锦程语录的语气，再加上",
+    "sc": 0.353
+   }
+  ]
+ },
+ "OpenAI Codex": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "Windsurf": {
+  "c": "code",
+  "status": "short",
+  "vids": [
+   {
+    "t": "Windsurf实测：AI编程IDE新选手能否挑战Cursor地位 | AI Engineer",
+    "a": "量子菠萝_",
+    "l": 0,
+    "pl": 73,
+    "p": "2026-09-05",
+    "b": "BV1jvt76nE9j",
+    "d": "Codeium推出的Windsurf号称比Cursor更懂代码上下文，实际体验究竟如何？\n1. 基于真实Python+FastAPI项目测试，Windsurf的Cascade流式编辑在多文件联动修改时响应更连贯，减少手动触发次数。\n2. 其深度上下文引擎能自动关联测试文件、配置与文档，在重构时提供更",
+    "sc": 0.059
+   },
+   {
+    "t": "Windsurf AI代码编辑器新手教程：比Cursor更好用吗？",
+    "a": "快乐的天才程序员",
+    "l": 0,
+    "pl": 26,
+    "p": "2026-10-04",
+    "b": "BV1c5HL6vEzX",
+    "d": "转自 https://www.youtube.com/watch?v=8TcWGk1DJVs\nHappy Code AI（happycodeai.com）：一站式 AI 模型服务平台，持续接入最新 AI 模型，支持稳定 API 调用与站内生图，新用户专享 $100 试用额度。\n翻译：Happy Co",
+    "sc": 0.01
+   }
+  ]
+ },
+ "Gemini Code Assist": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "Amazon Q Developer": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "Tabnine": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "Replit": {
+  "c": "code",
+  "status": "short",
+  "vids": [
+   {
+    "t": "Cursor、Lovable、Replit、v0到底有什么区别？Vibe Coding工具应该怎么选？",
+    "a": "不管这么多",
+    "l": 1,
+    "pl": 54,
+    "p": "2026-10-14",
+    "b": "BV132pz69E3j",
+    "d": "几个vibe coding工具的对比",
+    "sc": 0.059
+   }
+  ]
+ },
+ "Lovable": {
+  "c": "code",
+  "status": "short",
+  "vids": [
+   {
+    "t": "Cursor、Lovable、Replit、v0到底有什么区别？Vibe Coding工具应该怎么选？",
+    "a": "不管这么多",
+    "l": 1,
+    "pl": 54,
+    "p": "2026-10-14",
+    "b": "BV132pz69E3j",
+    "d": "几个vibe coding工具的对比",
+    "sc": 0.059
+   }
+  ]
+ },
+ "Bolt.new": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "v0": {
+  "c": "code",
+  "status": "short",
+  "vids": [
+   {
+    "t": "Cursor、Lovable、Replit、v0到底有什么区别？Vibe Coding工具应该怎么选？",
+    "a": "不管这么多",
+    "l": 1,
+    "pl": 54,
+    "p": "2026-10-14",
+    "b": "BV132pz69E3j",
+    "d": "几个vibe coding工具的对比",
+    "sc": 0.059
+   }
+  ]
+ },
+ "Sourcegraph Cody": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "Qodo": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "Aider": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "Cline": {
+  "c": "code",
+  "status": "short",
+  "vids": [
+   {
+    "t": "【从夯到拉】AI 编程 Agent 排名：Claude Code、Codex、Cursor、Copilot 谁夯谁拉？",
+    "a": "cxtiao",
+    "l": 3,
+    "pl": 421,
+    "p": "2026-10-25",
+    "b": "BV1cgHV68ERf",
+    "d": "把现在最火的 10 个 AI 编程工具从夯到拉排了一遍，纯个人排法，不是测评，不同意评论区见。\n\n00:00 开场\n00:11 夯：Claude Code\n00:36 顶级：Codex、Cursor\n01:03 人上人：GitHub Copilot、OpenCode、Cline\n01:39 NPC：",
+    "sc": 0.206
+   }
+  ]
+ },
+ "Devin": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "JetBrains AI": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "通义灵码": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "文心快码 Comate": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "腾讯云 CodeBuddy": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "豆包 MarsCode": {
+  "c": "code",
+  "status": "short",
+  "vids": [
+   {
+    "t": "自费实测！这堆 AI Agent，到底哪个值得你用？【Agent大横评】",
+    "a": "三颗门牙X",
+    "l": 3981,
+    "pl": 233750,
+    "p": "2026-09-28",
+    "b": "BV1phaq6bEyQ",
+    "d": "现在的 AI Agent，一个比一个能吹，到底哪个真能干活？\n这期我自费充了会员，把 Codex、WorkBuddy、DeepSeek Harness、千问办公、豆包工作、Kimi、GLM、MiniMax 拉出来试了一圈。从 PPT、Exc",
+    "sc": 0.931
+   },
+   {
+    "t": "国产AI怎么选？DeepSeek、Kimi、豆包等6家，各自强在哪？",
+    "a": "小华聊AI",
+    "l": 22,
+    "pl": 3847,
+    "p": "2026-10-16",
+    "b": "BV11YJQ6gEP6",
+    "d": "读论文、做网页、写代码、日常聊天，应该先找哪个AI？\n这期参考 Artificial Analysis（AA）和 Arena 的公开评测，结合个人使用感受，聊聊 Kimi、千问、智谱GLM、DeepSeek、小米MiMo和豆包，各自有哪些值得关注的能力。\n也讲清楚几个容易混淆的问题：为什么不同榜单的",
+    "sc": 0.451
+   }
+  ]
+ },
+ "华为云 CodeArts Snap": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "讯飞星火代码": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "CodeGeeX": {
+  "c": "code",
+  "status": "short",
+  "vids": [
+   {
+    "t": "【2026最新】IDEA和VSCode必装神级插件，CodeGeeX实用功能盘点！无偿自取",
+    "a": "bili_4428645349",
+    "l": 25,
+    "pl": 909,
+    "p": "2026-10-14",
+    "b": "BV1t7pC6FEsz",
+    "d": "",
+    "sc": 0.373
+   }
+  ]
+ },
+ "商汤代码小浣熊": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "aiXcoder": {
+  "c": "code",
+  "status": "none",
+  "vids": []
+ },
+ "Trae": {
+  "c": "code",
+  "status": "short",
+  "vids": [
+   {
+    "t": "2026 AI 编程工具从夯到拉怎么选：Claude Code、Codex、Cursor、Trae 等 10 个，按干什么活加预算，一张表选好",
+    "a": "优哥跨境",
+    "l": 18,
+    "pl": 1241,
+    "p": "2026-10-21",
+    "b": "BV1qGnN6wEvm",
+    "d": "10 个 AI 编程工具按“干什么活 + 预算”分 4 档，附一张选择表。Claude Code、Codex 是我天天在用的，其余 8 个按官方页面讲，价格 2026-10-11 现抓。\n没看过上一期也能直接看；上一期：《Claude 还是 Codex 怎么选？》BV1QmpE6YEEP。图文版和更",
+    "sc": 0.353
+   },
+   {
+    "t": "TRAE不好用？Cursor砍额度，这款能“自定义API+高完整度”的 AI IDE 才是真神？",
+    "a": "陨落睡不醒",
+    "l": 10,
+    "pl": 326,
+    "p": "2026-10-12",
+    "b": "BV1abp96aEJi",
+    "d": "Breezell 是一款基于 VS Code 打造的 AI 编程编辑器，保留了开发者熟悉的 VS Code 操作方式，同时集成 AI Agent、代码库理解、多模型接入和开发工具调用等能力。\n经过十个月的潜心研究，我们首发推出Entangl",
+    "sc": 0.216
+   }
+  ]
+ },
+ "DeepSeek": {
+  "c": "chat",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "【新宿决战】DeepSeek娘VS豆包",
+    "a": "明末召唤师",
+    "l": 239310,
+    "pl": 3439978,
+    "p": "2026-09-28",
+    "b": "BV1dsai6CErz",
+    "d": "原作：咒术回战\n原视频：\nhttps://www.youtube.com/watch?v=X8xLl_802UU\n[MMV] Gojo vs Sukuna | Jujutsu Kaisen x coldrain\n作者：Ninjaristic",
+    "sc": 0.976
+   },
+   {
+    "t": "DeepSeek新模型能和GPT-6 Astra 对比实测！以小博大，效果如何？",
+    "a": "神烦老狗",
+    "l": 5441,
+    "pl": 238007,
+    "p": "2026-10-18",
+    "b": "BV14nnM6WErB",
+    "d": "",
+    "sc": 0.952
+   },
+   {
+    "t": "自费实测！这堆 AI Agent，到底哪个值得你用？【Agent大横评】",
+    "a": "三颗门牙X",
+    "l": 3981,
+    "pl": 233752,
+    "p": "2026-09-28",
+    "b": "BV1phaq6bEyQ",
+    "d": "现在的 AI Agent，一个比一个能吹，到底哪个真能干活？\n这期我自费充了会员，把 Codex、WorkBuddy、DeepSeek Harness、千问办公、豆包工作、Kimi、GLM、MiniMax 拉出来试了一圈。从 PPT、Excel、网页，到动画、3D 看房和交互原型，看看实际效果，也聊",
+    "sc": 0.935
+   }
+  ]
+ },
+ "Kimi": {
+  "c": "chat",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "自费实测！这堆 AI Agent，到底哪个值得你用？【Agent大横评】",
+    "a": "三颗门牙X",
+    "l": 3981,
+    "pl": 233752,
+    "p": "2026-09-28",
+    "b": "BV1phaq6bEyQ",
+    "d": "现在的 AI Agent，一个比一个能吹，到底哪个真能干活？\n这期我自费充了会员，把 Codex、WorkBuddy、DeepSeek Harness、千问办公、豆包工作、Kimi、GLM、MiniMax 拉出来试了一圈。从 PPT、Excel、网页，到动画、3D 看房和交互原型，看看实际效果，也聊",
+    "sc": 0.935
+   },
+   {
+    "t": "45 - Kimi K3.1 Pro杀入前四斩破700分，力压Astra！画图开启全员盲测",
+    "a": "王郁的小站",
+    "l": 102,
+    "pl": 4481,
+    "p": "2026-10-24",
+    "b": "BV1yUHK6JE6d",
+    "d": "40个现役大模型同台竞技！本期迎来重量级国产黑马 Kimi K3.1 Pro，总分701.5强势杀入全榜第4，成功冲进700分俱乐部！官方宣称打平甚至超越 GPT-6 Astra，实测理综全面反超，总分力压 Astra 4.5分，且耗时和成本暴降60%！另外，全新画图科目上线「挖掘机动画盲测」，不设",
+    "sc": 0.645
+   },
+   {
+    "t": "国模巅峰之战！DeepSeek Flash 1017 大战 Kimi K3",
+    "a": "老程聊AI",
+    "l": 72,
+    "pl": 3301,
+    "p": "2026-10-20",
+    "b": "BV1iGnA6WEDA",
+    "d": "你觉得哪个模型表现更好？",
+    "sc": 0.597
+   }
+  ]
+ },
+ "ChatGPT": {
+  "c": "chat",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "DeepSeek VS Cladue VS ChatGPT VS 混元，谁的审美更胜一筹？",
+    "a": "洛洛ROLO",
+    "l": 120,
+    "pl": 7871,
+    "p": "2026-10-03",
+    "b": "BV1D4He6MEso",
+    "d": "",
+    "sc": 0.694
+   },
+   {
+    "t": "AI拳皇争霸赛第十三期，GPT 6.1 Terra VS Claude Sonnet 5.5",
+    "a": "铂金小鸟",
+    "l": 20,
+    "pl": 650,
+    "p": "2026-10-28",
+    "b": "BV1YixG64EEX",
+    "d": "「AI Fight」大模型拳皇争霸赛第十三期，本期OpenAI 的 ChatGPT 6.1 Terra VS Anthropic 的 Claude Sonnet 5.5。\n\n\n纯属娱乐，不代表大模型真实能力！",
+    "sc": 0.435
+   },
+   {
+    "t": "ChatGPT 和 Claude 谁更强：一份不站队的判断法",
+    "a": "云泊飘",
+    "l": 2,
+    "pl": 373,
+    "p": "2026-10-16",
+    "b": "BV1zNJb6cEDa",
+    "d": "",
+    "sc": 0.258
+   }
+  ]
+ },
+ "Claude": {
+  "c": "chat",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "GPT6 Astra 发布实测，对比 Claude Fable 5.1，两个全栈项目实测",
+    "a": "程序员阿江-Relakkes",
+    "l": 412,
+    "pl": 32820,
+    "p": "2026-09-05",
+    "b": "BV18ct167Ev7",
+    "d": "OpenAI 新模型 GPT-6 Astra 终于可以使用。\n\n这一期先讲清楚这次发布的重点：官方重点提升了哪些能力，榜单和使用条件应该怎么看。然后回到实际开发，把它与上一期的 Claude Fable 5.1 放在两个具体项目里对比。\n\n第一个是在线表格：不只看页面，还要检查公式计算、依赖更新、循",
+    "sc": 0.831
+   },
+   {
+    "t": "Opus 5.5 vs GPT-6 Astra：同样30秒动画，差距竟然这么大？",
+    "a": "薛定谔船长",
+    "l": 35,
+    "pl": 2227,
+    "p": "2026-10-24",
+    "b": "BV1qPHN6hEER",
+    "d": "让 Claude Opus 5.5 和 Codex 里的 GPT-6 Astra 分别制作一条30秒MG动画，最终效果究竟差多少？\n两个AI使用基本相同的提示词，要求制作一段关于短视频剪辑工作流程的创意动画。",
+    "sc": 0.548
+   },
+   {
+    "t": "【震惊瘫坐】Claude Opus5.5 豆包 deepseek生成视频对比",
+    "a": "月光中的重逢",
+    "l": 23,
+    "pl": 2638,
+    "p": "2026-09-24",
+    "b": "BV1UahZ6sErp",
+    "d": "参考视频作者：RULIWEB\n采用github：PDoomVideo重渲染",
+    "sc": 0.508
+   }
+  ]
+ },
+ "Gemini": {
+  "c": "chat",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "普通人该怎么选AI会员？GPT、Gemini、Grok、Claude一次讲明白",
+    "a": "深潜AI",
+    "l": 26,
+    "pl": 1876,
+    "p": "2026-10-27",
+    "b": "BV1BjxM69EEp",
+    "d": "简介无推广内容\n视频中演示网站有正规ICP备案",
+    "sc": 0.5
+   },
+   {
+    "t": "疯狂的鹈鹕！国内外12大主流模型画鹈鹕骑车对比合集｜含GPT、Claude、Gemini、DeepSeek、Kimi K3.1、Grok、MiniMax3.1等",
+    "a": "二两与海",
+    "l": 4,
+    "pl": 128,
+    "p": "2026-10-26",
+    "b": "BV19gnd6vEQu",
+    "d": "同一句提示词，国内外12大主流模型画鹈鹕骑车动画对比合集：包含OpenAi的GPT-6、6.1、Astra；Anthropic的 opus5.5、Sonnet5、谷歌的Gemini3.8 Flash和 Gemini 4 Argon；豆包的seed 2.1 lite和 seed 2.1 Turbo；D",
+    "sc": 0.282
+   },
+   {
+    "t": "Claude Duet 比 Muse 强在哪？",
+    "a": "计算机Python集训",
+    "l": 3,
+    "pl": 81,
+    "p": "2026-10-27",
+    "b": "BV1zLxM6sEAv",
+    "d": "本期对比 Claude Duet 与 Muse 的功能特点和使用体验，聊聊两者各自适合什么场景。\n视频配套资料见置顶评论，可免费领取～\n【UP主整理的 AI 工具教程与配套资料】\n1、GPT-6、Gemini-3、NotebookLM 使用技巧\n2、GitHub 新手指南\n3、Claude Code",
+    "sc": 0.218
+   }
+  ]
+ },
+ "Grok": {
+  "c": "chat",
+  "status": "short",
+  "vids": [
+   {
+    "t": "普通人该怎么选AI会员？GPT、Gemini、Grok、Claude一次讲明白",
+    "a": "深潜AI",
+    "l": 26,
+    "pl": 1876,
+    "p": "2026-10-27",
+    "b": "BV1BjxM69EEp",
+    "d": "简介无推广内容\n视频中演示网站有正规ICP备案",
+    "sc": 0.5
+   },
+   {
+    "t": "疯狂的鹈鹕！国内外12大主流模型画鹈鹕骑车对比合集｜含GPT、Claude、Gemini、DeepSeek、Kimi K3.1、Grok、MiniMax3.1等",
+    "a": "二两与海",
+    "l": 4,
+    "pl": 128,
+    "p": "2026-10-26",
+    "b": "BV19gnd6vEQu",
+    "d": "同一句提示词，国内外12大主流模型画鹈鹕骑车动画对比合集：包含OpenAi的GPT-6、6.1、Astra；Anthropic的 opus5.5、Sonnet5、谷歌的Gemini3.8 Flash和 Gemini 4 Argon；豆包的seed 2.1 lite和 seed 2.1 Turbo；D",
+    "sc": 0.282
+   }
+  ]
+ },
+ "Microsoft Copilot": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "Perplexity": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "Poe": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "Le Chat": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "豆包": {
+  "c": "chat",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "【新宿决战】DeepSeek娘VS豆包",
+    "a": "明末召唤师",
+    "l": 239310,
+    "pl": 3439978,
+    "p": "2026-09-28",
+    "b": "BV1dsai6CErz",
+    "d": "原作：咒术回战\n原视频：\nhttps://www.youtube.com/watch?v=X8xLl_802UU\n[MMV] Gojo vs Sukuna | Jujutsu Kaisen x coldrain\n作者：Ninjaristic",
+    "sc": 0.976
+   },
+   {
+    "t": "自费实测！这堆 AI Agent，到底哪个值得你用？【Agent大横评】",
+    "a": "三颗门牙X",
+    "l": 3981,
+    "pl": 233752,
+    "p": "2026-09-28",
+    "b": "BV1phaq6bEyQ",
+    "d": "现在的 AI Agent，一个比一个能吹，到底哪个真能干活？\n这期我自费充了会员，把 Codex、WorkBuddy、DeepSeek Harness、千问办公、豆包工作、Kimi、GLM、MiniMax 拉出来试了一圈。从 PPT、Excel、网页，到动画、3D 看房和交互原型，看看实际效果，也聊",
+    "sc": 0.935
+   },
+   {
+    "t": "国产AI怎么选？DeepSeek、Kimi、豆包等6家，各自强在哪？",
+    "a": "小华聊AI",
+    "l": 22,
+    "pl": 3847,
+    "p": "2026-10-16",
+    "b": "BV11YJQ6gEP6",
+    "d": "读论文、做网页、写代码、日常聊天，应该先找哪个AI？\n这期参考 Artificial Analysis（AA）和 Arena 的公开评测，结合个人使用感受，聊聊 Kimi、千问、智谱GLM、DeepSeek、小米MiMo和豆包，各自有哪些值得关注的能力。\n也讲清楚几个容易混淆的问题：为什么不同榜单的",
+    "sc": 0.532
+   }
+  ]
+ },
+ "通义千问": {
+  "c": "chat",
+  "status": "short",
+  "vids": [
+   {
+    "t": "Claude Code 接国产大模型：百炼千问、DeepSeek、Kimi 三家官方配置一次讲清（附完整变量、价格、排错表）",
+    "a": "优哥跨境",
+    "l": 19,
+    "pl": 1022,
+    "p": "2026-10-24",
+    "b": "BV1wVHK65Egt",
+    "d": "Claude Code 不换工具，只换后面的模型：阿里云百炼（通义千问）、DeepSeek、Kimi 三家官方文档里的 Claude Code 接入写法，一次讲清。\n本机真跑一个中文任务，附三家按量价格对比、哪些功能不一样、排错表。\n百炼部分为本机实测；DeepSeek、Kimi 按官方文档讲解，未",
+    "sc": 0.435
+   },
+   {
+    "t": "一次性盘点6款值得体验的国产头部大模型：豆包、通义千问、DeepSeek、Kimi、智谱GLM、文心一言。",
+    "a": "徐万东AI游戏开发版",
+    "l": 3,
+    "pl": 539,
+    "p": "2026-10-22",
+    "b": "BV1vinm61ESm",
+    "d": "一次性盘点6款值得体验的国产头部大模型：豆包、通义千问、DeepSeek、Kimi、智谱GLM、文心一言。\n没有绝对最强，不同模型各有擅长。\n✅豆包：综合体验好，情绪价值拉满，新手首选\n✅通义千问：老模型训练新模型，综合能力很强\n✅DeepSeek：圈内大名鼎鼎蓝色大肥鱼，性价比很高\n✅Kimi：长",
+    "sc": 0.339
+   }
+  ]
+ },
+ "文心一言": {
+  "c": "chat",
+  "status": "short",
+  "vids": [
+   {
+    "t": "一次性盘点6款值得体验的国产头部大模型：豆包、通义千问、DeepSeek、Kimi、智谱GLM、文心一言。",
+    "a": "徐万东AI游戏开发版",
+    "l": 3,
+    "pl": 539,
+    "p": "2026-10-22",
+    "b": "BV1vinm61ESm",
+    "d": "一次性盘点6款值得体验的国产头部大模型：豆包、通义千问、DeepSeek、Kimi、智谱GLM、文心一言。\n没有绝对最强，不同模型各有擅长。\n✅豆包：综合体验好，情绪价值拉满，新手首选\n✅通义千问：老模型训练新模型，综合能力很强\n✅DeepSeek：圈内大名鼎鼎蓝色大肥鱼，性价比很高\n✅Kimi：长",
+    "sc": 0.339
+   }
+  ]
+ },
+ "智谱清言": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "腾讯元宝": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "讯飞星火": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "百小应": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "天工": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "跃问": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "商量": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "纳米 AI 搜索": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "秘塔 AI 搜索": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "Groq": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "Together AI": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "OpenRouter": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "Hugging Face": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "Cohere": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "Character.AI": {
+  "c": "chat",
+  "status": "none",
+  "vids": []
+ },
+ "Suno": {
+  "c": "audio",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "【suno v6 拉完了】一个简单对比，告诉你suno v6到底有多拉",
+    "a": "Highborn",
+    "l": 68,
+    "pl": 9629,
+    "p": "2026-09-12",
+    "b": "BV1FHY26nEDV",
+    "d": "前4:00是v5.5，后面是v6的重制（直接重新生成，非cover非remix，因为我要测试v6的编曲逻辑和语法）\n\n直接上结论，如果只是使用v6制作pop、rock这类大众流派的歌曲，或者广告配乐，效果其实还行，但是如果你的偏好和光谱是小",
+    "sc": 0.577
+   },
+   {
+    "t": "sunoV6和YuE2模型音乐生成对比",
+    "a": "冷马酷",
+    "l": 10,
+    "pl": 442,
+    "p": "2026-10-11",
+    "b": "BV15CpE6KEWj",
+    "d": "用两款ai音乐模型进行同一首歌的翻唱效果对比",
+    "sc": 0.308
+   },
+   {
+    "t": "国内外AI音乐大模型实测对比｜MurekaV9.5 VS Suno V6，哪家更胜一筹？",
+    "a": "苏楚力AI音乐社",
+    "l": 6,
+    "pl": 165,
+    "p": "2026-10-28",
+    "b": "BV1xgxg6qEpj",
+    "d": "",
+    "sc": 0.231
+   }
+  ]
+ },
+ "Udio": {
+  "c": "audio",
+  "status": "short",
+  "vids": [
+   {
+    "t": "VoiceStudio 对决 ElevenLabs：646种语言对32种，哪个声音克隆更强？",
+    "a": "TadReamk泰德瑞科",
+    "l": 1,
+    "pl": 41,
+    "p": "2026-10-16",
+    "b": "BV1LYJD6HErX",
+    "d": "VoiceStudio 和 ElevenLabs 都能用一小段录音克隆你的声音。ElevenLabs 在云端运行，支持大约 32 种语言；VoiceStudio 免费、开源，在你自己的电脑上运行，号称支持 646 种，前提是你的显卡带得动。我们让两者做同一件事，再看看小字。你会选哪一个？",
+    "sc": 0.077
+   }
+  ]
+ },
+ "ElevenLabs": {
+  "c": "audio",
+  "status": "ok",
+  "vids": [
+   {
+    "t": "Elevenlabs vs Suno，ai配音领域到底谁更强？",
+    "a": "不管这么多",
+    "l": 1,
+    "pl": 107,
+    "p": "2026-10-19",
+    "b": "BV1eyn76ZEhB",
+    "d": "介绍ai配音",
+    "sc": 0.135
+   },
+   {
+    "t": "VoiceStudio 对决 ElevenLabs：646种语言对32种，哪个声音克隆更强？",
+    "a": "TadReamk泰德瑞科",
+    "l": 1,
+    "pl": 41,
+    "p": "2026-10-16",
+    "b": "BV1LYJD6HErX",
+    "d": "VoiceStudio 和 ElevenLabs 都能用一小段录音克隆你的声音。ElevenLabs 在云端运行，支持大约 32 种语言；VoiceStudio 免费、开源，在你自己的电脑上运行，号称支持 646 种，前提是你的显卡带得动。我们让两者做同一件事，再看看小字。你会选哪一个？",
+    "sc": 0.077
+   },
+   {
+    "t": "12 秒样本克隆一个声音，和 ElevenLabs 同一句对比",
+    "a": "bili_33340723185",
+    "l": 0,
+    "pl": 8,
+    "p": "2026-10-23",
+    "b": "BV1hVnh64E9o",
+    "d": "在游戏里克隆一个声音，再和 ElevenLabs 同一句对比 🎙️\n样本是 12 秒、用 ElevenLabs 的 Voice Design 设计出来的 AI 声音（不是真人）；导入、分析大约 6 秒，全程在本机，样本和声音都不上传。\n同样三句话：ElevenLabs 念一遍，她用本地克隆的声音实时",
+    "sc": 0.0
+   }
+  ]
+ },
+ "Murf AI": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "PlayHT": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "Resemble AI": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "Adobe Podcast": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "LALAL.AI": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "Moises": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "LANDR": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "AIVA": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "Soundraw": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "Stable Audio": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "Riffusion": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "Voicemod": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "Speechify": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "WellSaid Labs": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "网易天音": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "魔音工坊": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "MiniMax Audio": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "剪映": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "标贝悦读": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "TME Studio": {
+  "c": "audio",
+  "status": "none",
+  "vids": []
+ },
+ "Notion AI": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Microsoft 365 Copilot": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Google Workspace Gemini": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Grammarly": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Jasper": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Copy.ai": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Writesonic": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "QuillBot": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Otter.ai": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Fireflies.ai": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Fathom": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Gamma": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Tome": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Beautiful.ai": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "NotebookLM": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "ChatPDF": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "PDF.ai": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Readwise Reader": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Elicit": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Consensus": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "SciSpace": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "飞书智能伙伴": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "钉钉 AI 助理": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "WPS AI": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "讯飞智文": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "百度文库 AI": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "夸克": {
+  "c": "office",
+  "status": "short",
+  "vids": [
+   {
+    "t": "【10月AI眼镜推荐】2026年AI眼镜怎么选？18款热门AI智能眼镜大横评，雷鸟、Rokid、Xreal、INMO、华为、小米、夸克",
+    "a": "数码熊猫君",
+    "l": 464,
+    "pl": 19264,
+    "p": "2026-10-10",
+    "b": "BV1Qapg66Ew5",
+    "d": "本期视频推荐AI&amp;AR眼镜，从眼镜分类、重量、近视调节、续航表现和生态适配等要素，告诉不同预算和需求的用户该如何选择？产品价格覆盖750—3500元之间，包括了雷鸟、Rokid、Xreal、INMO、华为、小米、夸克等多个品牌的热门型号，里面有AI音频款，有AI拍摄款，也有AR观影款，产品型",
+    "sc": 0.648
+   }
+  ]
+ },
+ "腾讯文档": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "iSlide": {
+  "c": "office",
+  "status": "none",
+  "vids": []
+ },
+ "Figma": {
+  "c": "design",
+  "status": "short",
+  "vids": [
+   {
+    "t": "AI产品经理做原型，AI工具到底怎么选？",
+    "a": "AI产品经理PMGao",
+    "l": 27,
+    "pl": 1227,
+    "p": "2026-10-26",
+    "b": "BV1dgnZ6VEUp",
+    "d": "Figma Make、Cursor、Claude Code等等等工具这么多，到底该用哪个？先想清楚你要做个Demo、交互原型，还是把产品真正上线，聊聊产品经理怎么按自己的基础和目标选工具。",
+    "sc": 0.463
+   },
+   {
+    "t": "告别手动连线！用 Figma Make 快速把静态设计转成可交互原型",
+    "a": "设计门外憨",
+    "l": 8,
+    "pl": 204,
+    "p": "2026-10-27",
+    "b": "BV1etnR6NECR",
+    "d": "【视频简介】\n本期视频分享了使用 Figma Make 将现有 Figma 设计转化为交互式原型的实用方法，重点探讨了准备设计资产、对比传统与AI辅助原型工作流、编写交互提示词等实操技巧，适合 UX 设计师与产品经理参考交流。\n\n【你将看到",
+    "sc": 0.278
+   }
+  ]
+ },
+ "Canva": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Adobe Express": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Framer": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Webflow": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Relume": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Uizard": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Visily": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Motiff 妙多": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "即时设计": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "MasterGo": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Pixso": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "稿定设计": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "创客贴": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "图怪兽": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "美图设计室": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Looka": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Coolors": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Vectorizer": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Spline": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "墨刀": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "蓝湖": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Clipdrop": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "Remove.bg": {
+  "c": "design",
+  "status": "none",
+  "vids": []
+ },
+ "扣子 Coze": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Dify": {
+  "c": "agent",
+  "status": "short",
+  "vids": [
+   {
+    "t": "别再把n8n、Dify、Coze当成一类工具了！2026 AI工作流 Workflow到底怎么选？",
+    "a": "不管这么多",
+    "l": 7,
+    "pl": 366,
+    "p": "2026-10-14",
+    "b": "BV1B1pi6oECp",
+    "d": "3个工作流工具对比",
+    "sc": 0.321
+   },
+   {
+    "t": "Octop功能全拆解：真实任务实测，和WorkBuddy、OpenClaw、Dify怎么选",
+    "a": "小新评AI",
+    "l": 6,
+    "pl": 420,
+    "p": "2026-10-22",
+    "b": "BV1aznm6CEvY",
+    "d": "Octop综合评测：文件处理、知识库、记忆、技能、自动化、通道与连接器，以及和WorkBuddy、OpenClaw、Dify的使用区别。\n本次在Mac本机部署Octop 1.0.2。用7行自造订单跑去重与汇总，实际生成文件，合计500元；用自造设备手册测试有答案与无答案问题；一次性定时任务到点生成验",
+    "sc": 0.304
+   }
+  ]
+ },
+ "n8n": {
+  "c": "agent",
+  "status": "short",
+  "vids": [
+   {
+    "t": "别再把n8n、Dify、Coze当成一类工具了！2026 AI工作流 Workflow到底怎么选？",
+    "a": "不管这么多",
+    "l": 7,
+    "pl": 366,
+    "p": "2026-10-14",
+    "b": "BV1B1pi6oECp",
+    "d": "3个工作流工具对比",
+    "sc": 0.321
+   }
+  ]
+ },
+ "Zapier": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Make": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Relevance AI": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Flowise": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Langflow": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "CrewAI": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Manus": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Genspark": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Voiceflow": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Botpress": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Chatbase": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "CustomGPT.ai": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Glide": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Softr": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Bubble": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Airtable AI": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Retool": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "阿里云百炼": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "百度千帆": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "腾讯元器": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "讯飞星辰": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "简道云": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "明道云": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ },
+ "Monica": {
+  "c": "agent",
+  "status": "none",
+  "vids": []
+ }
+}

@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 创作者平台导航 · 国内优先 · 附 B 站测评证据</title>
+<style>
+  :root{
+    --bg:#f6f8fb;
+    --card:#ffffff;
+    --ink:#141821;
+    --muted:#6b7280;
+    --line:#e4e8ef;
+    --accent:#2563eb;
+    --accent-soft:#e8f0fe;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:36px 24px 80px}
+
+  header{margin-bottom:22px}
+  h1{
+    font-size:27px;line-height:1.3;margin:0 0 10px;font-weight:650;letter-spacing:-0.02em;
+  }
+  .sub{color:#4b5563;font-size:13.5px;margin:0;max-width:900px}
+  .sub b{color:var(--ink);font-weight:600}
+
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .stat{
+    background:#fff;border:1px solid var(--line);border-radius:9px;
+    padding:9px 14px;font-size:12.5px;color:var(--muted);
+  }
+  .stat b{display:block;font-size:19px;color:var(--ink);font-weight:650;line-height:1.25;font-variant-numeric:tabular-nums}
+
+  .toolbar{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px;margin:20px 0 22px;position:sticky;top:0;z-index:20;
+    box-shadow:0 2px 10px rgba(20,24,33,.04);
+  }
+  .searchrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  #q{
+    flex:1;min-width:240px;
+    border:1px solid var(--line);border-radius:8px;
+    padding:10px 13px;font-size:14px;font-family:inherit;
+    background:#fbfcfe;color:var(--ink);outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  #q:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);background:#fff}
+  .count{color:var(--muted);font-size:12.5px;white-space:nowrap;font-variant-numeric:tabular-nums;width:142px;text-align:right;flex-shrink:0;overflow:hidden;text-overflow:ellipsis}
+  .reset{
+    border:1px solid var(--line);background:#fff;color:#4b5563;border-radius:8px;
+    padding:9px 12px;font-size:12.5px;cursor:pointer;font-family:inherit;
+  }
+  .reset:hover{border-color:#c7cdd6;color:var(--ink)}
+  select#sort{
+    border:1px solid var(--line);border-radius:8px;background:#fff;color:#374151;
+    padding:9px 10px;font-size:12.5px;font-family:inherit;cursor:pointer;outline:none;
+  }
+  select#sort:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .btn-group{display:flex;gap:8px;flex-shrink:0;margin-left:auto}
+
+  .fgroup{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:11px}
+  .flabel{font-size:11.5px;color:#9aa1ac;letter-spacing:.04em;width:52px;flex-shrink:0}
+  .chip{
+    border:1px solid var(--line);background:#fff;color:#374151;
+    border-radius:999px;padding:5px 12px;font-size:12.5px;cursor:pointer;
+    font-family:inherit;transition:all .13s;line-height:1.4;
+  }
+  .chip:hover{border-color:#c7cdd6;background:#fbfcfe}
+  .chip.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:500}
+  .chip small{opacity:.55;margin-left:4px;font-size:11px;font-variant-numeric:tabular-nums}
+  .chip.p0.on{background:#0f7a3d;border-color:#0f7a3d}
+  .chip.p1.on{background:#3f8f4f;border-color:#3f8f4f}
+  .chip.p2.on{background:#1a56db;border-color:#1a56db}
+  .chip.p3.on{background:#b45309;border-color:#b45309}
+  .chip.p4.on{background:#b42318;border-color:#b42318}
+
+  .group{margin-bottom:34px}
+  .ghead{
+    display:flex;align-items:baseline;gap:10px;margin:0 0 12px;
+    padding-bottom:8px;border-bottom:1px solid var(--line);
+  }
+  .ghead h2{font-size:16px;margin:0;font-weight:650;letter-spacing:-0.01em}
+  .ghead .gmeta{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.01em}
+  .ghead{flex-wrap:wrap;row-gap:2px}
+  .gdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;transform:translateY(-2px)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(345px,1fr));gap:13px}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:15px 16px 13px;display:flex;flex-direction:column;
+    transition:border-color .15s, box-shadow .15s, transform .15s;
+  }
+  .card:hover{border-color:#c3d3f5;box-shadow:0 4px 16px rgba(20,24,33,.07);transform:translateY(-1px)}
+  .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+  .right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .score{font-size:16px;font-weight:700;color:#0f766e;font-variant-numeric:tabular-nums;letter-spacing:-.03em;line-height:1.2;white-space:nowrap;background:#f0f5f4;border-radius:5px;padding:2px 6px}
+  .score em{font-size:11px;font-weight:500;font-style:normal;color:#4b5563;margin-right:3px;letter-spacing:0}
+  .score i{font-size:10px;font-weight:400;font-style:normal;color:#8b93a1;margin-left:2px;letter-spacing:0}
+  .price em{font-style:normal;font-size:10.5px;font-weight:500;opacity:.82;margin-right:2px}
+  .scale{display:flex;gap:5px;align-items:baseline;margin-top:9px;font-size:11.5px;min-width:0}
+  .scale b{font-weight:650;color:#0f766e;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .scale span{color:#9aa1ac;font-size:10.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .scale.none b{color:#9aa1ac;font-weight:400}
+  .name{font-size:15px;font-weight:640;letter-spacing:-0.01em;color:var(--ink);text-decoration:none;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .card-link{display:block;color:inherit;text-decoration:none;border-radius:var(--radius)}
+  .card-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .nameline{display:flex;align-items:center;gap:7px;min-width:0}
+  .nameline .name{flex:0 1 auto;min-width:0}
+  .fav{flex-shrink:0;width:19px;height:19px;display:inline-flex;align-items:center;justify-content:center;color:#aeb5c0;cursor:pointer;user-select:none;transition:color .15s,transform .15s;margin-left:2px}
+  .fav svg{width:19px;height:19px;display:block}
+  .fav polygon{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linejoin:round;transition:fill .15s}
+  .fav:hover{color:#e0a800;transform:scale(1.12)}
+  .fav.on{color:#f0a500}
+  .fav.on polygon{fill:currentColor}
+  .reset.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .reset b{font-weight:600;font-variant-numeric:tabular-nums}
+  .name:hover{color:var(--accent)}
+  .name .flag{font-size:12px;font-weight:400;opacity:.85}
+  .host .co{color:#4b5563}
+  .host .dot{color:#c3c9d2;margin:0 3px}
+  .host{font-size:11.5px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-top:2px}
+  .desc{font-size:12.9px;color:#3f4652;margin:9px 0 0;flex:1}
+
+  .rev{font-size:11.5px;color:#4b5563;margin-top:9px;line-height:1.6;border-left:2px solid #dbe3ef;padding-left:9px}
+  .rev b{color:#33415c;font-weight:600}
+  .rev .src{display:block;color:#9aa1ac;font-size:10.5px;margin-top:2px}
+  .name i{font-style:normal;font-weight:500;font-size:11.5px;color:#0f766e;margin-left:4px;letter-spacing:0}
+  .vid{display:block;font-size:11.5px;color:#3f4754;text-decoration:none;padding:1.5px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vid:hover{color:#0f766e;text-decoration:underline}
+  .vl{display:inline-block;min-width:34px;color:#b42318;font-variant-numeric:tabular-nums;font-weight:600}
+  .vd{color:#9aa3b0;margin-left:6px;font-size:10.5px}
+  .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+  .tag{
+    font-size:11px;padding:2px 7px;border-radius:5px;background:#f1f4f9;color:#43506a;
+    letter-spacing:.01em;white-space:nowrap;
+  }
+  .tag.hot{background:#fdf2ec;color:#a15c00}
+  .tag.cn{background:#fdeeee;color:#b42318}
+
+  .meta{
+    display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;
+    font-size:11.5px;color:var(--muted);margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);
+  }
+  .meta .vm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:66%}
+  .net{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+  .net.free{color:#0f7a3d}
+  .net.vpn{color:#b45309}
+
+  .price{
+    flex-shrink:0;font-size:11px;font-weight:650;padding:2.5px 8px;border-radius:5px;
+    letter-spacing:.02em;white-space:nowrap;margin-top:1px;
+  }
+  .pr0{background:#e7f6ec;color:#0f7a3d}
+  .pr1{background:#eef7ec;color:#3f8f4f}
+  .pr2{background:#e8f0fe;color:#1a56db}
+  .pr3{background:#fff5e6;color:#a15c00}
+  .pr4{background:#fdecec;color:#b42318}
+
+  .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:48px 0;font-size:13.5px}
+
+  .panel{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 24px;margin-top:34px;
+  }
+  .panel h2{font-size:15px;margin:0 0 14px;font-weight:640;letter-spacing:-0.01em}
+  .panel h2 span{color:var(--muted);font-weight:400;font-size:13px;margin-left:6px}
+
+  table{width:100%;border-collapse:collapse;font-size:12.8px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:500;font-size:12px;letter-spacing:.02em;background:#fafbfc}
+  tr:last-child td{border-bottom:none}
+  td code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:#f3f4f6;padding:1px 5px;border-radius:4px}
+
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:14px;margin-top:30px}
+  .pnote{margin:14px 0 0;font-size:12.5px;color:#4b5563;line-height:1.75}
+  .rule{background:var(--card);border:1px solid var(--line);border-left:3px solid #d1d5db;border-radius:8px;padding:14px 16px}
+  .rule.hi{border-left-color:#b45309}
+  .rule h3{font-size:13px;margin:0 0 6px;font-weight:640}
+  .rule p{margin:0;font-size:12.5px;color:#4b5563}
+
+  footer{margin-top:36px;color:var(--muted);font-size:12px;line-height:1.8;border-top:1px solid var(--line);padding-top:16px}
+  ::selection{background:#cfe0fd}
+  @media (max-width:600px){
+    .wrap{padding:22px 14px 60px}
+    h1{font-size:21px}
+    .grid{grid-template-columns:1fr}
+    .flabel{width:100%}
+    .toolbar{position:static}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>AI 创作者平台导航</h1>
+    <p class="sub">按<b>生成能力分模块</b>收录，<b>优先国内可用</b>。只收录各品类中使用人数较多、较为常用的平台，热门度不足的不再收录，因此各模块数量不等（24–30 条）。排序默认<b>国内优先 · 使用人数</b>，可切换为名称排序。使用人数仅少数平台有公开数据（QuestMobile / Sensor Tower / 公司财报），无公开数据的条目不做数字臆测；<b>消费档只与同类型平台比较</b>，为同类内相对位置，不跨模块换算。</p>
+    <div class="stats">
+      <div class="stat"><b id="s-total">0</b>收录条目</div>
+      <div class="stat"><b id="s-cat">0</b>能力模块</div>
+      <div class="stat"><b id="s-cn">0</b>国内条目</div>
+      <div class="stat"><b id="s-free">0</b>可直连条目</div>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div class="searchrow">
+      <input id="q" type="search" placeholder="搜索平台、厂商、能力，不区分大小写，拼错也能搜：deepseek / 影视级 / 二次元 / 低代码">
+      <select id="sort" title="排序方式">
+        <option value="rec" selected>国内优先 · 使用人数</option>
+        <option value="scale">使用人数从多到少</option>
+        <option value="name">名称 A–Z</option>
+      </select>
+      <div class="count" id="count"></div>
+      <div class="btn-group">
+        <button class="reset" id="reset">重置筛选</button>
+        <button class="reset" id="favBtn">已收藏 <b id="favCount">0</b></button>
+      </div>
+    </div>
+    <div class="fgroup" id="f-cat"><span class="flabel">能力</span></div>
+    <div class="fgroup" id="f-region"><span class="flabel">地区</span></div>
+    <div class="fgroup" id="f-price"><span class="flabel">消费档</span></div>
+    <div class="fgroup" id="f-net"><span class="flabel">网络</span></div>
+  </div>
+
+  <div id="groups"></div>
+
+  <div class="panel">
+    <h2>测评证据口径 <span>不做评分，只列可核查的视频</span></h2>
+    <p class="pnote">本站不再给平台打分。原因很直接：把视频的点赞或标题措辞折算成「能力 7.2 分」，本质仍是估计，只是把主观判断从编辑换成了 UP 主的流量表达，不构成可核查的数据。</p>
+    <p class="pnote">因此改为只做两件事：给出每个平台近 2 个月的可点开核查的 B 站测评视频；明确标注哪些平台没有公开测评。<b>没有证据不等于平台差</b>，只代表近 2 个月没有可核查的公开测评。</p>
+    <table>
+      <thead><tr><th style="width:150px">口径</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td>时间窗口</td><td>2026-08-29 之后发布的视频。</td></tr>
+        <tr><td>视频类型</td><td>优先横向对比（多模型同题对比），单模型测评降权保留，仅作补充。</td></tr>
+        <tr><td>剔除规则</td><td>推广带货、破解版与资源下载类视频不计入。</td></tr>
+        <tr><td>排序依据</td><td>点赞与播放量，两者等权，不设自定义系数。</td></tr>
+        <tr><td>无测评处理</td><td>标注「近 2 个月无公开测评」，按使用人数排序，无人数按名称排序。</td></tr>
+      </tbody>
+    </table>
+    <p class="pnote">为什么不评分：尝试过按「很强 / 还可以 / 一般 / 不好用」的措辞折算分数，但 B 站标题为流量普遍使用「封神」「天花板」，结果只要被测评过就接近满分，15 个平台挤在同一档，区分度消失。这比不给分更误导。</p>
+  </div>
+
+  <div class="rules">
+    <div class="rule hi">
+      <h3>使用人数不是全量可查项</h3>
+      <p>AI 平台极少公布真实用户数。本页数据只有三类来源：公司财报或官方公告（OpenAI、Alphabet、微软等）、第三方监测（中国大陆用 QuestMobile，全球用 Sensor Tower）、以及无公开数据。周活跃用户与月活口径不同，不能直接比大小，因此只作量级参考。没有数字不等于平台小，只代表没有可核查来源。</p>
+    </div>
+    <div class="rule hi">
+      <h3>「需高科技」指什么</h3>
+      <p>标记为需高科技，是指平台主站在中国大陆常规网络下通常无法直接打开，需要借助额外的网络工具才能正常访问。是否可用、是否需要实名，最终以平台与当地法规为准。</p>
+    </div>
+    <div class="rule">
+      <h3>消费档只在同类内比</h3>
+      <p>「高」「中」「低」是同一模块内的相对位置，不是绝对价格。视频生成的「中」与对话助手的「中」不构成同一金额；要跨类比较，请回到具体平台的实际套餐。海外平台按约 1 美元 ≈ 7.2 元折算，未计区域定价与税费，实际支付以结算页为准。</p>
+    </div>
+    <div class="rule">
+      <h3>「擅长方向」来自产品定位</h3>
+      <p>标签取自平台公开的产品定位与主推能力，不代表在所有题材上都优于同类。影视级、二次元、工程级代码等描述是方向性判断，不是评测排名。</p>
+    </div>
+    <div class="rule">
+      <h3>厂商与国家用于判断语言生态</h3>
+      <p>国家按厂商总部或主要运营主体标注。语言优势看标签：中文理解、方言、多语言配音等，反映该平台训练与产品优化的语种侧重，不代表只支持本国语言。</p>
+    </div>
+    <div class="rule">
+      <h3>商用前核对三件事</h3>
+      <p>生成内容的商用授权、训练数据与肖像/商标风险、平台对输出物的署名要求。免费档常与付费档授权不同，逐条看服务条款。</p>
+    </div>
+  </div>
+
+  <footer>
+    收录口径：面向内容创作者的生成式 AI 平台，按能力分 8 个模块共 185 条（跨模块重复计入）。只保留各品类中使用人数较多、较为常用的平台，不为了凑整而收录冷门站点，因此各模块数量不等。<br>
+    使用人数数据：QuestMobile《2026 年 AI 应用市场半年报》及 2026-09 AI 原生 App 榜、Sensor Tower 2026-05 估算、OpenAI / Alphabet / 微软等公司财报与官方公告。公司披露口径（周活跃用户、月活、累计用户）与第三方估算不可混排，本页只作量级参考。<br>
+    本页不提供评分。每条卡片下方列出该平台近 2 个月在 B 站的测评视频，可逐条点开核查；无公开测评的平台已明确标注，不做分数推测。近 3 个月没有任何公开资讯的站点已从收录中移除。消费档为同一模块内的相对位置，不跨类换算。产品迭代快，域名、套餐与可用地区可能变更，以官方页面为准。
+  </footer>
+</div>
+
+<script>
+const CATS = [
+  {id:'code',  label:'代码生成',  color:'#0f766e', desc:'IDE 补全、仓库级改码、自然语言建站'},
+  {id:'video', label:'视频生成',  color:'#b42318', desc:'文生视频、图生视频、数字人播报、AI 剪辑成片'},
+  {id:'image', label:'图片生成',  color:'#7c3aed', desc:'文生图、图生图、风格模型、修图与放大'},
+  {id:'chat',  label:'对话与推理', color:'#1a56db', desc:'通用大模型、深度研究、模型聚合入口'},
+  {id:'audio', label:'音频与音乐', color:'#b45309', desc:'音乐生成、配音克隆、降噪与母带'},
+  {id:'office',label:'办公与文档', color:'#0369a1', desc:'写作、会议纪要、PPT、文档问答'},
+  {id:'design',label:'设计与原型', color:'#be185d', desc:'UI 生成、品牌物料、抠图与矢量转换'},
+  {id:'agent', label:'智能体与低代码', color:'#4d7c0f', desc:'工作流编排、0 代码智能体、应用搭建'}
+];
+
+const PRICES = [
+  {id:4, label:'很高', cls:'pr4', cny:'该类最高档'},
+  {id:3, label:'高',   cls:'pr3', cny:'高于该类中位'},
+  {id:2, label:'中',   cls:'pr2', cny:'该类主流付费档'},
+  {id:1, label:'低',   cls:'pr1', cny:'低于该类中位'},
+  {id:0, label:'很低', cls:'pr0', cny:'该类最低 / 免费'}
+];
+
+// 各模块「中档」人民币参考（编辑归纳，仅用于同类内定位）
+const CATMID = {
+  video:'¥100–200/月', image:'¥70–150/月', code:'¥70–150/月', chat:'¥70–150/月',
+  audio:'¥70–150/月', office:'¥70–150/月', design:'¥70–150/月', agent:'¥150–300/月'
+};
+
+const FLAG = {'中国':'🇨🇳','美国':'🇺🇸','英国':'🇬🇧','德国':'🇩🇪','法国':'🇫🇷','加拿大':'🇨🇦','澳大利亚':'🇦🇺','日本':'🇯🇵','韩国':'🇰🇷','以色列':'🇮🇱','印度':'🇮🇳','新加坡':'🇸🇬','瑞典':'🇸🇪','荷兰':'🇳🇱','西班牙':'🇪🇸','意大利':'🇮🇹','捷克':'🇨🇿','奥地利':'🇦🇹','瑞士':'🇨🇭','芬兰':'🇫🇮','丹麦':'🇩🇰','挪威':'🇳🇴','波兰':'🇵🇱','乌克兰':'🇺🇦','巴西':'🇧🇷','卢森堡':'🇱🇺','塞浦路斯':'🇨🇾','斯洛伐克':'🇸🇰','匈牙利':'🇭🇺','阿联酋':'🇦🇪','俄罗斯':'🇷🇺','中国台湾':'🇨🇳','中国香港':'🇨🇳'};
+
+const DATA = [
+  /* ========== 视频生成 ========== */
+  {n:'Runway', u:'https://runwayml.com', c:'video', v:'Runway AI', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['影视级','可控运镜'], d:'面向专业创作的全流程视频工作台，Gen 系列模型配合运镜控制、抠像与后期工具，广告与短片团队使用率高。', vids:[{t:'Terra发布，Runway创作应用，即梦短剧工作室｜10月27日AI日报',a:'酷恩哈哈',l:0,p:'2026-10-27',b:'BV12LHc6qEAM'}] },
+  {n:'Sora', u:'https://sora.com', c:'video', v:'OpenAI', co:'美国', p:4, net:1, m:0, mb:'',
+   t:['影视级','物理一致性'], d:'以长镜头与物理连贯性见长，擅长一次性生成带叙事的完整段落，适合概念片与分镜预演。注意：官方已分别于 2026-04-26 关闭网页端、2026-09-24 关闭 API，本条目仅作历史参考。', vids:[{t:'sora core be like:',a:'NiBaYuu',l:112,p:'2026-10-26',b:'BV1Hnno6mE5K'},{t:'【中字】sora提问箱',a:'pancake912',l:44,p:'2026-10-22',b:'BV13rn16vEbT'},{t:'Sora rap time！',a:'西瓜小酥酥',l:39,p:'2026-10-28',b:'BV1FvxE6pE5k'}] },
+  {n:'Google Veo / Flow', u:'https://labs.google/flow', c:'video', v:'Google DeepMind', co:'美国', p:4, net:1, m:0, mb:'',
+   t:['影视级','原生音画'], d:'Veo 模型搭配 Flow 剪辑界面，可生成带同步音效的片段并做镜头延展，适合成片级素材生产。'},
+  {n:'Luma Dream Machine', u:'https://lumalabs.ai/dream-machine', c:'video', v:'Luma AI', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['图生视频','运镜'], d:'以图像为起点的视频生成，镜头运动自然、画面质感偏电影，适合把静态概念图转成动态镜头。'},
+  {n:'Pika', u:'https://pika.art', c:'video', v:'Pika Labs', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['风格化','短视频'], d:'轻量级创意视频工具，特效模板与局部修改玩法多，适合社媒短视频与趣味视觉。', vids:[{t:'只有卡片大小的扫描仪！创想三维Pika开箱&amp;使用体验',a:'姜叔的家',l:174,p:'2026-08-31',b:'BV14itt68ERu'},{t:'松灵机器人AgileX Pika数据采集设备调试',a:'星途智科',l:0,p:'2026-09-18',b:'BV1Rpe26kEst'}] },
+  {n:'可灵 AI',md:'4.0', u:'https://app.klingai.com', c:'video', v:'快手', co:'中国', p:3, net:0, m:0, mb:'',
+   t:['影视级','图生视频','中文理解'], d:'国内视频生成的代表性产品，人物表演与大幅度动作稳定性较好，支持首尾帧控制，适合短剧与广告分镜。', vids:[{t:'平民主流AI视频模型测评：可灵4.0、vidu Q4、H3、wan3.0、seedance2.5等模型',a:'翊雲动画',l:1502,p:'2026-10-21',b:'BV1Cqnv64E6w'},{t:'不如seedance？可灵4.0真实测评来了！',a:'刺猬星球super-i',l:161,p:'2026-10-16',b:'BV1gKJX6UE8U'},{t:'可灵4.0测评报告！六维鹈鹕骑车实测！',a:'AI产品狙击手',l:49,p:'2026-10-16',b:'BV1fcJS6WEQK'}] },
+  {n:'海螺 AI', u:'https://hailuoai.com', c:'video', v:'MiniMax', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['动画质感','图生视频'], d:'画面风格偏细腻、镜头语言丰富，人物表情与动漫质感突出，适合动画短片与情绪化镜头。', vids:[{t:'海螺复盘更新晚了，被关小黑屋……',a:'海螺复盘',l:1269,p:'2026-10-23',b:'BV1iAnh6PEeJ'},{t:'禁忌岛刚需材料海螺海胆获取教学！传送盐渍废屋，海边捡海螺，击杀潮生灵拿海胆，学会切线量产',a:'七日子墨',l:9,p:'2026-10-27',b:'BV1sWxT6cEtx'},{t:'Soa来晚了！AI视频早已被海螺AI全端直装！解压即玩!统江湖，AI视频效果PK测评。',a:'绫可_Ayakax',l:11,p:'2026-10-21',b:'BV1aAnB67Ejr'}] },
+  {n:'Vidu',md:'Q4', u:'https://www.vidu.cn', c:'video', v:'生数科技', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['参考一致性','多主体'], d:'主打多主体参考一致性，能把同一角色稳定放进不同镜头，适合系列化内容与角色 IP 短片。', vids:[{t:'【VIDU Q4】新模型测试【无职转生】',a:'ToxTalk毒评电台',l:192,p:'2026-10-13',b:'BV1v9pi6HEWP'},{t:'Vidu S2 直播首秀即将到来！',a:'Vidu-AI',l:8,p:'2026-09-17',b:'BV13ye36rEQV'}] },
+  {n:'即梦 AI',md:'SD2.5', u:'https://jimeng.jianying.com', c:'video', v:'字节跳动', co:'中国', p:1, net:0, m:2400, mb:'QuestMobile 2026-09 TOP8，月活<2500万',
+   t:['快速出片','中文理解'], d:'图生视频与文生视频入口，中文提示理解好、出片快，与剪映生态衔接顺畅，适合内容号日更。', vids:[{t:'第4集 | 《野生缅北》第二季第四集 老许夜秀砸场子，老乔欲推老许上位#野生缅北  #即梦AI   #即梦电脑版还是太全面了',a:'艾派德漫剧',l:144,p:'2026-10-26',b:'BV1GvnR68Eqk'},{t:'《野生缅北》第二季第五集 这两天颈椎病犯了看电脑就头晕所以更新慢，抱歉抱歉#野生缅北  #即梦AI',a:'艾派德漫剧',l:37,p:'2026-10-28',b:'BV1bGs96cEmQ'},{t:'全流程体验即梦欣赏的短剧工作流 即梦短剧工作室重磅上线',a:'欧阳胸',l:12,p:'2026-10-27',b:'BV1ZNnZ62EvL'}] },
+  {n:'通义万相',md:'3.0', u:'https://tongyi.aliyun.com/wanxiang', c:'video', v:'阿里巴巴', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['中文场景','免费额度'], d:'阿里体系的多模态生成入口，视频与图像同站，中文语义与国风场景理解较稳，适合电商与营销素材。'},
+  {n:'腾讯混元视频', u:'https://hunyuan.tencent.com', c:'video', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['开源','中文理解'], d:'混元视频模型提供开源权重与在线体验，适合需要私有化部署或二次开发的团队。'},
+  {n:'智谱清影', u:'https://chatglm.cn', c:'video', v:'智谱 AI', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['免费额度','图生视频'], d:'清言内的视频生成能力，门槛低、免费额度友好，适合先验证创意再决定是否换重工具。'},
+  {n:'PixVerse', u:'https://pixverse.ai', c:'video', v:'爱诗科技', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['模板玩法','短视频'], d:'特效模板与风格转换玩法丰富，上手快，适合做传播型短视频而非精细成片。'},
+  {n:'讯飞智作', u:'https://peiyin.xunfei.cn', c:'video', v:'科大讯飞', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['数字人','中文播报'], d:'配音与数字人播报一体，中文发音与多音字处理成熟，适合口播科普、课程与政务宣传。'},
+  {n:'腾讯智影', u:'https://zenvideo.qq.com', c:'video', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['数字人','剪辑'], d:'数字人播报加在线剪辑，模板与素材库偏国内平台风格，适合企业号与知识类账号批量化生产。'},
+  {n:'剪映专业版', u:'https://www.capcut.cn', c:'video', v:'字节跳动', co:'中国', p:0, net:0, m:0, mb:'',
+   t:['AI 剪辑','字幕'], d:'免费桌面剪辑器，智能字幕、文本成片、音频降噪等能力齐备，是 AI 素材落地成片的默认收口工具。', vids:[{t:'剪映最新版11.6免会员直接导出方法，不用预合成，不用悬浮球',a:'ChenJing-',l:15,p:'2026-10-26',b:'BV1kind6mEBn'},{t:'1. 剪映会员值不值？免费·VIP·SVIP·团队版全对比，别再乱充',a:'成都赵赵的软件课',l:9,p:'2026-10-19',b:'BV1tZnJ6oEKE'},{t:'【剪映全套合集】剪映专业版教程｜一个视频带你从小白学会电脑剪辑，零基础保姆级剪辑教程',a:'视频剪辑小课堂',l:0,p:'2026-10-28',b:'BV1wCxL6JEWQ'}] },
+  {n:'HeyGen', u:'https://www.heygen.com', c:'video', v:'HeyGen', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['数字人','多语言'], d:'数字人形象与声音克隆质量稳定，口型同步多语言表现好，适合出海营销与培训视频。', vids:[{t:'【中字】油管博主拆解HeyGen视频Agent：一条指令全自动出片',a:'枫叶边城',l:3,p:'2026-10-17',b:'BV1xnJe6xEFV'},{t:'HeyGen为什么保持领先：始终围绕真实用户｜WaytoAGI',a:'通往AGI之路',l:1,p:'2026-10-17',b:'BV183Je6aEW4'}] },
+  {n:'Synthesia', u:'https://www.synthesia.io', c:'video', v:'Synthesia', co:'英国', p:3, net:1, m:0, mb:'官方 6.5万家企业客户（非用户数）',
+   t:['企业培训','合规'], d:'企业级数字人视频平台，强调品牌一致性与团队协作，常见于大型组织的培训与内训场景。', vids:[{t:'Sins Of The Father by Daniel Caesar piano tutorial (synthesia)',a:'urstory',l:13,p:'2026-09-13',b:'BV1hyYZ6PEy7'},{t:'O Canada! - Synthesia 10.9.5903',a:'NilBalance',l:0,p:'2026-09-17',b:'BV1cueG6sEA6'}] },
+  {n:'D-ID', u:'https://www.d-id.com', c:'video', v:'D-ID', co:'以色列', p:2, net:1, m:0, mb:'',
+   t:['照片说话','接口'], d:'让静态人像开口说话，接口化程度高，适合集成进客服、教育或互动装置。'},
+  {n:'Colossyan', u:'https://www.colossyan.com', c:'video', v:'Colossyan', co:'匈牙利', p:3, net:1, m:0, mb:'',
+   t:['企业课程','多语言'], d:'面向企业学习场景的数字人视频工具，模板偏课程结构，支持多语种替换音轨。'},
+
+  {n:'InVideo AI', u:'https://invideo.io', c:'video', v:'InVideo', co:'印度', p:2, net:1, m:0, mb:'',
+   t:['脚本到成片','模板'], d:'输入主题即产出脚本、配音与剪辑，模板量大，适合批量做信息类短视频。'},
+  {n:'Pictory', u:'https://pictory.ai', c:'video', v:'Pictory', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['长文转视频','切片'], d:'把长文章或长视频压缩成短片段，自动匹配素材与字幕，适合内容再利用。'},
+  {n:'Descript', u:'https://www.descript.com', c:'video', v:'Descript', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['文本剪辑','播客'], d:'用改文字的方式剪音视频，删词即删画面，播客与访谈类内容效率提升明显。'},
+  {n:'Adobe Firefly Video', u:'https://firefly.adobe.com', c:'video', v:'Adobe', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['商用安全','素材生态'], d:'定位商用安全的生成式视频，训练素材授权相对清晰，与 Premiere 等工具体系打通。', vids:[{t:'Adobe Firefly Course: AI-Powered Design, Illustration &amp; Photography Tools',a:'lmt831',l:0,p:'2026-10-27',b:'BV1rGxM64Ewk'}] },
+  {n:'Wonder Studio', u:'https://wonder.studio', c:'video', v:'Wonder Dynamics', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['三维角色替换','影视级'], d:'自动把实拍人物替换为三维角色并匹配光影，适合小团队做科幻或特效镜头。'},
+  {n:'Midjourney', u:'https://www.midjourney.com', c:'image', v:'Midjourney', co:'美国', p:3, net:1, m:2000, mb:'2026-01 注册用户约1983万',
+   t:['影视级图像','美学风格'], d:'审美上限与风格统一性突出的老牌平台，概念图、海报与氛围图表现稳定，需在 Discord 或网页端使用。'},
+  {n:'Stable Diffusion', u:'https://stability.ai', c:'image', v:'Stability AI', co:'英国', p:0, net:0, m:0, mb:'',
+   t:['开源','风格模型'], d:'开源图像生成的底座，可本地部署并自由加载风格模型与构图控制插件，适合要完全掌控流程与数据的工作室。'},
+  {n:'FLUX', u:'https://bfl.ai', c:'image', v:'Black Forest Labs', co:'德国', p:1, net:1, m:0, mb:'',
+   t:['开源','写实人像'], d:'出图质感与提示遵循度均衡，开源版本生态活跃，是自建绘图流水线的主流选择之一。', vids:[{t:'全网骂惨的Flux3，真有那么差？9轮实测对决Qwen！一个视频告诉你，该选什么模型！',a:'啦啦啦的小黄瓜',l:346,p:'2026-10-22',b:'BV1WQn16oEaM'},{t:'【lora训练营-41】训练器更新支持FLUX.3 Klein！本地部署＋生图改图实测，附工作流',a:'Doc_workBox',l:36,p:'2026-10-16',b:'BV1TNJt6GEoh'},{t:'工作流更新后效果怎样？ FLUX 3 Klein ComfyUI实测',a:'实验式',l:19,p:'2026-10-18',b:'BV1X9ng6BEDy'}] },
+  {n:'ChatGPT 图像', u:'https://chatgpt.com', c:'image', v:'OpenAI', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['语义理解','文字渲染'], d:'强在听懂复杂描述与在图内排版文字，适合做信息图、说明图与需要精确指令的改图任务。', vids:[{t:'ChatGPT现在彻底没法用了，全是防御性叠甲，被气到力竭了。。。',a:'柏拉图梦见电子羊',l:346,p:'2026-10-26',b:'BV1k6nZ6XECN'},{t:'ChatGPT 接上 MCP 后有多强？从产品设计到营销素材全流程实测',a:'小in分享',l:147,p:'2026-10-28',b:'BV1RFxj6qEJY'},{t:'你的ChatGPT被降智了吗？',a:'雷长阳LCY',l:43,p:'2026-10-23',b:'BV1qjn86iEaZ'}] },
+  {n:'Adobe Firefly', u:'https://firefly.adobe.com', c:'image', v:'Adobe', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['商用安全','设计生态'], d:'强调训练素材授权清晰，生成结果可直接进入 Photoshop 与 Illustrator 流程，适合商业交付。', vids:[{t:'Firefly实战教程，从图像到视频 | Ultimate Adobe Firefly Tutorial How to Use Adobe Firefly L',a:'TOP高效学习法',l:1,p:'2026-09-24',b:'BV1Boaw69E1j'},{t:'Adobe Firefly Course: AI-Powered Design, Illustration &amp; Photography Tools',a:'lmt831',l:0,p:'2026-10-27',b:'BV1rGxM64Ewk'}] },
+  {n:'Ideogram', u:'https://ideogram.ai', c:'image', v:'Ideogram', co:'加拿大', p:2, net:1, m:0, mb:'',
+   t:['文字渲染','海报'], d:'图内文字准确率是其主要卖点，适合 Logo 草案、活动海报与带标语的视觉。', vids:[{t:'Ideogram 4.5来了，编辑效果吊打ChatGPT Images 2.5！',a:'猎鲸狐',l:70,p:'2026-10-01',b:'BV12Da66GEJQ'},{t:'传承Ideogram精准编辑！~Flux3-Klein无脑PUP增强，但……',a:'Swan鹄仙',l:39,p:'2026-10-18',b:'BV1tyJq6qEeR'},{t:'Ideogram 4.5 发布，重点在于精确的图像编辑。',a:'AinIoDiven',l:3,p:'2026-10-06',b:'BV1m7HZ6aEQ1'}] },
+  {n:'Leonardo.Ai', u:'https://leonardo.ai', c:'image', v:'Leonardo（Canva 旗下）', co:'澳大利亚', p:2, net:1, m:0, mb:'',
+   t:['游戏资产','风格模型'], d:'面向游戏与产品美术的生成平台，自带模型训练与素材管理，适合批量产出道具、场景与角色概念。'},
+  {n:'Krea', u:'https://www.krea.ai', c:'image', v:'Krea', co:'西班牙', p:2, net:1, m:0, mb:'',
+   t:['实时生成','画质增强'], d:'实时画板边画边出图，配合放大与增强模块，适合视觉探索阶段快速试方向。', vids:[{t:'最新 Krea 3 测评报告！AI生图翻车现场！',a:'AI产品狙击手',l:43,p:'2026-10-21',b:'BV1Usnv6vEKa'},{t:'132.Krea3 image图片模型介绍，即将发布，先行测试文生图生成能力，如果开源，将会是第一梯队，如果闭源，将没有座位',a:'遇见AI工作室',l:15,p:'2026-10-21',b:'BV1Cynz6MEuP'},{t:'AI 周报：Krea 3 改图真好用，大模型这周也在冲业绩',a:'是我__非我',l:1,p:'2026-10-26',b:'BV1amnQ69EsV'}] },
+  {n:'Recraft', u:'https://www.recraft.ai', c:'image', v:'Recraft', co:'英国', p:2, net:1, m:0, mb:'',
+   t:['矢量','品牌一致'], d:'少数能稳定输出可编辑矢量图的生成工具，风格锁定功能适合做成套品牌插画与图标。'},
+  {n:'Freepik AI', u:'https://www.freepik.com', c:'image', v:'Freepik', co:'西班牙', p:2, net:1, m:0, mb:'',
+   t:['素材库','多模型'], d:'把多家生成模型与自身素材库合并，可在同一界面生成、扩图、改图并直接落到设计稿。'},
+  {n:'Civitai', u:'https://civitai.com', c:'image', v:'Civitai', co:'美国', p:0, net:1, m:0, mb:'',
+   t:['风格模型','社区'], d:'最大的开源模型与风格模型集散地，找特定画风或人物模型基本都从这里起步，附带在线生成。'},
+  {n:'SeaArt', u:'https://www.seaart.ai', c:'image', v:'SeaArt', co:'新加坡', p:1, net:0, m:0, mb:'',
+   t:['二次元','模型丰富'], d:'二次元与写实模型都齐，工作流与构图控制支持较完整，中文界面友好。'},
+  {n:'NovelAI', u:'https://novelai.net', c:'image', v:'NovelAI', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['二次元','隐私'], d:'以动漫插画见长，风格模型调校成熟，同时提供纯文本创作工具，社区对隐私保护评价较高。', vids:[{t:'【开源】狂烧30亿token，做出一个人和 Agent 都好用的本地 NovelAI 客户端！',a:'路北路陈',l:1058,p:'2026-10-22',b:'BV1TDnm6TEf4'},{t:'NovelAI封号严重？如何在国内使用NovelAI',a:'狮心王洁若米亚',l:95,p:'2026-10-18',b:'BV1MxnG6iEaG'},{t:'NovelAI 理性探讨AI画师的核心竞争力',a:'祝福与礼赞',l:27,p:'2026-10-28',b:'BV1fDxL6CEew'}] },
+  {n:'Bing 图像创建器', u:'https://www.bing.com/create', c:'image', v:'微软', co:'美国', p:0, net:1, m:0, mb:'',
+   t:['免费额度','易上手'], d:'免费调用 DALL·E 系模型，微软账号即可用，适合零成本试提示词与日常配图。', vids:[{t:'为了复活Bing大小姐，我训练了这个模型',a:'赎罪利亚',l:18,p:'2026-10-28',b:'BV1WYx366E5o'},{t:'YouKnowWho - 跳AOA的bing bing - 日期当然是以前咯清醒一点啊喂',a:'头像是林予晞',l:7,p:'2026-10-28',b:'BV13ax76vE4Z'},{t:'必应网站快速seo排名优化，bing排名如何上首页？',a:'SEO小陈',l:2,p:'2026-09-06',b:'BV1f8bH6AEFk'}] },
+  {n:'Grok Imagine', u:'https://grok.com', c:'image', v:'xAI', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['快速出图','风格化'], d:'与 Grok 对话集成的图像生成，出图快、限制少，适合社媒配图与快速视觉草案。', vids:[{t:'自从X添加Grok自动翻译功能以来 我的动态时间线：',a:'Speed-777',l:540,p:'2026-10-27',b:'BV1fBxT6SEVe'},{t:'【落后一代？】Grok4.7六维能力综合测试复测',a:'荡殇永魔',l:71,p:'2026-10-28',b:'BV16WxG6vECr'},{t:'Grok Imagine新手教程第一集：文生图 @JSFILMZ',a:'极客异想家',l:5,p:'2026-09-14',b:'BV1RJYB6UER3'}] },
+  {n:'即梦 AI',md:'SD2.5', u:'https://jimeng.jianying.com', c:'image', v:'字节跳动', co:'中国', p:1, net:0, m:2400, mb:'QuestMobile 2026-09 TOP8，月活<2500万',
+   t:['中文理解','二次元'], d:'中文提示理解到位，国风、二次元与商业人像都能出，和剪映衔接便于直接做成视频。', vids:[{t:'全流程体验即梦欣赏的短剧工作流 即梦短剧工作室重磅上线',a:'欧阳胸',l:12,p:'2026-10-27',b:'BV1ZNnZ62EvL'},{t:'14亿人都来参加婚礼会怎样？ 全片由@即梦AI 短剧工作室制作  #即梦AI创作者成长计划#即梦未来荧幕剧集片单',a:'完美界首',l:8,p:'2026-10-26',b:'BV1MbnU6gE28'},{t:'即梦短剧工作室重磅上线~',a:'十七AI智能体',l:7,p:'2026-10-27',b:'BV1FaxT6REap'}] },
+  {n:'通义万相',md:'3.0', u:'https://tongyi.aliyun.com/wanxiang', c:'image', v:'阿里巴巴', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['电商设计','中文'], d:'电商场景与商品图能力强，中文语义稳，适合主图、场景图与营销海报的批量试稿。'},
+  {n:'腾讯混元图像', u:'https://hunyuan.tencent.com', c:'image', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['开源','中文'], d:'混元图像提供在线体验与开源版本，中文场景与人物生成稳定，可私有化部署。'},
+  {n:'智谱 CogView', u:'https://chatglm.cn', c:'image', v:'智谱 AI', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['中文','免费额度'], d:'清言内置的图像生成，中文长提示理解好，适合配图与概念示意，额度对个人友好。', vids:[{t:'【黑鸦】鉴定一下网络热门智谱传闻：GLM-5.5 要来了？',a:'黑鸦Heya',l:888,p:'2026-10-28',b:'BV1vAxE65Ep5'},{t:'智谱文生图模型 GLM-Image 测评报告！是否真的能打？',a:'AI产品狙击手',l:38,p:'2026-10-15',b:'BV1XcJC6FEQc'},{t:'智谱没活了',a:'老周AgentBuilder',l:28,p:'2026-10-24',b:'BV1dTnY6uE35'}] },
+  {n:'商汤秒画', u:'https://miaohua.sensetime.com', c:'image', v:'商汤科技', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['写实人像','亚洲面孔'], d:'写实人像与亚洲面孔表现较好，支持模型自训练，适合需要固定人物形象的商业拍摄替代。'},
+  {n:'美图 WHEE', u:'https://www.whee.com', c:'image', v:'美图公司', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['人像美化','电商'], d:'延续美图在人像处理上的积累，生成后可直接修图美化，适合电商模特图与社交头像。', vids:[{t:'【精选美图】239期，4k高清云深不知梦云望舒',a:'颜值Coco',l:133,p:'2026-10-21',b:'BV1vnnr6aEko'},{t:'美图分享248',a:'飔厲',l:68,p:'2026-10-27',b:'BV1XDxu6JEYc'},{t:'测评画质修复🫡到底哪个夯中夯！？我觉得最夯的是whee！#WHEE#变清晰#演唱会#修图#出片',a:'-碳酸美式-',l:51,p:'2026-09-15',b:'BV1ften6VEMC'}] },
+  {n:'无界 AI', u:'https://www.wujieai.com', c:'image', v:'无界 AI', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['二次元','国风'], d:'国内较早的 AI 绘画平台，模型与风格库偏国风与二次元，工作流功能较完整。', vids:[{t:'【自费购买】机械革命 无界14 MAX Carbon 首发评测 超长续航+超全接口+超低价格 机械革命最轻本',a:'Jobs_Bao',l:173,p:'2026-10-25',b:'BV1oqnS6XEvx'},{t:'机械革命无界14S 2026锐龙版轻薄游戏本值得买吗？机械革命无界14S 2026锐龙版优缺点解析：R7 H255+24GB内存，这台轻薄本适合谁？',a:'肉肉严选',l:11,p:'2026-09-16',b:'BV12few6gEov'},{t:'「参数分解」机械革命无界16/14 Max，轻薄办公有性价比。',a:'阳光使者2025',l:18,p:'2026-10-26',b:'BV19Vnd6YErf'}] },
+  {n:'LiblibAI', u:'https://www.liblib.art', c:'image', v:'哩布哩布', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['风格模型','社区'], d:'国内最大的模型分享社区之一，风格模型与工作流模板丰富，可在线生成或下载自部署。'},
+  {n:'稿定 AI', u:'https://www.gaoding.com', c:'image', v:'稿定设计', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['电商设计','模板'], d:'生成能力嵌在设计模板体系里，出图后可直接排版成商品页、主图与活动物料。', vids:[{t:'稿定设计终身会员 稿定设计无水印下载 稿定设计VIP',a:'Top印',l:0,p:'2026-09-19',b:'BV1DveU6GE4D'}] },
+  {n:'Photoroom', u:'https://www.photoroom.com', c:'image', v:'Photoroom', co:'法国', p:2, net:1, m:0, mb:'',
+   t:['商品图','抠图'], d:'专攻电商商品图，抠图、换背景、加场景一步完成，移动端体验尤其顺手。'},
+  {n:'Magnific', u:'https://magnific.ai', c:'image', v:'Magnific', co:'西班牙', p:3, net:1, m:0, mb:'',
+   t:['画质增强','细节重建'], d:'把低清图重绘成高细节大图，纹理与皮肤质感重建能力强，常作为出图后的最后一道工序。'},
+  /* ========== 代码生成 ========== */
+  {n:'GitHub Copilot', u:'https://github.com/features/copilot', c:'code', v:'GitHub（微软）', co:'美国', p:2, net:1, m:5000, mb:'微软 2026-07 公布用户数',
+   t:['IDE 补全','企业合规'], d:'覆盖面最广的编程助手，补全与对话能力嵌进主流 IDE，企业版的策略管控与审计相对成熟。', vids:[{t:'GitHub Copilot是什么？怎么用？从安装到AI编程实战一次讲清',a:'不管这么多',l:5,p:'2026-10-15',b:'BV1Wipm6YE3f'},{t:'Microsoft Copilot 做 Excel，究竟用 Chat、Copilot In Excel 定 Excel Agent？3 種方法實測！',a:'听风望月qvq',l:0,p:'2026-10-22',b:'BV1xynC69EBY'}] },
+  {n:'Cursor', u:'https://cursor.com', c:'code', v:'Anysphere', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['工程级代码','仓库级重构'], d:'以整仓理解为设计前提的编辑器，跨文件改动与多步任务执行稳定，是目前专业团队的主力选项之一。', vids:[{t:'X订阅大合并：30刀全包了？Grok、Cursor老用户要不要换',a:'野生吃货',l:59,p:'2026-10-23',b:'BV1hVnh64Ere'}] },
+  {n:'Claude Code', u:'https://claude.com/product/claude-code', c:'code', v:'Anthropic', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['工程级代码','长上下文'], d:'终端里的编码代理，擅长读懂大型仓库后做渐进式改造，对代码风格与边界的把握较好。', vids:[{t:'AI 写得比你读得快，code review 要怎么做？',a:'grapeot',l:1682,p:'2026-10-21',b:'BV1mRn66JERc'},{t:'【Code Review】AI时代的CR还有意义么？一起看一个模板解析库',a:'码农高天',l:1170,p:'2026-10-03',b:'BV1RfaX6sESp'},{t:'AI 写完代码，怎么放心上线？拆解 Claude Code 团队的审查流程',a:'AI随风随风',l:54,p:'2026-10-28',b:'BV1Csxj6HEVN'}] },
+  {n:'OpenAI Codex', u:'https://openai.com/codex', c:'code', v:'OpenAI', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['工程级代码','并行任务'], d:'可并行派发多个编码任务并在云端执行，适合把明确的工单批量交给代理处理。', vids:[{t:'从零用上GPT6+Codex！保姆级注册/安装/使用/订阅教程，以及各种疑难杂症解决方法！',a:'柚子站长',l:5090,p:'2026-10-10',b:'BV1nepu6nENE'},{t:'你的Codex账号被降智了吗？怎么知道gpt账号被降智了吗？codex降智怎么查？',a:'AI科研葛师兄',l:143,p:'2026-10-01',b:'BV1kVaf6nEDT'},{t:'Selected model is at capacity | ChatGPT / Codex “模型超容量”？我也踩坑了，这是我的实测恢复过程',a:'深秋书吧',l:60,p:'2026-09-18',b:'BV1q9ey6CEh3'}] },
+  {n:'Gemini Code Assist', u:'https://cloud.google.com/gemini/docs/codeassist/overview', c:'code', v:'Google', co:'美国', p:1, net:1, m:0, mb:'',
+   t:['免费额度','IDE 集成'], d:'Google 体系的编程助手，个人版免费额度较大，与 Firebase、Cloud 的联动是主要优势。', vids:[{t:'【突发】谷歌发布 Gemini 4 Carbon，AA 跑分超 Opus 5.5！3D 理解与人类持平！价格不变！依旧只能看不能用',a:'渐近自由JJZY',l:28,p:'2026-10-29',b:'BV1yCsR6ZE9V'},{t:'据IT之家报道：谷歌安卓编程榜更新，自家Gemini 4 Argon首秀仅排第五｜每日AI午报 10月28日',a:'缘素子',l:10,p:'2026-10-28',b:'BV1NLx56SEvR'}] },
+  {n:'Replit', u:'https://replit.com', c:'code', v:'Replit', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['云端 IDE','全栈生成'], d:'浏览器里从写码到部署一体，适合快速做原型、内部工具与教学演示，无需本地环境。', vids:[{t:'Replit是什么？不会编程也能做App？从一句话到网站上线，Replit一次讲清',a:'不管这么多',l:1,p:'2026-10-15',b:'BV1BTpm6pEHx'}] },
+  {n:'Lovable', u:'https://lovable.dev', c:'code', v:'Lovable', co:'瑞典', p:2, net:1, m:0, mb:'',
+   t:['自然语言建站','全栈'], d:'用对话生成可上线的前后端应用，数据库与登录可托管，适合非工程背景做产品验证。', vids:[{t:'Lovable高级教程：从零到上线完整指南',a:'openclawai',l:5,p:'2026-09-24',b:'BV1yvhW6sE6z'},{t:'用 Lovable 搭建 AI 室内设计 SaaS：从流程规划到 Stripe 付款上线',a:'星小脉',l:1,p:'2026-10-21',b:'BV1TMni6KEMP'}] },
+  {n:'Bolt.new', u:'https://bolt.new', c:'code', v:'StackBlitz', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['自然语言建站','前端'], d:'在浏览器沙箱里边生成边运行前端项目，改错快，适合落地页与轻量 Web 应用。', vids:[{t:'Bolt.new 入门教程：逐步跟练',a:'谢特特365',l:0,p:'2026-09-19',b:'BV1hEeQ6DEK3'}] },
+  {n:'v0', u:'https://v0.dev', c:'code', v:'Vercel', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['UI 生成','前端'], d:'以 React 与 Tailwind 为目标的界面生成器，产出可直接复用的组件代码，配合 Vercel 一键部署。'},
+  {n:'Sourcegraph Cody', u:'https://sourcegraph.com', c:'code', v:'Sourcegraph', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['代码搜索','大仓库'], d:'建立在代码搜索之上，跨仓库定位实现与引用能力强，适合庞大单体或微服务群的维护。', vids:[{t:'Cody Webb：Endurocross 室内耐力越野赛埃弗里特激情之夜',a:'KT猫王',l:2,p:'2026-10-27',b:'BV1WCHF68EVi'},{t:'Cody Brennan &amp; The Temptations - Ruby Baby',a:'詹姆斯迪恩',l:1,p:'2026-10-28',b:'BV1hmxj6vEjr'},{t:'Cody Brennan And The Temptations – Ruby Baby',a:'詹姆斯迪恩',l:1,p:'2026-10-28',b:'BV1amxj6vEwx'}] },
+  {n:'Qodo', u:'https://www.qodo.ai', c:'code', v:'Qodo', co:'以色列', p:2, net:1, m:0, mb:'',
+   t:['测试生成','代码审查'], d:'聚焦测试用例生成与合并请求审查，补的是团队质量流程而不是单点补全。'},
+  {n:'Aider', u:'https://aider.chat', c:'code', v:'Aider（开源）', co:'美国', p:0, net:0, m:0, mb:'',
+   t:['开源','终端'], d:'命令行里的结对编程工具，直接改本地仓库并自动提交，模型可自选，适合愿意自己配环境的开发者。', vids:[{t:'Aider 教程：终端免费 AI 编程',a:'谢特特365',l:0,p:'2026-09-18',b:'BV1ATeU6aEQB'},{t:'我的 Aider AI 开发环境配置',a:'谢特特365',l:1,p:'2026-09-19',b:'BV1SYeU6CEUS'}] },
+  {n:'Cline', u:'https://cline.bot', c:'code', v:'Cline（开源）', co:'美国', p:0, net:0, m:0, mb:'',
+   t:['开源','智能体'], d:'开源编辑器代理，能读写文件、跑终端命令，模型自带密钥，成本可控、过程可审。', vids:[{t:'Cline Rules：设置组织与项目级规则，定制 Cline 工作区',a:'快乐的天才程序员',l:0,p:'2026-09-03',b:'BV1qWtR6pEV9'}] },
+  {n:'Devin', u:'https://devin.ai', c:'code', v:'Cognition', co:'美国', p:4, net:1, m:0, mb:'',
+   t:['工程级代码','自主代理'], d:'定位为可独立接单的 AI 工程师，能读文档、改仓库、跑测试，适合把整块任务外包给代理。', vids:[{t:'Devin支持绑定个人ChatGPT订阅额度；Codex上线Windows原生沙箱功能；OpenAI开源MCP Extensions',a:'菲猫Feimao',l:8,p:'2026-10-10',b:'BV1QEpi6LE15'},{t:'干得越好额度越高：Devin给AI用量上了信用分',a:'AI技术投降派',l:12,p:'2026-10-21',b:'BV1HeJf6XE2D'},{t:'AI日报10.21｜DeepSeek开源Devin升级',a:'翻奇兽AI',l:1,p:'2026-10-21',b:'BV1M2ni6gEro'}] },
+  {n:'JetBrains AI', u:'https://www.jetbrains.com/ai', c:'code', v:'JetBrains', co:'捷克', p:2, net:1, m:0, mb:'',
+   t:['IDE 集成','企业'], d:'与 IntelliJ、PyCharm 等原生融合，重构与导航仍是强项，AI 作为辅助层接入。', vids:[{t:'JetBrains 也做开源 AI 编程 IDE 了',a:'HelloGitHub',l:21,p:'2026-10-27',b:'BV1sxxT6fE8J'},{t:'Jetbrains IDE AI Assistant 使用中转站 Key',a:'RabbitHareLu',l:4,p:'2026-09-10',b:'BV1paY36oEZu'},{t:'JetBrains 开源 AI 编程工具 ThinkRail：支持多工作区并行开发 | NeuralNine',a:'量子菠萝_',l:2,p:'2026-10-25',b:'BV16jHP6eEbp'}] },
+  {n:'文心快码 Comate', u:'https://comate.baidu.com', c:'code', v:'百度', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['中文注释','企业版'], d:'覆盖补全、单测与代码审查，中文语义与国内技术栈适配较好，提供企业私有化方案。', vids:[{t:'百度文心快码用我的开源项目生成了一篇文章，然后……没告诉我？',a:'sodous-手抖',l:3,p:'2026-08-31',b:'BV1Sht86zEN2'}] },
+  {n:'腾讯云 CodeBuddy', u:'https://www.codebuddy.ai', c:'code', v:'腾讯云', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['工程级代码','微信生态'], d:'面向工程级任务的编码代理，支持仓级理解与多文件改动，对微信小程序与云开发有专门优化。', vids:[{t:'AI代码生成很快，审查返工却更费时间？腾讯CodeBuddy架构师认证课程工程实践，从项目规范、上下文准备到分步开发、代码审查和测试验证，讲透减少无效生成！',a:'WorkBuddy-教程',l:15,p:'2026-10-16',b:'BV19dJQ6sErz'},{t:'免费的AI插件 腾讯Codebuddy',a:'程序员慧鹏',l:4,p:'2026-10-28',b:'BV1LHx76GE9W'},{t:'2026年最新腾讯云领取6490元之超低价购买服务器详细教程!',a:'网络小Q',l:0,p:'2026-10-28',b:'BV1KvxL6RE1p'}] },
+  {n:'豆包 MarsCode', u:'https://www.marscode.cn', c:'code', v:'字节跳动', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['IDE 补全','免费'], d:'免费开放的编程助手，云端 IDE 与插件双形态，适合学生与个人开发者低成本起步。', vids:[{t:'【DSH插件】给 AI 接上豆包：生图零成本，水印不用去（配音字幕版）',a:'我真的是只大肥鱼',l:650,p:'2026-10-27',b:'BV131nf6uEim'},{t:'我将用最简单最直白最不绕弯子的方式告诉你 豆包来了！【Deadlock全语音全特效mod 豆包阿紫】',a:'zfats',l:284,p:'2026-10-28',b:'BV117x567Ees'},{t:'豆包ROOMS正式版',a:'白月の晃',l:151,p:'2026-10-14',b:'BV1sbp168Eva'}] },
+  {n:'华为云 CodeArts Snap', u:'https://www.huaweicloud.com/product/codearts.html', c:'code', v:'华为云', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['企业合规','私有化'], d:'嵌在 CodeArts 研发流水线里的智能助手，强调信创环境与内网部署，适合大型组织。'},
+  {n:'讯飞星火代码', u:'https://xinghuo.xfyun.cn', c:'code', v:'科大讯飞', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['中文','免费额度'], d:'星火大模型下的编程能力入口，中文需求描述转代码较顺，适合教学与轻量开发。'},
+  {n:'CodeGeeX', u:'https://codegeex.cn', c:'code', v:'智谱 AI', co:'中国', p:0, net:0, m:0, mb:'',
+   t:['开源','免费'], d:'清华系开源代码模型，提供 IDE 插件与开源版本，可离线部署，研究与教学场景常用。', vids:[{t:'【2026最新】IDEA和VSCode必装神级插件，CodeGeeX实用功能盘点！无偿自取',a:'bili_4428645349',l:25,p:'2026-10-14',b:'BV1t7pC6FEsz'}] },
+  {n:'商汤代码小浣熊', u:'https://www.xiaohuanxiong.com', c:'code', v:'商汤科技', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['轻量级代码','数据分析'], d:'把代码生成与数据分析串起来，适合做报表处理、脚本自动化这类轻量任务。'},
+  {n:'Trae', u:'https://www.trae.com.cn', c:'code', v:'字节跳动', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['智能体 IDE','免费'], d:'AI 原生编辑器，国内版免费开放，中文交互与一键生成项目对新手友好。', vids:[{t:'Trae破甲实现AI 全自动化逆向编程脚本',a:'小魔王AI脚本教学',l:31,p:'2026-09-30',b:'BV1v1aZ66E4B'}] },
+  {n:'DeepSeek',md:'V4.1-Flash', u:'https://www.deepseek.com', c:'code', v:'深度求索', co:'中国', p:0, net:0, m:12265, mb:'QuestMobile 2026-09 月活',
+   t:['工程级代码','免费'], d:'代码与数学推理是其强项，网页端免费且支持长上下文，常被当作低成本的编码顾问。', vids:[{t:'你知道吗，其实你的deepseek还可以优化27倍token，少吃白饭！',a:'魔法师風雪',l:19881,p:'2026-10-14',b:'BV1Ghpy6gE5x'},{t:'炸场！智谱GLM-5.5-Flash现身OpenCode，DeepSeek指纹两变，OpenAI新模型，Atria Dawn开源登顶 | 10月28日 AI日报',a:'一只AI风向标',l:320,p:'2026-10-28',b:'BV1q8xG6hEbs'},{t:'Qoder为Deepseek V4.1 Flash扩容并增加TPM，减少用户排队 | 10月26日AI日报第560期',a:'infinite灵感港',l:379,p:'2026-10-26',b:'BV1kind6mER6'}] },
+  {n:'Kimi',md:'K3.1', u:'https://kimi.moonshot.cn', c:'code', v:'月之暗面', co:'中国', p:1, net:0, m:729, mb:'QuestMobile 2026-06 月活',
+   t:['长上下文','代码阅读'], d:'超长上下文适合整包读代码与文档，做技术方案梳理和遗留系统理解比逐行补全更有价值。'},
+  /* ========== 对话与推理 ========== */
+  {n:'ChatGPT', u:'https://chatgpt.com', c:'chat', v:'OpenAI', co:'美国', p:3, net:1, m:110000, mb:'Sensor Tower 2026-05 月活；官方 12亿周活跃用户',
+   t:['多模态','通用'], d:'综合能力最均衡的通用助手，语音、图像、文件与联网都在同一入口，生态最丰富。', vids:[{t:'ChatGPT现在彻底没法用了，全是防御性叠甲，被气到力竭了。。。',a:'柏拉图梦见电子羊',l:346,p:'2026-10-26',b:'BV1k6nZ6XECN'},{t:'ChatGPT 接上 MCP 后有多强？从产品设计到营销素材全流程实测',a:'小in分享',l:147,p:'2026-10-28',b:'BV1RFxj6qEJY'},{t:'Selected model is at capacity | ChatGPT / Codex “模型超容量”？我也踩坑了，这是我的实测恢复过程',a:'深秋书吧',l:60,p:'2026-09-18',b:'BV1q9ey6CEh3'}] },
+  {n:'Claude', u:'https://claude.ai', c:'chat', v:'Anthropic', co:'美国', p:3, net:1, m:24500, mb:'Sensor Tower 2026-05 估算，官方未披露',
+   t:['长文本','写作'], d:'长文理解与文字质感突出，改稿时更愿意保留原意，适合报告、合同与长篇内容。', vids:[{t:'如何长期稳定使用Claude订阅，原理+实操教学',a:'技术爬爬虾',l:2576,p:'2026-10-20',b:'BV1EzJf6JE9U'},{t:'Claude max5x个人订阅实测稳定性',a:'尔雅丶释木',l:22,p:'2026-10-11',b:'BV1Wfpj67EkL'},{t:'AI 写完代码，怎么放心上线？拆解 Claude Code 团队的审查流程',a:'AI随风随风',l:54,p:'2026-10-28',b:'BV1Csxj6HEVN'}] },
+  {n:'Gemini', u:'https://gemini.google.com', c:'chat', v:'Google', co:'美国', p:2, net:1, m:95000, mb:'Alphabet 2026-Q2 月活（App）',
+   t:['多模态','生态集成'], d:'与搜索、Workspace、Android 深度打通，超长上下文与视频理解是其差异点。', vids:[{t:'Gemini能登谷歌却打不开？90% 的人都踩了这个IP大坑，保姆级教程一次搞定',a:'Rola海外代理ip',l:73,p:'2026-10-08',b:'BV1eXaA6jEcU'},{t:'Gemini忽然提示不支持该地区访问怎么办？试试这样配置静态IP一招解决地区不可用问题！',a:'ipdeep静态IP',l:26,p:'2026-09-24',b:'BV1fjaP6fEdS'},{t:'Gemini提示当前地区无法使用？3个原因分析及IP配置教程',a:'9HTTP',l:18,p:'2026-10-13',b:'BV1eBWw6tEfM'}] },
+  {n:'Grok', u:'https://grok.com', c:'chat', v:'xAI', co:'美国', p:2, net:1, m:11700, mb:'SEC 招股书 2026-03',
+   t:['实时信息','风格化'], d:'接 X 平台实时信息流，时效性强、语气直接，适合追踪热点与舆情。', vids:[{t:'【落后一代？】Grok4.7六维能力综合测试复测',a:'荡殇永魔',l:71,p:'2026-10-28',b:'BV16WxG6vECr'},{t:'超干货！10月27日实测 安卓设备下载Grok应用保姆级安装教程 全程无坑',a:'kaucmq08646',l:22,p:'2026-10-27',b:'BV12qxK6aEoC'},{t:'最新SuperGrok 订阅一个月 /三个月会员 新手小白也能2分钟完成订阅',a:'财神追着喂饭',l:12,p:'2026-10-16',b:'BV1aFJX6QEer'}] },
+  {n:'Microsoft Copilot', u:'https://copilot.microsoft.com', c:'chat', v:'微软', co:'美国', p:2, net:1, m:15000, mb:'微软 2026-01 全系月活',
+   t:['办公集成','免费额度'], d:'Windows 与 Office 体系内的助手入口，免费可用的模型与图像生成额度较大。', vids:[{t:'【Windows11】全新 Microsoft Copilot 亮相',a:'Windows之家',l:172,p:'2026-09-26',b:'BV15JhU6kExK'},{t:'微软 Copilot 全新 Agent Builder 教程：几分钟零代码创建AI智能体（2026）',a:'莉雅水嘟嘟',l:4,p:'2026-10-03',b:'BV1W9aS6wEMU'},{t:'Microsoft 365 Copilot 新功能202609',a:'微软copilot科技',l:2,p:'2026-10-13',b:'BV11ZWw6yEnG'}] },
+  {n:'Perplexity', u:'https://www.perplexity.ai', c:'chat', v:'Perplexity', co:'美国', p:2, net:1, m:4500, mb:'2026 估算区间下限',
+   t:['深度研究','来源引用'], d:'搜索与生成合一，答案逐句带来源链接，做资料核查与行业扫描效率高。', vids:[{t:'拆解 Perplexity Brain1️⃣：记忆整理成 wiki，agent 按需去取',a:'慢学AI',l:49,p:'2026-10-17',b:'BV1P3Jq6FEb5'},{t:'拆解 Perplexity Brain②：后台 agent Dream 怎么维护 wiki 记忆',a:'慢学AI',l:33,p:'2026-10-18',b:'BV1zHn36JEsZ'},{t:'34分钟详解Perplexity全部功能',a:'TinaHuangAI学习',l:2,p:'2026-10-22',b:'BV1dNnJ6AE5A'}] },
+  {n:'Poe', u:'https://poe.com', c:'chat', v:'Quora', co:'美国', p:1, net:1, m:0, mb:'',
+   t:['模型聚合','Bot 广场'], d:'一个订阅横跨多家模型与用户自建 Bot，适合比对不同模型对同一问题的表现。', vids:[{t:'谁还记得Poe',a:'王小二数据分析',l:55,p:'2026-09-21',b:'BV1efhv6BEmd'}] },
+  {n:'Le Chat', u:'https://chat.mistral.ai', c:'chat', v:'Mistral AI', co:'法国', p:1, net:1, m:0, mb:'',
+   t:['开源模型','欧洲合规'], d:'Mistral 官方入口，响应快、价格低，对数据驻留欧洲有要求的团队更合适。', vids:[{t:'VRChat中文恐怖图-地府·提线',a:'猫之优雅v',l:63,p:'2026-10-27',b:'BV1Nxxu6qEp9'},{t:'直接教会您chat gpt go/plus/pro！两分钟搞定！',a:'ChatGPT自充',l:12,p:'2026-10-28',b:'BV1qvxj6CEbj'},{t:'2026-10-28 22:47:57 I chat/all: 生当奋飞: 玩的好就是挂吗',a:'Vlsova_zz',l:2,p:'2026-10-28',b:'BV1rysX6JE9m'}] },
+  {n:'DeepSeek',md:'V4.1-Flash', u:'https://www.deepseek.com', c:'chat', v:'深度求索', co:'中国', p:0, net:0, m:12265, mb:'QuestMobile 2026-09 月活',
+   t:['推理','开源'], d:'推理链与代码、数学能力突出，接口价格低，是国内开发者做应用底座的高频选择。', vids:[{t:'鉴定一下网络热门 DeepSeek 传闻：DeepSeek-V5 要来了？',a:'黑鸦Heya',l:1641,p:'2026-10-28',b:'BV1ksxj6nEsa'},{t:'【辟谣】鲸鱼兄弟们！DeepSeek 放大招啦！V5 要来咧！离正式上线应该不远了！这波剧透信号很明确！',a:'渐近自由JJZY',l:398,p:'2026-10-28',b:'BV1XKxj6YEao'},{t:'最新Skills开发教程，Agent skill实战|WorkBuddy+Codex+DeepSeek Harness',a:'尚硅谷',l:475,p:'2026-10-28',b:'BV14rxM6qEnL'}] },
+  {n:'豆包', u:'https://www.doubao.com', c:'chat', v:'字节跳动', co:'中国', p:0, net:0, m:41908, mb:'QuestMobile 2026-09 月活',
+   t:['多模态','免费'], d:'语音交互自然，图像与视频生成一体化，免费额度大，适合日常问答与内容初稿。', vids:[{t:'「小白」读作豆包手机二代 写作努比亚NaviX Ultra',a:'小白测评',l:9536,p:'2026-09-20',b:'BV12aeh6HEqm'},{t:'【 豆包Agent保姆级教程】吊打付费!  豆包彻底玩明白！只看这一期就够了！10节付费课内容全公开，零基础也能学会!',a:'豆包Agent官方教程',l:3085,p:'2026-09-26',b:'BV1LQaN6RE3v'},{t:'AI会员到底怎么选？！ #ai #AI #豆包  #千问 #chatgpt',a:'gpt全程指导',l:1746,p:'2026-10-12',b:'BV1fipR61E85'}] },
+  {n:'Kimi',md:'K3.1', u:'https://kimi.moonshot.cn', c:'chat', v:'月之暗面', co:'中国', p:1, net:0, m:729, mb:'QuestMobile 2026-06 月活',
+   t:['长文本','文档解析'], d:'以超长上下文起家，能整本读报告与合同，适合做资料汇总与跨文档比对。', vids:[{t:'【实测】等了三个月！Kimi K3.1 Pro这次有点不一样！',a:'神烦老狗',l:1508,p:'2026-10-27',b:'BV1p9xM6bE7R'},{t:'10月AI模型强度榜（更新kimi k3.1 pro)',a:'梦涟真红',l:198,p:'2026-10-25',b:'BV1PpnS6PEJ4'},{t:'【国模SOTA】Kimi K3.1Pro六维能力综合测试',a:'荡殇永魔',l:51,p:'2026-10-28',b:'BV1dAxE6VEXW'}] },
+  {n:'通义千问', u:'https://tongyi.aliyun.com', c:'chat', v:'阿里巴巴', co:'中国', p:0, net:0, m:15817, mb:'QuestMobile 2026-09 月活',
+   t:['办公','多模态'], d:'与钉钉、阿里云打通，文档、表格与会议场景衔接顺，企业落地案例多。'},
+  {n:'文心一言', u:'https://yiyan.baidu.com', c:'chat', v:'百度', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['中文','搜索增强'], d:'中文语料与百科知识扎实，配合百度搜索做事实类问答较稳。', vids:[{t:'国产主流A大乱斗｜豆包 Kimi DeepSeek 文心千问，谁才是真正的生产力工具？',a:'优测实验室',l:801,p:'2026-09-20',b:'BV1zvei69Eyf'}] },
+  {n:'智谱清言', u:'https://chatglm.cn', c:'chat', v:'智谱 AI', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['智能体','中文'], d:'内置大量智能体与工具调用，图文视频生成同站，适合一站式完成轻量创作。', vids:[{t:'智谱清言 AI更新后还更不好用了，而且也更没人情味了，千问这个占空间太大了，看来现在是没啥好用的AI了',a:'沐悠束雅',l:2,p:'2026-09-11',b:'BV1REY76fEhs'},{t:'写报告写论文还得自己憋半天? 智谱清言GLM4实测, 打工人学生党都在偷偷用🤖😎📚',a:'游戏小铺ol6',l:0,p:'2026-10-28',b:'BV13jx36HEUF'}] },
+  {n:'腾讯元宝', u:'https://yuanbao.tencent.com', c:'chat', v:'腾讯', co:'中国', p:0, net:0, m:3733, mb:'QuestMobile 2026-09 月活',
+   t:['微信生态','免费'], d:'可直接读取公众号内容，与微信、腾讯文档衔接，做中文资料检索方便。', vids:[{t:'砸了重金的腾讯元宝，为什么还是干不过字节的傻豆包？',a:'星尚故事汇',l:306,p:'2026-09-30',b:'BV14Fao6HE9v'},{t:'deepseek三合一之后，发现腾讯元宝的deepseek用起来比dsAPP舒服多了，除了限制5次',a:'隐于芸芸众生之中',l:177,p:'2026-09-24',b:'BV13Xac6BEek'},{t:'腾讯元宝app专属福利',a:'盛扬爱分享',l:5,p:'2026-10-08',b:'BV1LFH26LEJ7'}] },
+  {n:'讯飞星火', u:'https://xinghuo.xfyun.cn', c:'chat', v:'科大讯飞', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['语音','教育'], d:'语音识别与合成是传统强项，教育、医疗行业的知识问答做了专门适配。', vids:[{t:'讯飞星火X2.5测评报告！严重翻车事故现场！',a:'AI产品狙击手',l:93,p:'2026-09-07',b:'BV1HMbP6sEVz'},{t:'全国产算力训练的讯飞星火Spark X2.6，293B参数量的前端表现居然不算很区？【两分钟模型速测】',a:'小佛懒羊',l:20,p:'2026-10-23',b:'BV1XgnH6qEzf'},{t:'【实力炸裂】最近爆火的讯飞星火大模型到底怎么样？它真的好用吗？稳到离谱！',a:'-T梁课绝e2谢',l:14,p:'2026-09-10',b:'BV1jiYT6qERS'}] },
+  {n:'百小应', u:'https://ying.baichuan-ai.com', c:'chat', v:'百川智能', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['医疗','中文'], d:'医疗健康方向积累较多，回答偏严谨，适合健康科普与专业资料初筛。'},
+  {n:'天工', u:'https://www.tiangong.cn', c:'chat', v:'昆仑万维', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['长文本','搜索'], d:'长文本与搜索结合，支持研究式提问，适合做行业调研的起点。', vids:[{t:'未央城隐藏探索 天工地窟 芥子藏形 全收集',a:'嗨土豆爱吃薯条',l:178,p:'2026-10-24',b:'BV1bJnY6cEgj'},{t:'评价手杀天工武将（第一期）',a:'江南布衣132',l:66,p:'2026-10-24',b:'BV1ciHN66ECt'}] },
+  {n:'海螺 AI', u:'https://hailuoai.com', c:'chat', v:'MiniMax', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['语音','长文本'], d:'语音合成自然度高，对话与视频生成共用一套账号，适合做有声内容。', vids:[{t:'小海螺',a:'青春的时候时光',l:458,p:'2026-10-18',b:'BV1JBng6SEH3'},{t:'禁忌岛刚需材料海螺海胆获取教学！传送盐渍废屋，海边捡海螺，击杀潮生灵拿海胆，学会切线量产',a:'七日子墨',l:9,p:'2026-10-27',b:'BV1sWxT6cEtx'},{t:'【小影】蘸汁儿大海螺～',a:'发芽的小香菇',l:11,p:'2026-10-26',b:'BV1cPnZ6EEcm'}] },
+  {n:'跃问', u:'https://yuewen.cn', c:'chat', v:'阶跃星辰', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['多模态','图像理解'], d:'多模态理解能力较突出，看图问答、图表解读是其主要使用场景。'},
+  {n:'商量', u:'https://chat.sensetime.com', c:'chat', v:'商汤科技', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['多模态','企业'], d:'商汤的多模态助手，图文理解与行业方案结合，偏企业侧交付。', vids:[{t:'有话好商量！这次哥是真知道错了！',a:'绿能战士来啦',l:57,p:'2026-10-28',b:'BV1Qwx56tEKd'},{t:'商量',a:'内购呀它内购呀',l:0,p:'2026-10-28',b:'BV1vFs96uE2J'}] },
+  {n:'纳米 AI 搜索', u:'https://www.n.cn', c:'chat', v:'360', co:'中国', p:0, net:0, m:0, mb:'',
+   t:['搜索','免费'], d:'搜索式问答入口，聚合多模型结果，免费且中文内容覆盖广。'},
+  {n:'秘塔 AI 搜索', u:'https://metaso.cn', c:'chat', v:'秘塔科技', co:'中国', p:0, net:0, m:0, mb:'',
+   t:['搜索','无广告'], d:'无广告的学术与资料搜索，自动生成大纲与出处，适合写综述与做尽调。'},
+  {n:'Groq', u:'https://groq.com', c:'chat', v:'Groq', co:'美国', p:1, net:1, m:0, mb:'',
+   t:['推理加速','低延迟'], d:'自研推理芯片带来极低延迟，适合做实时对话与语音交互的底层推理。'},
+  {n:'Together AI', u:'https://www.together.ai', c:'chat', v:'Together AI', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['开源模型托管','接口'], d:'把主流开源模型做成可按量调用的接口，价格透明，适合自建产品后端。', vids:[{t:'【更新1-60】被困在一起  Locked Together',a:'小零们你的大猛一来了',l:112,p:'2026-10-28',b:'BV14yxg6VEdJ'},{t:'【2026新外研七上U3-2】Racing together课文动画 更新版本',a:'AI小先生动画',l:2,p:'2026-10-24',b:'BV1JiHN6zEKu'},{t:'LLM能写多卡CUDA内核吗？Together AI实测与瓶颈解析 | AI Engineer',a:'量子菠萝_',l:2,p:'2026-08-30',b:'BV1P8tc6SEjr'}] },
+  {n:'OpenRouter', u:'https://openrouter.ai', c:'chat', v:'OpenRouter', co:'美国', p:1, net:1, m:0, mb:'',
+   t:['模型聚合','统一接口'], d:'一个密钥调数百个模型并自动比价，做模型选型与容灾切换很方便。', vids:[{t:'DeepSeek Harness上手实战！结合OpenRouter配置免费AI模型与代码挑战',a:'赛博门外憨',l:20,p:'2026-10-08',b:'BV1jxpc69E4p'}] },
+  {n:'Hugging Face', u:'https://huggingface.co', c:'chat', v:'Hugging Face', co:'美国', p:0, net:0, m:0, mb:'',
+   t:['开源社区','模型托管'], d:'开源模型与数据集的中心，Spaces 可在线试玩，是查模型能力边界的第一站。', vids:[{t:'【熟肉】Hugging Face 入侵事件完整解析',a:'贰鼠',l:244,p:'2026-10-03',b:'BV1MUHh64EZ2'},{t:'Hugging Face《大语言模型课程|LLM Course》中英字幕',a:'GPT中英字幕课程资源',l:46,p:'2026-10-09',b:'BV1EiHq6fEHK'},{t:'Hugging Face期刊俱乐部，AI研究的偏好模型 | Hugging Face | Hugging Face Journal Club AI Resea',a:'Mindofuture',l:8,p:'2026-09-09',b:'BV1ULbN6BEnb'}] },
+  {n:'Cohere', u:'https://coral.cohere.com', c:'chat', v:'Cohere', co:'加拿大', p:3, net:1, m:0, mb:'',
+   t:['企业知识库','私有部署'], d:'面向企业的检索增强与嵌入方案，支持私有云部署，强调数据不出域。'},
+  {n:'Character.AI', u:'https://character.ai', c:'chat', v:'Character.AI', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['角色扮演','社区'], d:'角色对话社区的先行者，人设保持与多轮互动体验成熟，适合做虚拟角色原型。'},
+  /* ========== 音频与音乐 ========== */
+  {n:'Suno',md:'V6', u:'https://suno.com', c:'audio', v:'Suno', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['音乐生成','人声演唱'], d:'输入一句主题即可产出带人声的完整歌曲，风格覆盖广，是目前传播度最高的 AI 音乐工具。', vids:[{t:'道路以目歌 ｜ Suno AI',a:'Jawward',l:175,p:'2026-10-28',b:'BV1TYnx6uEQ2'},{t:'就豆包+Suno+汽水做Ai音乐！首月收获1.7W！附工具教程！不懂乐理也能学会的Ai音乐教学！用到的工具+过审变现指南+全套suno教程也都整好啦',a:'冰冰冰荔子',l:65,p:'2026-10-27',b:'BV16DxK6XEQ9'},{t:'Suno V6 版修改以前唱错的歌词，editor里有惊艳之处，studio里最可控',a:'贝多音乐邹师傅',l:12,p:'2026-09-11',b:'BV14WY36wEfM'}] },
+  {n:'Udio', u:'https://www.udio.com', c:'audio', v:'Udio', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['音乐生成','高保真'], d:'音质与编曲细节见长，支持段落延展与重绘，适合对成品听感要求更高的创作。'},
+  {n:'ElevenLabs', u:'https://elevenlabs.io', c:'audio', v:'ElevenLabs', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['配音克隆','多语言'], d:'声音克隆与情感表达的行业标杆，多语种口音自然，适合有声书、播客与出海视频配音。', vids:[{t:'热门 TTS 初体验- elevenlabs、gemini3.8、minimax audio',a:'SeASnAkEss',l:114,p:'2026-10-07',b:'BV1aCpN6ZEPf'},{t:'Elevenlabs vs Suno，ai配音领域到底谁更强？',a:'不管这么多',l:1,p:'2026-10-19',b:'BV1eyn76ZEhB'},{t:'ElevenLabs测试',a:'丸子捞什么_',l:0,p:'2026-10-22',b:'BV1qTn262Ekb'}] },
+  {n:'Murf AI', u:'https://murf.ai', c:'audio', v:'Murf AI', co:'印度', p:2, net:1, m:0, mb:'',
+   t:['企业配音','多语言'], d:'面向企业演示与课程的配音平台，发音词典与语速控制细，团队协作功能完整。'},
+  {n:'Resemble AI', u:'https://www.resemble.ai', c:'audio', v:'Resemble AI', co:'加拿大', p:2, net:1, m:0, mb:'',
+   t:['声音克隆','鉴伪'], d:'声音克隆起家，同时提供深度伪造检测，适合既要用声音又需要风控的场景。'},
+  {n:'Adobe Podcast', u:'https://podcast.adobe.com', c:'audio', v:'Adobe', co:'美国', p:0, net:1, m:0, mb:'',
+   t:['降噪','人声增强'], d:'免费的人声增强工具，一段录音即可去掉房间混响与底噪，播客与口播剪辑的常用前置步骤。', vids:[{t:'[IELTS Podcast] Is Technology Making Our Lives Better?',a:'Falling_Studio',l:19,p:'2026-10-08',b:'BV1yEH96LEMY'}] },
+  {n:'LALAL.AI', u:'https://www.lalal.ai', c:'audio', v:'LALAL.AI', co:'塞浦路斯', p:1, net:0, m:0, mb:'',
+   t:['分轨','去人声'], d:'人声、鼓、贝斯、钢琴分轨质量稳定，做伴奏提取与采样二创很方便。', vids:[{t:'在DAW中一键生成无吉他伴奏，任何录音软件都可以实时音轨拆分了！LALAL.AI啦啦爱分轨VST插件版试用感受【天线测评】',a:'SKYline吉他工作室',l:29,p:'2026-10-27',b:'BV1LKxu6nEXr'},{t:'分轨器 Lalal Stem Separator 如何使用',a:'Z少徒',l:2,p:'2026-10-08',b:'BV1nXpM6JExo'}] },
+  {n:'Moises', u:'https://moises.ai', c:'audio', v:'Moises', co:'巴西', p:1, net:0, m:0, mb:'',
+   t:['分轨','变速'], d:'面向乐手的分轨与练习工具，可单独静音某轨、变速变调，移动端体验好。'},
+  {n:'AIVA', u:'https://www.aiva.ai', c:'audio', v:'AIVA', co:'卢森堡', p:1, net:1, m:0, mb:'',
+   t:['配乐','版权清晰'], d:'偏影视与游戏配乐，可按情绪与时长生成，版权归属规则相对明确。', vids:[{t:'AIVA Life 全时智慧伙伴，让AI伴你每一天',a:'AIVA汽车',l:100,p:'2026-10-22',b:'BV1BRnz6hEwd'},{t:'听AIVA ME7设计师本人讲AI汽车应该怎么设计',a:'白宁的爱车时光',l:216,p:'2026-10-22',b:'BV1u5n66mEt5'},{t:'AIVA ME7｜懂你的未来同行者',a:'AIVA汽车',l:62,p:'2026-10-26',b:'BV1yyHV6KEAn'}] },
+  {n:'Soundraw', u:'https://soundraw.io', c:'audio', v:'Soundraw', co:'日本', p:2, net:1, m:0, mb:'',
+   t:['免版税配乐','可编辑'], d:'按场景与情绪筛曲，生成后可改段落与乐器，订阅期内产出可商用。'},
+  {n:'Stable Audio', u:'https://stableaudio.com', c:'audio', v:'Stability AI', co:'英国', p:1, net:1, m:0, mb:'',
+   t:['音效','配乐'], d:'音效与氛围音乐生成，短片段质感好，适合游戏与视频的音效填补。', vids:[{t:'【声音处理】MUFFLED AUDIO',a:'招财猫吃枣枣',l:48,p:'2026-09-03',b:'BV1RV846VETE'}] },
+  {n:'Voicemod', u:'https://www.voicemod.net', c:'audio', v:'Voicemod', co:'西班牙', p:1, net:0, m:0, mb:'',
+   t:['变声','实时'], d:'实时变声与音效板，直播与游戏语音的常用工具，本地处理延迟低。'},
+  {n:'Speechify', u:'https://speechify.com', c:'audio', v:'Speechify', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['朗读','无障碍'], d:'把网页与文档转成语音，语速与音色选择多，适合通勤听读与无障碍场景。'},
+  {n:'讯飞智作', u:'https://peiyin.xunfei.cn', c:'audio', v:'科大讯飞', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['配音','方言'], d:'中文配音的老牌工具，方言与多音字处理成熟，支持情绪与停顿标记。', vids:[{t:'一句话直接出完整视频！这个讯飞智作视频Agent有点东西？',a:'星野AI局',l:0,p:'2026-09-06',b:'BV1DrbH6REed'}] },
+  {n:'MiniMax Audio', u:'https://hailuoai.com', c:'audio', v:'MiniMax', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['语音克隆','多语言'], d:'声音克隆只需少量样本，多语种发音自然，适合做跨境内容的多语配音。', vids:[{t:'Minimax H3总是乱出字幕、抢台词？一期视频教你如何解决这些问题！附提示词模板！',a:'在下鱼酥',l:117,p:'2026-10-07',b:'BV1voHC6zETb'},{t:'Singularity × 10Eros PRISM 全流程教学：MiniMax H3 最强融合底模实战',a:'有趣的80后程序员',l:93,p:'2026-10-28',b:'BV1pFxL6UEfm'},{t:'超强音频生成 FishAudio Drama 3 首发！35B 情感 TTS 本地跑，多角色对话 + MiniMax H3 联动！',a:'大凯AI',l:61,p:'2026-10-17',b:'BV1MnJi6PEHq'}] },
+  {n:'腾讯智影', u:'https://zenvideo.qq.com', c:'audio', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['配音','数字人'], d:'配音与数字人口型同步，企业宣传与课程视频可一站式完成。'},
+  {n:'剪映', u:'https://www.capcut.cn', c:'audio', v:'字节跳动', co:'中国', p:0, net:0, m:0, mb:'',
+   t:['文本朗读','音效库'], d:'内置朗读音色与音效库，剪辑时直接配音配乐，是短视频音频的最低成本方案。', vids:[{t:'剪映更新“插件”功能了？',a:'小猫TeaM',l:223,p:'2026-10-21',b:'BV1mdn66UEuK'},{t:'【剪映教程】外置插件使用',a:'Billzc7',l:28,p:'2026-10-23',b:'BV1Jvnh6GEDj'},{t:'1. 剪映会员值不值？免费·VIP·SVIP·团队版全对比，别再乱充',a:'成都赵赵的软件课',l:9,p:'2026-10-19',b:'BV1tZnJ6oEKE'}] },
+  {n:'TME Studio', u:'https://y.qq.com', c:'audio', v:'腾讯音乐', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['作曲','分轨'], d:'腾讯音乐旗下的创作辅助工具，旋律生成与人声分离结合，中文曲库资源丰富。'},
+  /* ========== 办公与文档 ========== */
+  {n:'Notion AI', u:'https://www.notion.so', c:'office', v:'Notion', co:'美国', p:2, net:1, m:10000, mb:'官网 1亿+ 累计用户',
+   t:['写作','知识库'], d:'在笔记与数据库里直接调用 AI，摘要、改写、跨页检索都在原地完成，适合团队知识沉淀。', vids:[{t:'ChatGPT 接入 Notion：把聊出来的想法存成文档',a:'职场懒人',l:9,p:'2026-09-08',b:'BV1BXb36qEew'},{t:'Notion AI 竟然能控制本机电脑？从配置到使用，手把手实操教程爽用opus5.5',a:'睿哥趣谈云原生',l:7,p:'2026-10-18',b:'BV1Y8nu6KE5n'},{t:'Genie 4 世界会说话，Notion 直接做文件｜AI日报 2026.10.28',a:'酷恩哈哈',l:1,p:'2026-10-28',b:'BV1YixG64E6d'}] },
+  {n:'Microsoft 365 Copilot', u:'https://www.microsoft.com/microsoft-365/copilot', c:'office', v:'微软', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['办公套件','企业合规'], d:'嵌进 Word、Excel、PowerPoint、Teams，基于企业内部数据作答，权限体系沿用微软租户。', vids:[{t:'面向初学者的Microsoft 365 Copilot   Copilot in Microsoft 365 for Beginners',a:'DiscoveryJourney',l:11,p:'2026-09-26',b:'BV1oMYe66EgP'},{t:'Microsoft 365 Copilot 新功能202609',a:'微软copilot科技',l:2,p:'2026-10-13',b:'BV11ZWw6yEnG'},{t:'Microsoft365 Copilot 2026 Introduction',a:'TrinityLowCode',l:1,p:'2026-10-26',b:'BV1CYnd6SEKg'}] },
+  {n:'Google Workspace Gemini', u:'https://workspace.google.com', c:'office', v:'Google', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['办公套件','协作'], d:'在 Docs、Sheets、Gmail 内生成与总结，长上下文可跨 Drive 文件检索。', vids:[{t:'Gemini能登谷歌却打不开？90% 的人都踩了这个IP大坑，保姆级教程一次搞定',a:'Rola海外代理ip',l:73,p:'2026-10-08',b:'BV1eXaA6jEcU'},{t:'【突发】谷歌发布 Gemini 4 Carbon，AA 跑分超 Opus 5.5！3D 理解与人类持平！价格不变！依旧只能看不能用',a:'渐近自由JJZY',l:34,p:'2026-10-29',b:'BV1yCsR6ZE9V'},{t:'Gemini 提示所在地区不可用？Gemini充值时，遇到地区访问限制，应该怎么办？',a:'不管这么多',l:10,p:'2026-10-02',b:'BV1fWaS6QEfG'}] },
+  {n:'Jasper', u:'https://www.jasper.ai', c:'office', v:'Jasper', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['营销文案','品牌语气'], d:'面向营销团队的品牌语气管理，可锁定风格与禁用词，批量产出多渠道文案。'},
+  {n:'Copy.ai', u:'https://www.copy.ai', c:'office', v:'Copy.ai', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['销售文案','工作流'], d:'从线索到外呼话术的销售流程自动化，模板与企业集成较完整。'},
+  {n:'Writesonic', u:'https://writesonic.com', c:'office', v:'Writesonic', co:'印度', p:1, net:1, m:0, mb:'',
+   t:['SEO 写作','博客'], d:'围绕搜索流量做长文生成与优化，适合内容站批量铺稿。'},
+  {n:'QuillBot', u:'https://quillbot.com', c:'office', v:'QuillBot', co:'美国', p:1, net:1, m:0, mb:'',
+   t:['改写','语法检查'], d:'段落改写与同义替换工具，适合非母语写作时调整表达而非整段重写。'},
+  {n:'Otter.ai', u:'https://otter.ai', c:'office', v:'Otter', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['会议纪要','实时转录'], d:'英文会议实时转写与摘要，能自动区分发言人并同步到日历与协作工具。'},
+  {n:'Fireflies.ai', u:'https://fireflies.ai', c:'office', v:'Fireflies', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['会议记录','客户系统同步'], d:'会议记录自动归档并写入客户系统，销售与客户成功团队使用较多。'},
+  {n:'Fathom', u:'https://fathom.video', c:'office', v:'Fathom', co:'美国', p:1, net:1, m:0, mb:'',
+   t:['会议纪要','免费额度'], d:'免费额度慷慨的会议助手，会后即刻出摘要与行动项，个人使用成本低。', vids:[{t:'FATHOM(深测)第一章 全流程｜Roblox恐怖游戏',a:'Ibuki゚',l:21,p:'2026-10-28',b:'BV1maxL6oExY'}] },
+  {n:'Gamma', u:'https://gamma.app', c:'office', v:'Gamma', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['PPT','网页'], d:'从一句话或文档生成整份演示，排版自动完成，可导出 PPT 或直接发布为网页。', vids:[{t:'Retroid Pocket Duo Lite: Gamma OS测试(RPDL终于适配GammaOS了，可玩更多的3Ds游戏)',a:'Retroid_Pocket官方',l:37,p:'2026-10-28',b:'BV1RKxE63E2r'},{t:'第11集-Delta与Gamma',a:'赛博基地',l:0,p:'2026-10-15',b:'BV1t9JC69E26'}] },
+  {n:'Tome', u:'https://tome.app', c:'office', v:'Tome', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['叙事演示','销售提案'], d:'以叙事结构为核心的演示工具，适合做提案与产品故事而非密集数据页。'},
+  {n:'Beautiful.ai', u:'https://www.beautiful.ai', c:'office', v:'Beautiful.ai', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['演示排版','团队模板'], d:'自动遵守排版规则，加内容时版式不乱，适合不擅长设计的汇报者。'},
+  {n:'PDF.ai', u:'https://pdf.ai', c:'office', v:'PDF.ai', co:'美国', p:1, net:1, m:0, mb:'',
+   t:['PDF 对话','批量'], d:'支持多份 PDF 同时对话与信息抽取，适合做合同比对与资料整理。'},
+  {n:'Elicit', u:'https://elicit.com', c:'office', v:'Elicit', co:'美国', p:1, net:1, m:0, mb:'',
+   t:['文献综述','证据表'], d:'自动检索论文并抽取研究结论成表，做综述与证据梳理的效率工具。'},
+  {n:'Consensus', u:'https://consensus.app', c:'office', v:'Consensus', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['论文证据','问答'], d:'用论文结论回答研究性问题，标注样本量与结论方向，适合查证健康与社科议题。', vids:[{t:'6分钟学会 Consensus：提问、筛选、查看证据与参考文献',a:'末荟7',l:12,p:'2026-09-03',b:'BV1C1tX68EFS'}] },
+  {n:'飞书智能伙伴', u:'https://www.feishu.cn', c:'office', v:'字节跳动', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['协作','知识库'], d:'嵌在飞书文档、会议与多维表格中的助手，会议纪要与企业知识检索衔接顺。'},
+  {n:'钉钉 AI 助理', u:'https://www.dingtalk.com', c:'office', v:'阿里巴巴', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['办公','审批流'], d:'把 AI 接进审批、日程与群聊，可在组织架构内做信息查询与流程发起。'},
+  {n:'WPS AI', u:'https://www.wps.cn', c:'office', v:'金山办公', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['文档','表格','PPT'], d:'国内办公套件里覆盖最全的 AI 能力，写作、表格公式、PPT 生成与 PDF 处理都在同一账号下。'},
+  {n:'讯飞智文', u:'https://zhiwen.xfyun.cn', c:'office', v:'科大讯飞', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['PPT 生成','中文'], d:'一句话或一篇文稿生成整套 PPT，中文排版与政务、教育模板较贴合国内汇报习惯。'},
+  {n:'百度文库 AI', u:'https://wenku.baidu.com', c:'office', v:'百度', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['文档','PPT'], d:'依托文库语料做文档生成与总结，模板与范文资源是其主要优势。', vids:[{t:'【直装即用】百度文库免费下载工具，百度文库免费下载插件【这软件用着不烧心】',a:'fgseoa54244',l:12,p:'2026-10-25',b:'BV1mZH56LEYa'}] },
+  {n:'夸克', u:'https://quark.cn', c:'office', v:'阿里巴巴', co:'中国', p:0, net:0, m:0, mb:'',
+   t:['搜索','文档处理'], d:'搜索加 AI 助手的组合，扫描、转写、总结免费可用，适合移动端轻办公。', vids:[{t:'夸克为什么有质量',a:'Dear-Altolia',l:3,p:'2026-10-26',b:'BV1cZno6pE1i'}] },
+  {n:'腾讯文档', u:'https://docs.qq.com', c:'office', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['协作文档','表格'], d:'在线协作文档内置 AI 写作与表格分析，与微信、企业微信分享链路短。', vids:[{t:'WorkBuddy+腾讯文档 学生学情管理系统',a:'Shiki实验室',l:10,p:'2026-10-28',b:'BV15fxV6hEsE'}] },
+  {n:'Figma', u:'https://www.figma.com', c:'design', v:'Figma', co:'美国', p:2, net:1, m:1300, mb:'第三方 2026 设计类月活',
+   t:['UI 生成','协作'], d:'界面设计的事实标准，AI 功能围绕首稿生成、批量重命名与内容填充展开，团队协作链路最完整。'},
+  {n:'Canva', u:'https://www.canva.com', c:'design', v:'Canva', co:'澳大利亚', p:2, net:1, m:22000, mb:'官方 2026-Q1 月活',
+   t:['模板','品牌一致性'], d:'模板驱动的全民设计工具，Magic Studio 覆盖文生图、抠图、批量改尺寸，非设计师也能出成品。', vids:[{t:'Canva 2026｜挑战 30 分钟带你入门！从零做出简报、海报、网站、影片',a:'zhaoji16',l:110,p:'2026-09-08',b:'BV1fcbT6dEyZ'},{t:'科技早报 10.23 | 1685星！Canva发布先规划后生成的图像模型Craft，new-term-radar 开源上新',a:'lhy1145',l:2,p:'2026-10-23',b:'BV1Z3nx6pE5o'}] },
+  {n:'Adobe Express', u:'https://www.adobe.com/express', c:'design', v:'Adobe', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['社媒物料','素材库'], d:'轻量版 Adobe 设计工具，字体与素材授权清晰，适合做社媒图与短视频封面。', vids:[{t:'SOA设计需求又变了！试试PREEvision EXPRESS',a:'维克多汽车技术',l:10,p:'2026-09-09',b:'BV1QWY467Era'}] },
+  {n:'Framer', u:'https://www.framer.com', c:'design', v:'Framer', co:'荷兰', p:3, net:1, m:0, mb:'',
+   t:['建站','发布'], d:'设计稿直接变成可上线网站，AI 可生成整页布局，适合作品集与营销页快速上线。'},
+  {n:'Webflow', u:'https://webflow.com', c:'design', v:'Webflow', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['建站','内容管理'], d:'可视化建站加内容管理，AI 辅助生成结构与文案，适合需要长期维护的企业站。'},
+  {n:'Relume', u:'https://www.relume.io', c:'design', v:'Relume', co:'澳大利亚', p:3, net:1, m:0, mb:'',
+   t:['站点结构','线框'], d:'从一句话生成站点地图与线框，可直接同步到 Figma 或 Webflow，做前期结构很快。'},
+  {n:'Uizard', u:'https://uizard.io', c:'design', v:'Uizard', co:'丹麦', p:2, net:1, m:0, mb:'',
+   t:['线框转设计','快速原型'], d:'手绘草图或截图转成可编辑线框，适合产品早期快速对齐界面结构。'},
+  {n:'即时设计', u:'https://js.design', c:'design', v:'即时设计', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['UI 协作','免费'], d:'国产在线 UI 工具，Figma 文件可导入，个人免费额度大，适合国内团队协作。'},
+  {n:'Pixso', u:'https://pixso.cn', c:'design', v:'Pixso', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['UI 协作','交付'], d:'设计、原型与交付一体的国产工具，与国内研发流程衔接顺，价格友好。', vids:[{t:'Pixso MCP：6步拆解设计稿到代码，还原度稳了！',a:'Pixso协同设计',l:7,p:'2026-10-08',b:'BV1BbH96BEyM'}] },
+  {n:'稿定设计', u:'https://www.gaoding.com', c:'design', v:'稿定设计', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['电商物料','模板'], d:'电商与新媒体物料模板库，AI 抠图、扩图、商品图生成都围绕卖货场景设计。', vids:[{t:'稿定设计终身会员 稿定设计无水印下载 稿定设计VIP',a:'Top印',l:0,p:'2026-09-19',b:'BV1DveU6GE4D'}] },
+  {n:'创客贴', u:'https://www.chuangkit.com', c:'design', v:'创客贴', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['模板设计','印刷'], d:'模板加在线印刷下单，做线下物料与门店海报时省去对接环节。'},
+  {n:'图怪兽', u:'https://818ps.com', c:'design', v:'图怪兽', co:'中国', p:0, net:0, m:0, mb:'',
+   t:['模板','免费'], d:'免费模板资源多，改字换图即可出图，适合预算有限的小商家与个人号。'},
+  {n:'美图设计室', u:'https://design.meitu.com', c:'design', v:'美图公司', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['电商图','人像'], d:'商品图与模特图的 AI 处理，抠图、换背景、试穿一体，适合淘宝与跨境卖家。', vids:[{t:'AIGC微课-使用美图设计室无损放大图像',a:'阳光熠熠小小艾',l:0,p:'2026-10-22',b:'BV18inC6FE9h'}] },
+  {n:'Looka', u:'https://looka.com', c:'design', v:'Looka', co:'加拿大', p:1, net:1, m:0, mb:'',
+   t:['Logo','品牌套件'], d:'输入行业与偏好生成 Logo 方案，附带名片、社媒头像等成套品牌物料。'},
+  {n:'Spline', u:'https://spline.design', c:'design', v:'Spline', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['3D 设计','网页嵌入'], d:'浏览器里的 3D 设计工具，AI 生成模型与材质，可直接嵌进网页做交互展示。'},
+  {n:'蓝湖', u:'https://lanhuapp.com', c:'design', v:'蓝湖', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['协作交付','标注'], d:'设计稿交付与标注平台，自动生成切图与代码片段，是国内研发协作的常见一环。'},
+  {n:'Remove.bg', u:'https://www.remove.bg', c:'design', v:'Canva', co:'奥地利', p:1, net:0, m:0, mb:'',
+   t:['抠图','批量'], d:'一键去背景的老牌服务，边缘发丝处理稳定，提供接口可批量接入。'},
+  /* ========== 智能体与低代码 ========== */
+  {n:'扣子 Coze', u:'https://www.coze.cn', c:'agent', v:'字节跳动', co:'中国', p:0, net:0, m:0, mb:'',
+   t:['0 代码智能体','多端发布'], d:'拖拽式搭建智能体并一键发布到飞书、微信公众号等渠道，插件与知识库齐全，个人可零成本起步。', vids:[{t:'【2026最新】目前B站最全最细扣子coze入门到精通全套教程，一周带你小白变大神！从入门到精通，全程干货无废话！手把手教会你用coze搭建智能体~',a:'大模型零基础入门-',l:19,p:'2026-10-27',b:'BV1eMxT63Ecx'},{t:'Coze到底是什么？别把扣子空间当普通AI工作流，它更像一支AI团队',a:'不管这么多',l:3,p:'2026-10-14',b:'BV1qmpi6xEfo'}] },
+  {n:'Dify', u:'https://dify.ai', c:'agent', v:'LangGenius', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['开源','工作流','知识库问答'], d:'开源的大模型应用平台，工作流编排、知识库与运行监控完整，可自托管，国内团队落地首选之一。', vids:[{t:'Dify RAG的分段模式',a:'鱼日小生',l:1,p:'2026-10-01',b:'BV1eGaz6JEi6'}] },
+  {n:'n8n', u:'https://n8n.io', c:'agent', v:'n8n', co:'德国', p:2, net:0, m:0, mb:'',
+   t:['工作流','自托管'], d:'节点式自动化平台，可自托管、可控数据，AI 节点支持接入自有模型，适合技术团队做内部集成。', vids:[{t:'n8n3.0测试版升级前先查迁移，百度长文档OCR2开放｜10.27 AI晚报',a:'猫王AI',l:0,p:'2026-10-28',b:'BV1aGxu6jE7C'}] },
+  {n:'Make', u:'https://www.make.com', c:'agent', v:'Make', co:'捷克', p:2, net:1, m:0, mb:'',
+   t:['可视化自动化','性价比'], d:'可视化流程编排，分支与循环表达能力强，同等任务量的成本通常低于同类。', vids:[{t:'英语演讲Using Al Wisely to Make College Education Better',a:'bili_52305743539',l:0,p:'2026-10-25',b:'BV18YHV6CEe6'},{t:'中配+原声·【a16z Show】让医疗保健变得可负担的计划 | Plan to Make Healthcare Affordable | 双语',a:'全球播客频道',l:0,p:'2026-10-29',b:'BV1RLsX6uEf3'}] },
+  {n:'Relevance AI', u:'https://relevanceai.com', c:'agent', v:'Relevance AI', co:'澳大利亚', p:2, net:1, m:0, mb:'',
+   t:['AI 员工','多智能体'], d:'搭建可分工协作的「AI 员工」团队，带权限与审核，偏企业运营场景。'},
+  {n:'Flowise', u:'https://flowiseai.com', c:'agent', v:'Flowise', co:'美国', p:0, net:0, m:0, mb:'',
+   t:['开源','可视化'], d:'开源的可视化大模型编排工具，拖拽节点即可搭建知识库问答与对话流程，可本地部署。'},
+  {n:'Langflow', u:'https://www.langflow.org', c:'agent', v:'Langflow', co:'美国', p:0, net:0, m:0, mb:'',
+   t:['开源','可视化'], d:'以 LangChain 为基础的可视化编排器，适合快速验证链路并导出为接口。', vids:[{t:'Langflow严重漏洞遭大规模利用，攻击者专门偷OpenAI和AWS密钥-【网安资讯】',a:'蚁景网安实验室',l:85,p:'2026-09-02',b:'BV1BztJ6xE3b'}] },
+  {n:'CrewAI', u:'https://www.crewai.com', c:'agent', v:'CrewAI', co:'美国', p:1, net:0, m:0, mb:'',
+   t:['多智能体','开源'], d:'用角色分工的方式组织多个智能体协作，代码化程度高，适合工程团队做定制。'},
+  {n:'Manus', u:'https://manus.im', c:'agent', v:'Monica', co:'中国', p:3, net:1, m:0, mb:'',
+   t:['通用智能体','自主执行'], d:'给定目标后自主规划并操作浏览器与工具产出交付物，适合调研、制表与多步任务。', vids:[{t:'Manus2.0放大招：Cue上线，AI有自己手机号和钱包了！',a:'杜雨说AI',l:131,p:'2026-09-29',b:'BV1Xqa76XEJ1'},{t:'Manus 新品 Cue 开箱测评',a:'超级个体Silabs',l:20,p:'2026-09-30',b:'BV1iia96FEE1'},{t:'Manus 2.0 + Cue震撼发布',a:'Agent黄叔',l:21,p:'2026-09-29',b:'BV12oaJ6mEJa'}] },
+  {n:'Genspark', u:'https://www.genspark.ai', c:'agent', v:'Genspark', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['超级智能体','搜索'], d:'搜索起家转向任务执行，可生成页面、表格与简报，适合做一次性深度调研。'},
+  {n:'Glide', u:'https://www.glideapps.com', c:'agent', v:'Glide', co:'美国', p:2, net:1, m:0, mb:'',
+   t:['表格转应用','0 代码'], d:'把表格直接变成可用的内部应用，AI 可生成界面与字段，适合快速做业务工具。'},
+  {n:'Softr', u:'https://www.softr.io', c:'agent', v:'Softr', co:'德国', p:2, net:1, m:0, mb:'',
+   t:['无代码门户','Airtable'], d:'基于 Airtable 等数据源搭客户门户与内部系统，权限与登录开箱可用。'},
+  {n:'Bubble', u:'https://bubble.io', c:'agent', v:'Bubble', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['无代码应用','全栈'], d:'能力最接近真实开发的无代码平台，可做带支付与数据库的完整产品，学习曲线也最陡。', vids:[{t:'Bubble Tea 详解：用 Elm 架构写 Go 终端界面（设计理念 · 源码原理 · 示例 · 优秀项目）',a:'比特光锥_BightCone',l:17,p:'2026-10-23',b:'BV1CCJ963Eet'},{t:'【银虎】吃饭唠嗑｜bubble261028',a:'Jade_0524',l:5,p:'2026-10-28',b:'BV1aVxE6qEwT'},{t:'【银虎】今日份唱歌｜bubble261028',a:'Jade_0524',l:4,p:'2026-10-28',b:'BV1DVxE6iEzf'}] },
+  {n:'Airtable AI', u:'https://www.airtable.com', c:'agent', v:'Airtable', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['表格','自动化'], d:'在结构化数据上叠加 AI 字段与自动化，适合做内容排期、线索管理与轻量客户管理。'},
+  {n:'Retool', u:'https://retool.com', c:'agent', v:'Retool', co:'美国', p:3, net:1, m:0, mb:'',
+   t:['内部工具','企业集成'], d:'面向工程团队的内部工具搭建平台，AI 可生成查询与界面，适合替换手工后台。'},
+  {n:'阿里云百炼', u:'https://bailian.console.aliyun.com', c:'agent', v:'阿里云', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['企业智能体','模型托管'], d:'模型调用、模型定制与应用搭建一体，企业可在阿里云账号体系内完成权限与配额管理。', vids:[{t:'Claude Code 接阿里云百炼大模型平台【国内用户永远可用】',a:'顶级云加',l:2,p:'2026-10-13',b:'BV1TRpz6EE66'}] },
+  {n:'百度千帆', u:'https://qianfan.cloud.baidu.com', c:'agent', v:'百度', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['企业智能体','知识库问答'], d:'文心系模型的应用开发平台，知识库与插件体系完整，提供私有化选项。', vids:[{t:'百度千帆实测：1积分=1分钱，最低能到0.55折！！',a:'模真真-AI消费指南',l:24,p:'2026-10-27',b:'BV1QSxT6GEUp'},{t:'针对百度千帆Token Plan与Claude Code桌面端在Deepseek-v4.1-flash上缓存命中极低异常的问题解决',a:'绫Official',l:11,p:'2026-10-18',b:'BV1HZJz6vEER'},{t:'实测百度千帆Token Plan个人版：全时段折扣，用了一个月，账单直接少个零',a:'AI马丁同学',l:5,p:'2026-10-12',b:'BV1cYpR6UEzQ'}] },
+  {n:'腾讯元器', u:'https://yuanqi.tencent.com', c:'agent', v:'腾讯', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['0 代码智能体','微信生态'], d:'零代码创建智能体并发布到微信生态，适合做公众号客服与社群助手。', vids:[{t:'腾讯元器将停服：AI员工还没转正，平台先退场了',a:'周周商业说',l:2,p:'2026-10-11',b:'BV11Bp76SEGe'},{t:'腾讯元器平台：将停止服务',a:'大单网',l:2,p:'2026-10-12',b:'BV1JepX6gEq3'}] },
+  {n:'讯飞星辰', u:'https://xinghuo.xfyun.cn', c:'agent', v:'科大讯飞', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['智能体','私有化'], d:'星火体系下的智能体与模型定制平台，语音交互与行业知识库是主要落点。', vids:[{t:'讯飞免费10亿spark模型token',a:'人生如少年of',l:2,p:'2026-10-23',b:'BV1pwnt6ME7U'}] },
+  {n:'简道云', u:'https://www.jiandaoyun.com', c:'agent', v:'帆软', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['低代码平台','表单流程'], d:'表单、流程与仪表盘一体的低代码平台，AI 可辅助建表与数据分析，适合企业信息化。', vids:[{t:'公司用简道云不会写代码？WorkBuddy直连简道云，自然语言就能建表单、处理数据',a:'普中企业AI赋能',l:6,p:'2026-10-12',b:'BV1PSpY6tE7b'},{t:'简道云×悟帆AI应收风控助手，自动评分预警赊销风险，发货催收全程有依据！',a:'简道云',l:0,p:'2026-10-21',b:'BV1BGnq6HEKZ'}] },
+  {n:'明道云', u:'https://www.mingdao.com', c:'agent', v:'明道云', co:'中国', p:2, net:0, m:0, mb:'',
+   t:['低代码','私有部署'], d:'以数据表与工作流为核心的低代码平台，支持私有化部署，适合中大型组织自建系统。', vids:[{t:'HAP实战直播第292期《明道云 AI 功能实战：设备运维场景演示》',a:'明道云',l:4,p:'2026-10-16',b:'BV1DtJ96HEUc'},{t:'HAP实战直播第293期《基于明道云搭建多Agent记忆架构》',a:'明道云',l:2,p:'2026-10-27',b:'BV1ZrxT6UEcg'}] },
+  {n:'Monica', u:'https://monica.im', c:'agent', v:'Monica', co:'中国', p:1, net:0, m:0, mb:'',
+   t:['浏览器助手','模型聚合'], d:'浏览器侧边栏助手，网页总结、写作与多模型切换随手可用，适合日常资料处理。', vids:[{t:'Santa Monica Dream - Angus &amp; Julia Stone（cover）',a:'果樹園之女',l:61,p:'2026-08-31',b:'BV14dtb6vEaz'},{t:'[贝斯谱】张国荣-Monica',a:'贝仙啊',l:24,p:'2026-10-24',b:'BV1qFHA6xExX'},{t:'【Monica】红烧肉',a:'香芋无敌好恰',l:12,p:'2026-10-26',b:'BV1B2nZ6UEiX'}] },
+
+];
+
+// 本站不做评分：卡片只展示可核查的 B 站测评证据，不折算分数。
+const VID_OK = /AI|ai|模型|生成|测评|评测|对比|横评|工具|智能|编程|代码|绘画|视频|音频|对话|设计|办公|助手|大模型|提示词/;
+function videos(d){
+  const ok = (d.vids||[]).filter(v => VID_OK.test(v.t));
+  if(!ok.length) return '';
+  const items = ok.map(v=>`<a class="vid" href="https://www.bilibili.com/video/${esc(v.b)}" target="_blank" rel="noopener"><span class="vl">${v.l>=10000?(v.l/10000).toFixed(1)+'万':v.l}</span> 赞 · ${esc(v.t)}<span class="vd">${esc(v.p)}</span></a>`).join('');
+  return `<div class="rev"><b>B 站测评</b>（近 2 个月，${ok.length} 条）：${items}</div>`;
+}
+
+const state = {cat:'all', region:'all', price:'all', net:'all', favOnly:false, sort:'rec', q:''};
+
+const groupsEl   = document.getElementById('groups');
+const countEl    = document.getElementById('count');
+const qEl        = document.getElementById('q');
+const favBtn     = document.getElementById('favBtn');
+const favCountEl = document.getElementById('favCount');
+
+let favSet = new Set();
+try { favSet = new Set(JSON.parse(localStorage.getItem('aigc-nav-favs') || '[]')); } catch(e) { favSet = new Set(); }
+function saveFavs(){ try { localStorage.setItem('aigc-nav-favs', JSON.stringify([...favSet])); } catch(e) {} }
+
+function esc(s){return String(s).replace(/[&<>"]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+
+function priceOf(id){ return PRICES.find(p=>p.id===id) || PRICES[2]; }
+
+function fmtM(m){
+  if(!m) return '';
+  if(m >= 10000) return (m/10000).toFixed(2).replace(/\.?0+$/,'') + ' 亿';
+  return m + ' 万';
+}
+
+function card(d){
+  const p = priceOf(d.p);
+  const host = d.u.replace(/^https?:\/\//,'').replace(/\/.*$/,'');
+  const tags = d.t.map(t=>{
+    const hot = /影视级|二次元|音频|工程级|0 ?代码|智能体/.test(t) ? ' hot' : '';
+    return `<span class="tag${hot}">${esc(t)}</span>`;
+  }).join('');
+  const scale = d.m
+    ? `<div class="scale" title="${esc(d.mb)}"><b>${fmtM(d.m)}</b><span>${esc(d.mb)}</span></div>`
+    : '';
+  const fav = favSet.has(d.n);
+  return `<a class="card-link" href="${esc(d.u)}" target="_blank" rel="noopener">
+    <article class="card">
+      <div class="card-top">
+        <div style="min-width:0;flex:1">
+          <div class="nameline">
+            <span class="name" title="${esc(d.n)}">${esc(d.n)}${d.md?' <i>'+esc(d.md)+'</i>':''}</span>
+            <span class="fav${fav?' on':''}" role="button" tabindex="0" data-fav="${esc(d.n)}"
+                  title="${fav?'取消收藏':'收藏'}"><svg viewBox="0 0 20 20" aria-hidden="true"><polygon points="10,1.6 18,7.4 14.9,16.8 5.1,16.8 2,7.4"/></svg></span>
+          </div>
+          <div class="host">${esc(host)}<span class="dot">·</span><span class="co">${esc(d.co)}</span></div>
+        </div>
+        <div class="right">
+          <span class="price ${p.cls}" title="同类内相对消费档：${p.label}；本类中档参考 ${CATMID[d.c]||'—'}"><em>消费</em>${p.label}</span>
+        </div>
+      </div>
+      <p class="desc">${esc(d.d)}</p>
+      ${videos(d)}
+      <div class="tags">${tags}</div>
+      ${scale}
+      <div class="meta">
+        <span class="vm" title="${esc(d.v)}">${esc(d.v)}</span>
+        <span class="net ${d.net===0?'free':'vpn'}">${d.net===0?'✓ 可直连':'↗ 需高科技'}</span>
+      </div>
+    </article>
+  </a>`;
+}
+
+// 归一化：统一小写，分隔符折成空格，保留词边界
+function norm(s){
+  return String(s).toLowerCase()
+    .replace(/[\-_.,·、()（）\/]+/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+// 编辑距离，用于英文名拼错时的容错
+function lev(a,b){
+  const m=a.length, n=b.length;
+  if(Math.abs(m-n)>2) return 99;
+  let prev=Array.from({length:n+1},(_,j)=>j), cur=new Array(n+1);
+  for(let i=1;i<=m;i++){
+    cur[0]=i;
+    const ca=a.charCodeAt(i-1);
+    for(let j=1;j<=n;j++){
+      const cost = ca===b.charCodeAt(j-1) ? 0 : 1;
+      cur[j]=Math.min(prev[j]+1, cur[j-1]+1, prev[j-1]+cost);
+    }
+    const t=prev; prev=cur; cur=t;
+  }
+  return prev[n];
+}
+
+function fuzzyHit(q, d){
+  if(!/^[a-z0-9]+$/.test(q)) return false;
+  const max = q.length >= 5 ? 2 : (q.length === 4 ? 1 : 0);
+  if(!max) return false;
+  const host = norm(d.u.replace(/^https?:\/\//,'').replace(/\/.*$/,'').replace(/^www\./,''));
+  return [norm(d.n), host, norm(d.v)]
+    .some(t => Math.abs(t.length - q.length) <= max && lev(q, t) <= max);
+}
+
+function match(d){
+  if(state.favOnly && !favSet.has(d.n)) return false;
+  if(state.cat !== 'all' && d.c !== state.cat) return false;
+  if(state.region === 'cn' && d.co !== '中国') return false;
+  if(state.region === 'global' && d.co === '中国') return false;
+  if(state.price !== 'all' && d.p !== +state.price) return false;
+  if(state.net !== 'all' && d.net !== +state.net) return false;
+  const q = state.q.trim().toLowerCase();
+  if(q){
+    const catLabel = (CATS.find(c=>c.id===d.c)||{}).label || '';
+    const fields = [d.n, d.v, d.co, d.d, d.t.join(' '), d.u, catLabel].map(norm);
+    const terms = norm(q).split(' ').filter(Boolean);
+    for(const term of terms){
+      if(fields.some(f => f.includes(term))) continue;
+      if(fuzzyHit(term, d)) continue;
+      return false;
+    }
+  }
+  return true;
+}
+
+function sortRows(list){
+  const arr = list.slice();
+  const byName = (a,b) => a.n.localeCompare(b.n, 'zh');
+  if(state.sort === 'scale'){
+    arr.sort((a,b)=> (b.m||0)-(a.m||0) || byName(a,b));
+  } else if(state.sort === 'name'){
+    arr.sort(byName);
+  } else {
+    arr.sort((a,b)=>
+      ((a.co==='中国')?0:1) - ((b.co==='中国')?0:1) ||
+      (b.m?1:0) - (a.m?1:0) ||
+      (b.m||0) - (a.m||0) ||
+      byName(a,b)
+    );
+  }
+  return arr;
+}
+
+function render(){
+  const rows = DATA.filter(match);
+  const list = state.cat==='all' ? CATS : CATS.filter(c=>c.id===state.cat);
+  let html = '';
+
+  list.forEach(cat=>{
+    const sub = sortRows(rows.filter(d=>d.c===cat.id));
+    if(!sub.length) return;
+    const cn = sub.filter(d=>d.co==='中国').length;
+    const sm = sub.filter(d=>d.m).length;
+    const dist = [4,3,2,1,0].map(k=>`${priceOf(k).label}${sub.filter(d=>d.p===k).length}`).join('/');
+    html += `<section class="group">
+      <div class="ghead">
+        <span class="gdot" style="background:${cat.color}"></span>
+        <h2 title="${esc(cat.desc)}">${cat.label}</h2>
+        <span class="gmeta">${sub.length} 条 · 国内 ${cn} · 有公开人数 ${sm} · 消费 ${dist}</span>
+      </div>
+      <div class="grid">${sub.map(card).join('')}</div>
+    </section>`;
+  });
+
+  const empty = state.favOnly
+    ? '还没有收藏。点平台名称右边的 ☆ 就能收藏，收藏后再点「已收藏」只看这些平台。'
+    : '没有找到匹配的平台。已尝试忽略大小写与拼写差异，可换关键词或点「重置筛选」。';
+  groupsEl.innerHTML = html || `<div class="grid"><div class="empty">${empty}</div></div>`;
+  countEl.textContent = state.favOnly
+    ? `已收藏 ${new Set(rows.map(d=>d.n)).size} 个平台 · ${rows.length} 条`
+    : `显示 ${rows.length} / ${DATA.length} 条`;
+}
+
+function chips(host, items, key, extraClass){
+  host.querySelectorAll('.chip').forEach(n=>n.remove());
+  items.forEach(it=>{
+    const b = document.createElement('button');
+    b.className = 'chip' + (extraClass?(' '+extraClass(it)):'') + (state[key]===it.id?' on':'');
+    b.innerHTML = it.label + (it.count!==undefined?`<small>${it.count}</small>`:'');
+    b.onclick = ()=>{ state[key]=it.id; buildFilters(); render(); };
+    host.appendChild(b);
+  });
+}
+
+function buildFilters(){
+  const catItems = [{id:'all', label:'全部', count:DATA.length}].concat(
+    CATS.map(c=>({id:c.id, label:c.label, count:DATA.filter(d=>d.c===c.id).length}))
+  );
+  chips(document.getElementById('f-cat'), catItems, 'cat');
+
+  chips(document.getElementById('f-region'), [
+    {id:'all', label:'全球', count:DATA.length},
+    {id:'cn', label:'国内', count:DATA.filter(d=>d.co==='中国').length},
+    {id:'global', label:'海外', count:DATA.filter(d=>d.co!=='中国').length}
+  ], 'region');
+
+  const priceItems = [{id:'all', label:'全部', count:DATA.length}].concat(
+    PRICES.map(p=>({id:p.id, label:p.label, count:DATA.filter(d=>d.p===p.id).length}))
+  );
+  chips(document.getElementById('f-price'), priceItems, 'price',
+    it=>['p0','p1','p2','p3','p4'].includes('p'+it.id) ? 'p'+it.id : '');
+
+  chips(document.getElementById('f-net'), [
+    {id:'all', label:'全部', count:DATA.length},
+    {id:0, label:'可直连', count:DATA.filter(d=>d.net===0).length},
+    {id:1, label:'需高科技', count:DATA.filter(d=>d.net===1).length}
+  ], 'net');
+}
+
+function updateFavUI(){
+  favCountEl.textContent = favSet.size;
+  favBtn.classList.toggle('on', state.favOnly);
+}
+
+function toggleFav(name){
+  if(favSet.has(name)) favSet.delete(name); else favSet.add(name);
+  saveFavs();
+  updateFavUI();
+  if(state.favOnly){ render(); return; }
+  groupsEl.querySelectorAll('.fav').forEach(el=>{
+    const on = favSet.has(el.dataset.fav);
+    el.classList.toggle('on', on);
+    el.title = on ? '取消收藏' : '收藏';
+  });
+}
+
+groupsEl.addEventListener('click', e=>{
+  const f = e.target.closest('.fav');
+  if(!f) return;
+  e.preventDefault();
+  e.stopPropagation();
+  toggleFav(f.dataset.fav);
+});
+
+groupsEl.addEventListener('keydown', e=>{
+  if((e.key==='Enter' || e.key===' ') && e.target.classList && e.target.classList.contains('fav')){
+    e.preventDefault();
+    toggleFav(e.target.dataset.fav);
+  }
+});
+
+favBtn.onclick = ()=>{ state.favOnly = !state.favOnly; updateFavUI(); render(); };
+
+qEl.addEventListener('input', e=>{ state.q = e.target.value; render(); });
+document.getElementById('sort').onchange = e=>{ state.sort = e.target.value; render(); };
+document.getElementById('reset').onclick = ()=>{
+  state.cat='all'; state.region='all'; state.price='all'; state.net='all';
+  state.favOnly=false; state.sort='rec'; state.q='';
+  qEl.value=''; document.getElementById('sort').value='score';
+  buildFilters(); updateFavUI(); render();
+};
+
+document.getElementById('s-total').textContent = DATA.length;
+document.getElementById('s-cat').textContent = CATS.length;
+document.getElementById('s-cn').textContent = DATA.filter(d=>d.co==='中国').length;
+document.getElementById('s-free').textContent = DATA.filter(d=>d.net===0).length;
+
+buildFilters();
+updateFavUI();
+render();
+</script>
+<script>
+setTimeout(function(){
+  var g = document.querySelector('.grid');
+  var out = document.createElement('pre');
+  out.style.cssText = 'position:fixed;inset:0;background:#fff;z-index:99999;padding:12px;font:12px monospace;white-space:pre-wrap;margin:0;overflow:hidden';
+  var first = g && g.children[0];
+  out.textContent = 'grid children=' + (g ? g.children.length : 'none')
+    + '\nfirst tag=' + (first ? first.tagName + ' cls=' + first.className : 'none')
+    + '\nfirst rect=' + (first ? JSON.stringify(first.getBoundingClientRect()) : 'none')
+    + '\nfirst html=' + (first ? first.outerHTML.slice(0, 420) : 'none');
+  document.body.appendChild(out);
+}, 900);
+</script>
+</body>
+</html>
